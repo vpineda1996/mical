@@ -1,5 +1,6 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit} from '@angular/core';
 import * as d3 from 'd3';
+import {HistogramDefinition} from '../model/Histogram';
 
 
 let counter = 0;
@@ -13,6 +14,9 @@ export class HistogramComponent implements OnInit, AfterViewInit {
 
   id = 'histogram-' + counter++;
 
+  @Input()
+  histogramDfn: HistogramDefinition;
+
   constructor() { }
 
   ngOnInit() {
@@ -20,87 +24,76 @@ export class HistogramComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.chart();
+  }
 
-    const margin = {top: 10, right: 30, bottom: 30, left: 40},
-      height = 500 - margin.top - margin.bottom;
 
-    // parse the date / time
-    const parseDate = d3.timeParse("%d-%m-%Y");
+  chart() {
 
-    // set the ranges
-    const x = d3.scaleTime()
-      .domain([new Date(2010, 6, 3), new Date(2012, 0, 1)])
-      .rangeRound([0, 200]);
+    const margin = ({top: 30, right: 0, bottom: 30, left: 30});
+
+    const d3Node = d3.select("#" + this.id)
+    const width = (<HTMLElement> d3Node.node()).clientWidth;
+    const height = (<HTMLElement> d3Node.node()).clientHeight + margin.top + margin.bottom;
+
+
+    const data = this.histogramDfn.data
+      .slice()
+      .sort((a, b) => a.xPoint - b.xPoint)
+      .map(({xPoint, frequency, color}) => {
+        let acc = 0;
+        return frequency.map( (e, idx, a) => ({
+          name: xPoint,
+          value: e,
+          prev: acc,
+          acc: (acc += e),
+          color: color[idx % color.length]
+        }));
+      }).reduce((_1, _2) => _1.concat(_2), []);
+
+    const svg = d3Node
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    const x = d3.scaleBand()
+      .domain(<any>data.map(d => d.name))
+      .range([margin.left, width - margin.right])
+      .padding(0.1)
+
     const y = d3.scaleLinear()
-      .range([height, 0]);
+      .domain([0, d3.max(data, d => d.acc)]).nice()
+      .range([height - margin.bottom, margin.top])
 
-    // set the parameters for the histogram
-    const histogram = d3.histogram()
-      .value(function(d: any) { return d.date; })
-      .domain(x.domain())
-      .thresholds(x.ticks(d3.timeMonth));
-
-    // append the svg object to the body of the page
-    // append a 'group' element to 'svg'
-    // moves the 'group' element to the top left margin
-    const svg = d3.select("#" + this.id).append("svg")
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform",
-        "translate(" + margin.left + "," + margin.top + ")");
-
-
-    const data = [
-      {
-        dtg: "01-01-11",
-        date: null,
-        value: 1
-      },
-      {
-        dtg: "01-01-12",
-        date: null,
-        value: 1
-      },
-      {
-        dtg: "01-01-12",
-        date: null,
-        value: 2
-      }
-    ];
-    // format the data
-    data.forEach(function(d) {
-      d.date = parseDate(d.dtg);
-    });
-
-    // group the data for the bars
-    const bins = histogram(data);
-
-    // Scale the range of the data in the y domain
-    y.domain([0, d3.max(bins, function(d) { return d.length; })]);
-
-    // append the bar rectangles to the svg element
-    svg.selectAll("rect")
-      .data(bins)
-      .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", 1)
-      .attr("transform", function(d: any) {
-        return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-      .attr("width", function(d: any) { return x(d.x1) - x(d.x0) - 1 ; })
-      .attr("height", function(d: any) { return height - y(d.length); });
-
-    // add the x Axis
     svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      .attr("fill", "steelblue")
+      .selectAll("rect").data(data).enter().append("rect")
+      .attr("x", d => x(<any>d.name))
+      .attr("y", d => y(d.acc))
+      .attr("fill", d => d.color)
+      .attr("height", d => {
+        return y(d.prev) - y(d.acc);
+      })
+      .attr("width", x.bandwidth());
 
-    // add the y Axis
+    const yAxis = g => g
+      .attr("transform", `translate(${margin.left},0)`)
+      .call(d3.axisLeft(y))
+      .call(_ => _.select(".domain").remove())
+
+    const xAxis = g => g
+      .attr("transform", `translate(0,${height - margin.bottom})`)
+      .call(d3.axisBottom(x).ticks(width / 80))
+
     svg.append("g")
-      .call(d3.axisLeft(y));
+      .call(xAxis);
+
+    svg.append("g")
+      .call(yAxis);
+
+    return svg.node();
   }
 
 
 
-
 }
-
