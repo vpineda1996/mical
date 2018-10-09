@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MapExplorerComponent } from './map-explorer.component';
+import { MapExplorerHolderComponent } from './map-explorer-holder.component';
 
-describe('MapExplorerComponent', () => {
-  let component: MapExplorerComponent;
-  let fixture: ComponentFixture<MapExplorerComponent>;
+describe('MapExplorerHolderComponent', () => {
+  let component: MapExplorerHolderComponent;
+  let fixture: ComponentFixture<MapExplorerHolderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapExplorerComponent ]
+      declarations: [ MapExplorerHolderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MapExplorerComponent);
+    fixture = TestBed.createComponent(MapExplorerHolderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

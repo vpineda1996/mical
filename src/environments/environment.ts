@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  mapbox: {
+    accessToken: 'pk.eyJ1IjoidnBpbmVkYTE5OTYiLCJhIjoiNWRmYjcxNTQyODFmNGM1MTJkMjg3OGQ3ODcyZDA5MTUifQ.l8nQjhBq_mmCrZ9mWDv9Yw'
+  }
 };
 
 /*
