@@ -1,8 +1,12 @@
 <p>
   graphics-holder works!
 </p>
-<div [style.height]="'400px'">
-  <viz-histogram [histogramDfn]="myHistDef">
+<div class="graphics-holder d-flex flex-column mb-3" [style.top]="topOffset" [style.bottom]="bottomOffset">
+  <div class="p-2" [style.height]="'100%'">
+      <viz-histogram [histogramDfn]="myHistDef">
 
-  </viz-histogram>
+      </viz-histogram>
+  </div>
+
 </div>
+

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {HistogramDefinition} from '../../viz/model/Histogram';
 
 
@@ -19,6 +19,11 @@ const defaultMatlabColors = [
   styleUrls: ['./graphics-holder.component.css']
 })
 export class GraphicsHolderComponent implements OnInit {
+
+  @Input()
+  topOffset = 0;
+  @Input()
+  bottomOffset = 0;
 
   myHistDef: HistogramDefinition = {
     data: [

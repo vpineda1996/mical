@@ -34,7 +34,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
 
     const d3Node = d3.select("#" + this.id)
     const width = (<HTMLElement> d3Node.node()).clientWidth;
-    const height = (<HTMLElement> d3Node.node()).clientHeight + margin.top + margin.bottom;
+    const height = (<HTMLElement> d3Node.node()).clientHeight - margin.top - margin.bottom;
 
 
     const data = this.histogramDfn.data
