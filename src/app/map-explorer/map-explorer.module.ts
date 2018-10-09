@@ -5,11 +5,13 @@ import { GraphicsHolderComponent } from './graphics-holder/graphics-holder.compo
 import {MapExplorerService} from './map-explorer.service';
 import { MapExplorerHolderComponent } from './map-explorer-holder/map-explorer-holder.component';
 import {FormsModule} from '@angular/forms';
+import {VizModule} from '../viz/viz.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    VizModule
   ],
   declarations: [
     MapHolderComponent,

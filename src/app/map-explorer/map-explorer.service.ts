@@ -11,6 +11,7 @@ import {Observable, of} from 'rxjs';
 export class MapExplorerService {
 
   constructor() {
+    // @ts-ignore
     mapboxgl.accessToken = environment.mapbox.accessToken;
   }
 
