@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 import {HistogramDefinition} from '../model/Histogram';
 
@@ -30,7 +30,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
 
   chart() {
 
-    const margin = ({top: 30, right: 0, bottom: 30, left: 30});
+    const margin = ({top: 10, right: 0, bottom: 20, left: 30});
 
     const d3Node = d3.select("#" + this.id)
     const width = (<HTMLElement> d3Node.node()).clientWidth;
