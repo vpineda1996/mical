@@ -1,28 +1,29 @@
-export interface IGeometry {
-  type: string;
-  coordinates: [number, number];
-}
+import {BBox, Feature, FeatureCollection, GeoJsonProperties, Point} from 'geojson';
 
-export interface IGeoJson {
-  type: string;
-  geometry: IGeometry;
-  properties?: any;
-  $key?: string;
-}
 
-export class GeoJson implements IGeoJson {
-  type = 'Feature';
-  geometry: IGeometry;
+export class GeoJsonPoint implements Feature<Point> {
+   bbox: BBox;
+   geometry: Point;
+   id: string | number;
+   type: "Feature" = "Feature";
 
-  constructor(coordinates, public properties?) {
+  constructor(coordinates, public properties: GeoJsonProperties) {
     this.geometry = {
       type: 'Point',
       coordinates: coordinates
     };
+    this.type = "Feature";
   }
 }
 
-export class FeatureCollection {
-  type = 'FeatureCollection';
-  constructor(public features: Array<GeoJson>) {}
+export class PointCollection implements FeatureCollection<Point> {
+  type: "FeatureCollection" = "FeatureCollection";
+  crs: any = { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } };
+
+  constructor(public features: Array<Feature<Point, GeoJsonProperties>>) {}
+}
+
+export class GeoData {
+  constructor(public datum: FeatureCollection) {
+  }
 }

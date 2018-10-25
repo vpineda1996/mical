@@ -1,17 +1,9 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {HistogramDefinition} from '../../viz/model/Histogram';
+import {ColorProviderService} from '../../services/color-provider.service';
 
 
-const defaultMatlabColors = [
-  // Starting in R2014b	R2014a and Earlier
-  "rgb(0,   114, 189)",
-  "rgb(217, 83,  25)",
-  "rgb(237, 177, 32)",
-  "rgb(126, 47,  142)",
-  "rgb(119, 172, 48)",
-  "rgb(77,  190, 238)",
-  "rgb(162, 20,  47)",
-]
+
 
 @Component({
   selector: 'app-graphics-holder',
@@ -29,23 +21,23 @@ export class GraphicsHolderComponent implements OnInit {
     data: [
       {
         frequency: [20, 6],
-        color: defaultMatlabColors,
+        color: this.colorProvider.getColoursStartingAtIndex(0, 10),
         xPoint: -10
       },
       {
         frequency: [50, 70, 5, 1, 4, 1, 10, 20, 10, 10],
-        color: defaultMatlabColors,
+        color: this.colorProvider.getColoursStartingAtIndex(0, 10),
         xPoint: 20
       },
       {
         frequency: [30],
-        color: defaultMatlabColors,
+        color: this.colorProvider.getColoursStartingAtIndex(6, 10),
         xPoint: 30
       }
     ]
   };
 
-  constructor(private elementRef: ElementRef) { }
+  constructor(private elementRef: ElementRef, public colorProvider: ColorProviderService) { }
 
   ngOnInit() {
   }

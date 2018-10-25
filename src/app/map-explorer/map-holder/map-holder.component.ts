@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {MapExplorerService} from '../map-explorer.service';
 import * as mapboxgl from 'mapbox-gl';
-import {FeatureCollection, GeoJson} from '../../model/map';
 import {Observable} from 'rxjs';
+import {Feature, FeatureCollection} from 'geojson';
+import {GeoJsonPoint, PointCollection} from '../../model/map';
 
 @Component({
   selector: 'app-map-holder',
@@ -20,13 +21,13 @@ export class MapHolderComponent implements OnInit {
 
   // data
   source: any;
-  markers$: Observable<Array<GeoJson>>;
+  markers$: Observable<Array<GeoJsonPoint>>;
 
   constructor(private mapService: MapExplorerService) {
   }
 
   ngOnInit() {
-    this.markers$ = this.mapService.getMarkers()
+    this.markers$ = this.mapService.getMarkers();
     this.initializeMap();
   }
 
@@ -61,10 +62,10 @@ export class MapHolderComponent implements OnInit {
 
     //// Add Marker on Click
     this.map.on('click', (event) => {
-      const coordinates = [event.lngLat.lng, event.lngLat.lat]
-      const newMarker   = new GeoJson(coordinates, { message: this.message })
+      const coordinates = [event.lngLat.lng, event.lngLat.lat];
+      const newMarker   = new GeoJsonPoint(coordinates, { message: this.message });
       this.mapService.createMarker(newMarker);
-    })
+    });
 
 
     /// Add realtime firebase data on map load
@@ -80,25 +81,21 @@ export class MapHolderComponent implements OnInit {
       });
 
       /// get source
-      this.source = this.map.getSource('firebase')
+      this.source = this.map.getSource('firebase');
 
       /// subscribe to realtime database and set data source
       this.markers$.subscribe(markers => {
-        const data = new FeatureCollection(markers)
+        const data = new PointCollection(markers);
         this.source.setData(data);
-      })
-
-      /// create map layers with realtime data
-      this.map.addLayer({
-        id: 'firebase',
-        source: 'firebase',
-        type: 'heatmap',
-        layout: {
-        },
-        paint: {
-        },
       });
 
+
+      /// create map layers with realtime data
+      const layers = this.mapService.getLayers('firebase');
+      layers.layerDef.map((layer, idx) => {
+          this.map.addLayer(layer);
+        }
+      );
     });
 
   }
@@ -110,9 +107,9 @@ export class MapHolderComponent implements OnInit {
     this.mapService.removeMarker(marker.$key);
   }
 
-  flyTo(data: GeoJson) {
+  flyTo(data: GeoJsonPoint) {
     this.map.flyTo({
-      center: data.geometry.coordinates
+      center: <[number, number]>data.geometry.coordinates
     });
   }
 }
