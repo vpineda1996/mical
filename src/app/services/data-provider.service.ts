@@ -46,6 +46,6 @@ const DATA = {
       "geometry": {"type": "Point", "coordinates": [-151.5129, 63.1016]}
     },
   ]
-}
+};
 
 
