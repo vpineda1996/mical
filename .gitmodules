@@ -1,3 +1,3 @@
 [submodule "mical_server"]
-	path = mical_server
+	path = rest
 	url = git@github.com:LUGELab/mical_server.git
