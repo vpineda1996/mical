@@ -12,8 +12,8 @@ let datasetRequestForYield = "/api/yield/12"
 let serverURL = "http://localhost:8888"
 
 let errorFn = (err) => {
-  alert("Error tring to fetch rows: " + err);
-}
+  alert("Error tring to fetch rows: " + JSON.stringify(err));
+};
 
 @Injectable({
   providedIn: 'root'
