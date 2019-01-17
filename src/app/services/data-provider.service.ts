@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Column, YieldDocument } from '../model/datatypes';
+import { Column, RowData } from '../model/datatypes';
 import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { FeatureCollection } from 'geojson';
 import { GeoData, GeoJsonPoint, PointCollection } from '../model/map';
@@ -20,7 +20,7 @@ let errorFn = (err) => {
 })
 export class DataProviderService {
 
-  private data: Subject<Array<YieldDocument>> = new Subject();
+  private data: Subject<Array<RowData>> = new Subject();
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
 
   
@@ -44,7 +44,7 @@ export class DataProviderService {
 
   update() {
     // do database query
-    this.http.get(serverURL + datasetRequestForYield).subscribe((value: Array<YieldDocument>) => {
+    this.http.get(serverURL + datasetRequestForYield).subscribe((value: Array<RowData>) => {
       this.data.next(value);
     }, errorFn)
   }
@@ -53,7 +53,7 @@ export class DataProviderService {
     return this.geoDataSubject;
   }
 
-  getData(): Observable<Array<YieldDocument>> {
+  getData(): Observable<Array<RowData>> {
     return this.data;
   }
 }

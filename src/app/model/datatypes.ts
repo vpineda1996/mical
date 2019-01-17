@@ -15,10 +15,14 @@ export class GeoPoint implements Point {
 
 
 
-export interface YieldDocument {
+export interface RowData {
   coords: GeoPoint;
   effectSize: number;
   sampleSize: number;
   studyID: string;
+}
+
+export interface YieldRowData extends RowData {
+
 }
 

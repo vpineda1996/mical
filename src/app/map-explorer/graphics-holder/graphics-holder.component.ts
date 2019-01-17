@@ -2,6 +2,10 @@ import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {HistogramDefinition} from '../../viz/model/Histogram';
 import {ColorProviderService} from '../../services/color-provider.service';
 import { DataProviderService } from 'src/app/services/data-provider.service';
+import {map} from 'rxjs/operators';
+import {RowData} from '../../model/datatypes';
+import {ChartDataSets} from 'chart.js';
+import {Observable} from 'rxjs';
 
 
 
@@ -18,31 +22,49 @@ export class GraphicsHolderComponent implements OnInit {
   @Input()
   bottomOffset = 0;
 
-  myHistDef: HistogramDefinition = {
-    data: [
-      {
-        frequency: [20, 6],
-        color: this.colorProvider.getColoursStartingAtIndex(0, 10),
-        xPoint: -10
-      },
-      {
-        frequency: [50, 70, 5, 1, 4, 1, 10, 20, 10, 10],
-        color: this.colorProvider.getColoursStartingAtIndex(0, 10),
-        xPoint: 20
-      },
-      {
-        frequency: [30],
-        color: this.colorProvider.getColoursStartingAtIndex(6, 10),
-        xPoint: 30
-      }
-    ]
-  };
+  myHistDef$: Observable<HistogramDefinition>;
 
   constructor(
-    private elementRef: ElementRef, 
-    public colorProvider: ColorProviderService) { }
+    private dataProvider: DataProviderService,
+    public colorProvider: ColorProviderService) {
+    this.setupData();
+  }
 
   ngOnInit() {
+
+  }
+
+  // TODO: vpineda setup datasetProvider to get us the datasets that we are interested on
+  setupData(): void {
+    let parseFn = (rows: Array<RowData>) => {
+      let datasetsData: {[studyID: string]: [number[], string[]]} = {};
+      rows.forEach((row) => {
+        if (datasetsData[row.studyID] === undefined) {
+          datasetsData[row.studyID] = [[], []];
+        }
+        datasetsData[row.studyID][0].push(row.sampleSize);
+        datasetsData[row.studyID][1].push(row.effectSize.toString());
+      });
+
+      let ds = Object.keys(datasetsData).reduce((acc: ChartDataSets[], next) => {
+        acc.push({
+          label: next,
+          backgroundColor: this.colorProvider.getColoursFillStartingAtIndex(0, rows.length),
+          data: datasetsData[next][0],
+          borderColor: this.colorProvider.getColoursStartingAtIndex(0, rows.length),
+          borderWidth: 1,
+        });
+        return acc;
+      }, []);
+      return {
+        datasets: ds,
+        buckets:datasetsData[Object.keys(datasetsData)[0]][1]
+      };
+    };
+
+    this.myHistDef$ = this.dataProvider.getData().pipe(
+      map(parseFn)
+    )
   }
 
 }
