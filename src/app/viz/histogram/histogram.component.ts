@@ -35,12 +35,11 @@ export class HistogramComponent implements OnInit, AfterViewInit {
     const ctx = this.canvas.nativeElement.getContext("2d");
 
     this.histogramDfn$.subscribe((defn) => {
-      debugger
       let chart = new Chart(ctx, {
         type: "bar",
         data: {
           datasets: defn.datasets,
-          labels: defn.buckets.splice(0,10),
+          labels: defn.buckets,
         },
         options: {
           legend: {

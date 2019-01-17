@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 // TODO: vpineda this is harcoded, should be removed!
-let datasetRequestForYield = "/api/yield/12" 
+let datasetRequestForYield = "/api/yield/";
 let serverURL = "http://localhost:8888"
 
 let errorFn = (err) => {

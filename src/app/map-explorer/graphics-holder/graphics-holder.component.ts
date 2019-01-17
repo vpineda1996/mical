@@ -43,7 +43,7 @@ export class GraphicsHolderComponent implements OnInit {
           datasetsData[row.studyID] = [[], []];
         }
         datasetsData[row.studyID][0].push(row.sampleSize);
-        datasetsData[row.studyID][1].push(row.effectSize.toString());
+        datasetsData[row.studyID][1].push(Math.round(row.effectSize * 10).toString());
       });
 
       let ds = Object.keys(datasetsData).reduce((acc: ChartDataSets[], next) => {
