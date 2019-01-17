@@ -63,7 +63,7 @@ export class MapHolderComponent implements OnInit {
     //// Add Marker on Click
     this.map.on('click', (event) => {
       const coordinates = [event.lngLat.lng, event.lngLat.lat];
-      const newMarker   = new GeoJsonPoint(coordinates, { message: this.message });
+      const newMarker   = new GeoJsonPoint(<any> coordinates, { message: this.message });
       this.mapService.createMarker(newMarker);
     });
 

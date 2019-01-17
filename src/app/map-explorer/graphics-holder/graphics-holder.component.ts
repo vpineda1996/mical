@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {HistogramDefinition} from '../../viz/model/Histogram';
 import {ColorProviderService} from '../../services/color-provider.service';
+import { DataProviderService } from 'src/app/services/data-provider.service';
 
 
 
@@ -37,7 +38,9 @@ export class GraphicsHolderComponent implements OnInit {
     ]
   };
 
-  constructor(private elementRef: ElementRef, public colorProvider: ColorProviderService) { }
+  constructor(
+    private elementRef: ElementRef, 
+    public colorProvider: ColorProviderService) { }
 
   ngOnInit() {
   }

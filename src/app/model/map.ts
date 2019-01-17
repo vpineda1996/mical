@@ -7,7 +7,7 @@ export class GeoJsonPoint implements Feature<Point> {
    id: string | number;
    type: "Feature" = "Feature";
 
-  constructor(coordinates, public properties: GeoJsonProperties) {
+  constructor(coordinates: [number, number], public properties: GeoJsonProperties) {
     this.geometry = {
       type: 'Point',
       coordinates: coordinates
