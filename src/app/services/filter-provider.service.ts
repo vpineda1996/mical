@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import {Observable, of, Subject} from 'rxjs';
-import { Filter } from '../model/filters';
-import { Column } from '../model/datatypes';
+import {Injectable} from '@angular/core';
+import {Filter} from '../model/filters';
+import {Column} from '../model/datatypes';
 import {ActivatedRoute} from '@angular/router';
+import {DEFAULT_FILTERS, FILTERS_KEY} from '../util/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +29,4 @@ export class FilterProviderService {
   }
 
 }
-export const FILTERS_KEY = 'f';
-const DEFAULT_FILTERS = [];
+

@@ -5,9 +5,7 @@ import {FilterProviderService} from './filter-provider.service';
 import {HttpClient} from '@angular/common/http';
 import {RowData} from '../model/datatypes';
 import {Observable} from 'rxjs';
-
-
-const API_ROUTE = "api";
+import {API_ROUTE, SERVER_URL} from '../util/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +26,7 @@ export class QueryProviderService {
   }
 
   buildURL(): string {
-    return [serverURL, API_ROUTE, this.outcomeTableProvider.table].join("/");
+    return [SERVER_URL, API_ROUTE, this.outcomeTableProvider.table].join("/");
   }
 
 }
@@ -37,7 +35,3 @@ export class QueryProviderService {
 let errorFn = (err) => {
   console.log("Error tring to fetch rows: " + JSON.stringify(err));
 };
-
-
-// TODO: vpineda this is harcoded, should be removed!
-let serverURL = "http://localhost:8888";

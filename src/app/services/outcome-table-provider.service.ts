@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {DEFAULT_TABLE, OUTCOME_TABLE_KEY} from '../util/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,3 @@ export class OutcomeTableProviderService {
 
 
 }
-
-export const OUTCOME_TABLE_KEY = 't';
-const DEFAULT_TABLE = 'yield';
