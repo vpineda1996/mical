@@ -9,6 +9,8 @@ import {map} from 'rxjs/operators';
 import {GeoJSON} from 'geojson';
 import {GeoData, GeoJsonPoint} from '../model/map';
 import {ColorProviderService} from '../services/color-provider.service';
+import {ActivatedRoute} from '@angular/router';
+import {Filter} from '../model/filters';
 
 const CLUSTER_LAYER_NAME = 'clusters';
 const CLUSTER_LAYER_TAGS_NAME = 'cluster-tag';
@@ -20,7 +22,7 @@ const POINT_LAYER = 'point_layer';
 })
 export class MapExplorerService {
 
-  constructor(private dataProvider: DataProviderService, private colorProvider: ColorProviderService) {
+  constructor(private dataProvider: DataProviderService, private colorProvider: ColorProviderService, private route: ActivatedRoute) {
     // @ts-ignore
     mapboxgl.accessToken = environment.mapbox.accessToken;
   }

@@ -1,19 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Column, RowData } from '../model/datatypes';
-import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
-import { FeatureCollection } from 'geojson';
-import { GeoData, GeoJsonPoint, PointCollection } from '../model/map';
-import { FilterProviderService } from './filter-provider.service';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-
-// TODO: vpineda this is harcoded, should be removed!
-let datasetRequestForYield = "/api/yield/";
-let serverURL = "http://localhost:8888"
-
-let errorFn = (err) => {
-  alert("Error tring to fetch rows: " + JSON.stringify(err));
-};
+import {Injectable} from '@angular/core';
+import {Column, RowData} from '../model/datatypes';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {FeatureCollection} from 'geojson';
+import {GeoData, GeoJsonPoint, PointCollection} from '../model/map';
+import {map} from 'rxjs/operators';
+import {QueryProviderService} from './query-provider.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +15,7 @@ export class DataProviderService {
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
 
   
-  constructor(private filterProvider: FilterProviderService, private http: HttpClient) {
+  constructor(private queryProvider: QueryProviderService) {
     this.setupGeoDataListener()
     this.update();
   }
@@ -44,9 +35,9 @@ export class DataProviderService {
 
   update() {
     // do database query
-    this.http.get(serverURL + datasetRequestForYield).subscribe((value: Array<RowData>) => {
+    this.queryProvider.get().subscribe((value: Array<RowData>) => {
       this.data.next(value);
-    }, errorFn)
+    })
   }
 
   getGeoDataPoints(columns: Column[]): Observable<GeoData> {
