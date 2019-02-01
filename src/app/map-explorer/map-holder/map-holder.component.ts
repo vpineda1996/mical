@@ -4,6 +4,7 @@ import * as mapboxgl from 'mapbox-gl';
 import {Observable} from 'rxjs';
 import {Feature, FeatureCollection} from 'geojson';
 import {GeoJsonPoint, PointCollection} from '../../model/map';
+import {FilterProviderService} from '../../services/filter-provider.service';
 
 @Component({
   selector: 'app-map-holder',
@@ -23,7 +24,8 @@ export class MapHolderComponent implements OnInit {
   source: any;
   markers$: Observable<Array<GeoJsonPoint>>;
 
-  constructor(private mapService: MapExplorerService) {
+  constructor(private mapService: MapExplorerService,
+              private filterProviderService: FilterProviderService) {
   }
 
   ngOnInit() {
@@ -78,6 +80,11 @@ export class MapHolderComponent implements OnInit {
           type: 'FeatureCollection',
           features: []
         }
+      });
+
+      this.map.on('move', () => {
+        console.log("updating bounds");
+        this.filterProviderService.setGeoFilter(this.map.getBounds());
       });
 
       /// get source

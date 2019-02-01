@@ -16,7 +16,9 @@ export class QueryProviderService {
               private outcomeTableProvider: OutcomeTableProviderService,
               private filterProvider: FilterProviderService,
               private http: HttpClient) {
-
+    filterProvider.announcer.subscribe(() => {
+      this.get();
+    })
   }
 
   get(): Observable<Array<RowData>> {
@@ -26,7 +28,19 @@ export class QueryProviderService {
   }
 
   buildURL(): string {
-    return [SERVER_URL, API_ROUTE, this.outcomeTableProvider.table].join("/");
+     let url = [SERVER_URL, API_ROUTE, this.outcomeTableProvider.table].join("/");
+
+     // set geofilter
+     let areaFilter = this.filterProvider.geoFilter;
+     if (areaFilter !== "") {
+       url += "?area=" + areaFilter;
+     }
+
+     // set other filters
+     let customF = this.filterProvider.filters.compile();
+     url += "?f=" + customF;
+     console.log("Querying: " + url);
+     return url;
   }
 
 }

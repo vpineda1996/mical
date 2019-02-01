@@ -9,6 +9,9 @@ import { DataProviderService } from './services/data-provider.service';
 import { ColorProviderService } from './services/color-provider.service';
 import { FilterProviderService } from './services/filter-provider.service';
 import { ChartProviderService } from './services/chart-provider.service';
+import {OutcomeTableProviderService} from './services/outcome-table-provider.service';
+import {InterventionProviderService} from './services/intervention-provider.service';
+import {QueryProviderService} from './services/query-provider.service';
 
 @NgModule({
   declarations: [
@@ -21,10 +24,12 @@ import { ChartProviderService } from './services/chart-provider.service';
     HttpClientModule
   ],
   providers: [
-    DataProviderService,
     ColorProviderService,
-    FilterProviderService,
-    ChartProviderService
+    ChartProviderService,
+
+    // Data providers
+    DataProviderService,
+    QueryProviderService,
   ],
   bootstrap: [AppComponent]
 })
