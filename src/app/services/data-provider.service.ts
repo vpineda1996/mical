@@ -5,6 +5,12 @@ import {FeatureCollection} from 'geojson';
 import {GeoData, GeoJsonPoint, PointCollection} from '../model/map';
 import {map} from 'rxjs/operators';
 import {QueryProviderService} from './query-provider.service';
+import { InterventionProviderService } from './intervention-provider.service';
+import { OutcomeTableProviderService } from './outcome-table-provider.service';
+import { FilterProviderService } from './filter-provider.service';
+
+
+const DEBOUNCE_WAIT = 500;
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +20,24 @@ export class DataProviderService {
   private data: Subject<Array<RowData>> = new Subject();
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
 
+  private updateWithDebounce = (function() {
+    let curTimeout;
+    return function() {
+      if (curTimeout != null) {
+        clearTimeout(curTimeout);
+      }
+      curTimeout = setTimeout(this.update.bind(this), DEBOUNCE_WAIT);
+    }
+  })();
+
   
-  constructor(private queryProvider: QueryProviderService) {
+  constructor(private interventionProviderService: InterventionProviderService,
+              private outcomeTableProvider: OutcomeTableProviderService,
+              private filterProvider: FilterProviderService,
+              private queryProvider: QueryProviderService) {
+    filterProvider.announcer.subscribe(() => {
+      this.updateWithDebounce();
+    })
     this.setupGeoDataListener()
     this.update();
   }

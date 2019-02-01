@@ -16,9 +16,6 @@ export class QueryProviderService {
               private outcomeTableProvider: OutcomeTableProviderService,
               private filterProvider: FilterProviderService,
               private http: HttpClient) {
-    filterProvider.announcer.subscribe(() => {
-      this.get();
-    })
   }
 
   get(): Observable<Array<RowData>> {
