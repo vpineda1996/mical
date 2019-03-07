@@ -22,7 +22,19 @@ export interface RowData {
   studyID: string;
 }
 
-export interface YieldRowData extends RowData {
 
+export type SeriesEntry = [number, number][]
+
+export interface HistogramData {
+  title: string,
+  bar: SeriesEntry,
+  dist: SeriesEntry,
+  ticks: Ticks,
+  labels: {
+    denom: string,
+    numerator: string
+  }
 }
+
+export type Ticks = number[];
 

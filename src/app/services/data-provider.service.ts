@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Column, RowData} from '../model/datatypes';
+import {Column, RowData, HistogramData} from '../model/datatypes';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {FeatureCollection} from 'geojson';
 import {GeoData, GeoJsonPoint, PointCollection} from '../model/map';
@@ -18,11 +18,12 @@ const DEBOUNCE_WAIT = 500;
 export class DataProviderService {
 
   private data: Subject<Array<RowData>> = new Subject();
+  private summaryQueries: Subject<HistogramData>[] = [];
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
 
   private updateWithDebounce = (function() {
     let curTimeout;
-    return function() {
+    return () => {
       if (curTimeout != null) {
         clearTimeout(curTimeout);
       }
@@ -57,7 +58,7 @@ export class DataProviderService {
 
   update() {
     // do database query
-    this.queryProvider.get().subscribe((value: Array<RowData>) => {
+    this.queryProvider.getRawData().subscribe((value: Array<RowData>) => {
       this.data.next(value);
     })
   }

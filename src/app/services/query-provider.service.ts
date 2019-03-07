@@ -5,7 +5,7 @@ import {FilterProviderService} from './filter-provider.service';
 import {HttpClient} from '@angular/common/http';
 import {RowData} from '../model/datatypes';
 import {Observable} from 'rxjs';
-import {API_ROUTE, SERVER_URL} from '../util/constants';
+import {API_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +18,14 @@ export class QueryProviderService {
               private http: HttpClient) {
   }
 
-  get(): Observable<Array<RowData>> {
+  getRawData(): Observable<Array<RowData>> {
     let ans =  <Observable<Array<RowData>>> this.http.get(this.buildURL());
     ans.subscribe(undefined, errorFn);
     return ans;
   }
 
   buildURL(): string {
-     let url = [SERVER_URL, API_ROUTE, this.outcomeTableProvider.table].join("/");
+     let url = [SERVER_URL, API_ROUTE, OUTCOME_TABLE_ROUTE, this.outcomeTableProvider.table].join("/");
 
      // set geofilter
      let areaFilter = this.filterProvider.geoFilter;
