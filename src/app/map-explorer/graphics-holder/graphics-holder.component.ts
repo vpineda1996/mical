@@ -37,34 +37,33 @@ export class GraphicsHolderComponent implements OnInit {
   // TODO: vpineda setup datasetProvider to get us the datasets that we are interested on
   setupData(): void {
     let parseFn = (rows: Array<RowData>) => {
-      let datasetsData: {[studyID: string]: [number[], string[]]} = {};
-      rows.forEach((row) => {
-        if (datasetsData[row.studyID] === undefined) {
-          datasetsData[row.studyID] = [[], []];
-        }
-        datasetsData[row.studyID][0].push(row.sampleSize);
-        datasetsData[row.studyID][1].push(Math.round(row.effectSize * 10).toString());
-      });
-
-      let ds = Object.keys(datasetsData).reduce((acc: ChartDataSets[], next) => {
-        acc.push({
-          label: next,
-          backgroundColor: this.colorProvider.getColoursFillStartingAtIndex(0, rows.length),
-          data: datasetsData[next][0],
-          borderColor: this.colorProvider.getColoursStartingAtIndex(0, rows.length),
-          borderWidth: 1,
-        });
-        return acc;
-      }, []);
-      return {
-        datasets: ds,
-        buckets:datasetsData[Object.keys(datasetsData)[0]][1]
-      };
+      // let datasetsData: {[studyID: string]: [number[], string[]]} = {};
+      // rows.forEach((row) => {
+      //   if (datasetsData[row.studyID] === undefined) {
+      //     datasetsData[row.studyID] = [[], []];
+      //   }
+      //   datasetsData[row.studyID][0].push(row.sampleSize);
+      //   datasetsData[row.studyID][1].push(Math.round(row.effectSize * 10).toString());
+      // });
+      //
+      // let ds = Object.keys(datasetsData).reduce((acc: ChartDataSets[], next) => {
+      //   acc.push({
+      //     label: next,
+      //     backgroundColor: this.colorProvider.getColoursFillStartingAtIndex(0, rows.length),
+      //     data: datasetsData[next][0],
+      //     borderColor: this.colorProvider.getColoursStartingAtIndex(0, rows.length),
+      //     borderWidth: 1,
+      //   });
+      //   return acc;
+      // }, []);
+      // return {
+      //   datasets: ds,
+      //   buckets:datasetsData[Object.keys(datasetsData)[0]][1]
+      // };
+      return <any>{};
     };
 
-    this.myHistDef$ = this.dataProvider.getData().pipe(
-      map(parseFn)
-    )
+    this.myHistDef$ = new Observable<HistogramDefinition>();
   }
 
 }
