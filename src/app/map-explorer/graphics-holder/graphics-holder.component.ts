@@ -3,7 +3,7 @@ import {HistogramDefinition} from '../../viz/model/Histogram';
 import {ColorProviderService} from '../../services/color-provider.service';
 import { DataProviderService } from 'src/app/services/data-provider.service';
 import {map} from 'rxjs/operators';
-import {RowData} from '../../model/datatypes';
+import {MapData} from '../../model/datatypes';
 import {ChartDataSets} from 'chart.js';
 import {Observable} from 'rxjs';
 
@@ -36,7 +36,7 @@ export class GraphicsHolderComponent implements OnInit {
 
   // TODO: vpineda setup datasetProvider to get us the datasets that we are interested on
   setupData(): void {
-    let parseFn = (rows: Array<RowData>) => {
+    let parseFn = (rows: Array<MapData>) => {
       // let datasetsData: {[studyID: string]: [number[], string[]]} = {};
       // rows.forEach((row) => {
       //   if (datasetsData[row.studyID] === undefined) {

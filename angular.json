@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mical": {
+    "AgriculturalEvidence": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/mical",
+            "outputPath": "dist/AgriculturalEvidence",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -51,18 +51,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mical:build"
+            "browserTarget": "AgriculturalEvidence:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mical:build:production"
+              "browserTarget": "AgriculturalEvidence:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mical:build"
+            "browserTarget": "AgriculturalEvidence:build"
           }
         },
         "test": {
@@ -96,7 +96,7 @@
         }
       }
     },
-    "mical-e2e": {
+    "AgriculturalEvidence-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -104,11 +104,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mical:serve"
+            "devServerTarget": "AgriculturalEvidence:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "mical:serve:production"
+              "devServerTarget": "AgriculturalEvidence:serve:production"
             }
           }
         },
@@ -124,5 +124,5 @@
       }
     }
   },
-  "defaultProject": "mical"
+  "defaultProject": "AgriculturalEvidence"
 }

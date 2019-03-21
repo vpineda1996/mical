@@ -12,10 +12,14 @@ import { ChartProviderService } from './services/chart-provider.service';
 import {OutcomeTableProviderService} from './services/outcome-table-provider.service';
 import {InterventionProviderService} from './services/intervention-provider.service';
 import {QueryProviderService} from './services/query-provider.service';
+import { HomeExplorerComponent } from './home/home-explorer/home-explorer.component';
+import { NavBarComponent } from './nav-bar/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeExplorerComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,

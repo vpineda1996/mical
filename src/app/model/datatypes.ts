@@ -15,11 +15,8 @@ export class GeoPoint implements Point {
 
 
 
-export interface RowData {
+export interface MapData {
   coords: GeoPoint;
-  effectSize: number;
-  sampleSize: number;
-  studyID: string;
 }
 
 

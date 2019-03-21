@@ -3,7 +3,7 @@ import {InterventionProviderService} from './intervention-provider.service';
 import {OutcomeTableProviderService} from './outcome-table-provider.service';
 import {FilterProviderService} from './filter-provider.service';
 import {HttpClient} from '@angular/common/http';
-import {RowData} from '../model/datatypes';
+import {MapData} from '../model/datatypes';
 import {Observable} from 'rxjs';
 import {API_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
 
@@ -18,10 +18,16 @@ export class QueryProviderService {
               private http: HttpClient) {
   }
 
-  getRawData(): Observable<Array<RowData>> {
-    let ans =  <Observable<Array<RowData>>> this.http.get(this.buildURL());
+  getMapData(): Observable<Array<MapData>> {
+    let ans =  <Observable<Array<MapData>>> this.http.get(this.buildMapURL());
     ans.subscribe(undefined, errorFn);
     return ans;
+  }
+
+  buildMapURL(): string {
+    let baseURL = this.buildURL();
+    baseURL += "&cols=coords";
+    return baseURL;
   }
 
   buildURL(): string {
