@@ -1,0 +1,78 @@
+button {
+  text-transform: uppercase;
+  color: var(--dark-grey);
+  font-weight: bold;
+  height: 42px;
+  letter-spacing: 0.05em;
+}
+
+.selected {
+  color: var(--white-color);
+  background-color: var(--dark-blue)
+}
+
+.selected i {
+  color: var(--orange-accent);
+}
+
+div {
+  padding: 8px;
+  display: inline-block;
+}
+
+.button-search {
+  border: none;
+  -webkit-appearance: none;
+  outline: 0;
+  font: var(--text-font);
+  background-color: var(--dark-blue);
+  margin: 1px 0;
+}
+
+.btn-ico-margin {
+  margin-right: 0.3em;
+}
+
+.search-container {
+  padding-top: 0;
+  padding-bottom: 0;
+  display: block;
+}
+
+.drop-down-holder {
+  position: absolute;
+  display: block;
+}
+
+.drop-down-pad {
+  background-color: white;
+  border-radius: 5px;
+  margin-top: 60px;
+}
+
+.drop-down-pad > div {
+  display: block;
+}
+
+.clear-btn {
+  color: var(--orange-accent);
+}
+
+.drop-down-btns {
+  padding: 0;
+}
+
+.apply-btn {
+  border-color: var(--orange-accent);
+  border-radius: 2em;
+  text-transform: uppercase;
+  color: var(--dark-grey);
+  font-weight: bold;
+  height: 42px;
+  letter-spacing: 0.05em;
+}
+
+.selected.apply-btn {
+  background-color: var(--orange-accent);
+  border-color: transparent;
+}

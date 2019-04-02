@@ -64,12 +64,8 @@ a.pure-button-primary {
   background-color: white;
 }
 
-.seach-bar-opts-container .btn-holder button {
-  margin-top: 12px;
-}
-
-.btn-ico-margin {
-  margin-right: 0.3em;
+.seach-bar-opts-container {
+  margin-left: -8px;
 }
 
 .search-title {
@@ -79,45 +75,6 @@ a.pure-button-primary {
   color: var(--dark-grey);
   font-weight: bold;
   letter-spacing: 0.1em;
-}
-.search-bar-opts div {
-  padding: 8px;
-  display: inline;
-}
-
-.search-bar-opts button {
-  text-transform: uppercase;
-  color: var(--dark-grey);
-  font-weight: bold;
-  height: 42px;
-  letter-spacing: 0.05em;
-}
-
-.search-bar-opts .selected button {
-  color: var(--white-color);
-  background-color: var(--dark-blue)
-}
-
-.search-bar-opts .selected i {
-  color: var(--orange-accent);
-}
-
-.search-bar-opts div[first-btn] {
-  padding-left: 0px;
-}
-
-.search-bar-opts div[last-btn] {
-  padding-right: 0px;
-}
-
-.apply-btn {
-  border-color: var(--orange-accent);
-  border-radius: 2em;
-}
-
-.search-bar-opts .selected .apply-btn {
-  background-color: var(--orange-accent);
-  border-color: transparent;
 }
 
 
@@ -218,10 +175,6 @@ a.pure-button-primary {
   /* We increase the header font size even more */
   .splash-head {
     font-size: 300%;
-  }
-
-  .seach-bar-opts-container .btn-holder button {
-    margin-top: 0px;
   }
 
   .seach-bar-opts-container {

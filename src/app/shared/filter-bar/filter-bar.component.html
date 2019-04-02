@@ -1,0 +1,52 @@
+<div class="search-bar-opts">
+  <app-drop-down-button
+    [selected]="selectedBtn[ButtonIds.COUNTRY]"
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [id]="ButtonIds.COUNTRY">
+    <i class="fas fa-search btn-ico-margin"></i>
+    <span>Seach country</span>
+  </app-drop-down-button>
+
+  <app-drop-down-button
+    [selected]="selectedBtn[ButtonIds.INTERVENTION]"
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [id]="ButtonIds.INTERVENTION">
+    <span>Intervention</span>
+  </app-drop-down-button>
+
+  <app-drop-down-button
+    [selected]="selectedBtn[ButtonIds.CROP]"
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [id]="ButtonIds.CROP">
+    <i class="fas fa-seedling btn-ico-margin"></i>
+    <span>Search crop</span>
+  </app-drop-down-button>
+
+
+  <app-drop-down-button
+    [selected]="selectedBtn[ButtonIds.CLIMATE]"
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [id]="ButtonIds.CLIMATE">
+    <span>Climate</span>
+  </app-drop-down-button>
+
+
+  <app-drop-down-button
+    [selected]="selectedBtn[ButtonIds.SOIL]"
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [id]="ButtonIds.SOIL">
+    <span>Soil</span>
+  </app-drop-down-button>
+
+
+  <app-drop-down-button
+    [selected]="selectedBtn[ButtonIds.DURATION]"
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [id]="ButtonIds.DURATION">
+    <span>Study duration</span>
+  </app-drop-down-button>
+
+  <div last-btn class="btn-holder" [class.selected]="selectedBtn[ButtonIds.APPLY]">
+  <button mat-stroked-button class="apply-btn" (click)="onSelectButton(ButtonIds.APPLY)">Apply</button>
+</div>
+</div>
