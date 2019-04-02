@@ -11,14 +11,17 @@
   </div>
   <div class="drop-down-holder" (click)="sinkClickEvents($event)">
     <div class="drop-down-pad">
-      <div style="height: 300px">
-      </div>
-      <div class="drop-down-btns">
-        <div class="btn-holder">
-          <button mat-button class="clear-btn" (click)="onClearClick($event)">Clear</button>
+      <div class="arrow-up"></div>
+      <div class="white-round-edg">
+        <div style="height: 300px">
         </div>
-        <div class="btn-holder" [class.selected]="existingSelection">
-          <button mat-stroked-button class="apply-btn" (click)="onApplyClick($event)">Apply</button>
+        <div class="drop-down-btns">
+          <div class="btn-holder">
+            <button mat-button class="clear-btn" (click)="onClearClick($event)">Clear</button>
+          </div>
+          <div class="btn-holder" [class.selected]="existingSelection">
+            <button mat-stroked-button class="apply-btn" (click)="onApplyClick($event)">Apply</button>
+          </div>
         </div>
       </div>
     </div>
