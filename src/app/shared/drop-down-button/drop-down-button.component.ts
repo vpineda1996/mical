@@ -22,16 +22,38 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
 
   protected activeSelection = false;
   protected searchString = "";
+  protected selectedOpts : {[key:string]: boolean} = {};
 
   protected existingSelection = false;
 
-  opts$ = of(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]);
+  opts$ = of([
+    "basket",
+    "flash",
+    "feeling",
+    "redundancy",
+    "restrain",
+    "decay",
+    "amputate",
+    "corn",
+    "outline",
+    "discipline",
+    "glass",
+    "orgy",
+    "weakness",
+    "selection",
+    "fragrant",
+    "ash",
+    "reception",
+    "healthy",
+    "breathe",
+    "arrangement"]);
 
   @Input()
   onOptSelected = (id: BUTTON_ID, selctedOpts: string[]) => {};
 
-  protected clearListener(e: Event) {
+  protected closeDropDown(e: Event) {
     this.activeSelection = false;
+    this.onOptSelected(this.id, this.getSelection());
   }
 
   protected sinkClickEvents(e: Event) {
@@ -39,7 +61,13 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   }
 
   protected getSelection(): string[] {
-    return (this.sl) ? Object.keys(this.sl.selected) : [];
+    // the dropdown hasnt been init, restore old opts
+    if (!this.sl) {
+      return Object.keys(this.selectedOpts)
+    } else {
+      this.selectedOpts = this.sl.selected;
+      return Object.keys(this.sl.selected)
+    }
   }
 
   protected onButtonClick(event: Event) {
@@ -57,13 +85,12 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   protected onActiveInput(event: Event) {
     let keyE = <KeyboardEvent> event;
     if (keyE.key == "Enter") {
-      this.activeSelection = false;
       // todo vpineda new search
+      return;
     }
   }
 
   protected onApplyClick(event: Event) {
-    // todo vpineda
     this.onOptSelected(this.id, this.getSelection());
     event.stopPropagation();
   }
@@ -79,11 +106,11 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    window.addEventListener('click', this.clearListener.bind(this));
+    window.addEventListener('click', this.closeDropDown.bind(this));
   }
 
   ngOnDestroy() {
-    window.removeEventListener('click', this.clearListener.bind(this));
+    window.removeEventListener('click', this.closeDropDown.bind(this));
   }
 
 

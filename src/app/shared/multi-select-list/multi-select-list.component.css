@@ -1,4 +1,4 @@
-.selection-entry > div {
+.selection-entry > div > div {
   display: inline-block;
   padding: 4px 0 4px 15px;
   min-width: 100px;
@@ -30,6 +30,8 @@
 
 .multi-select-holder::-webkit-scrollbar {
   width: 8px;
+  background-color: white;
+  z-index: 5;
 }
 
 .multi-select-holder::-webkit-scrollbar-track {

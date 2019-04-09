@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
 @Component({
@@ -6,20 +6,48 @@ import {Observable, of} from 'rxjs';
   templateUrl: './multi-select-list.component.html',
   styleUrls: ['./multi-select-list.component.css']
 })
-export class MultiSelectListComponent implements OnInit {
+export class MultiSelectListComponent implements OnInit, OnChanges {
 
   @Input()
   list$: Observable<string[]>;
+  selectable: {name: string, visible: boolean}[] = [];
 
+  @Input()
   selected : {[key:string]: boolean} = {};
 
-  onClick(idx: string) {
-    this.selected[idx] = !this.selected[idx];
+  @Input()
+  filterStr: string = "";
+
+  protected onClick(idx: string) {
+    if (this.selected[idx]) {
+      delete this.selected[idx];
+    } else {
+      this.selected[idx] = true;
+    }
   }
 
-  constructor() { }
+  protected buildSelectables(sList: string[]) {
+    let trimedSearch = this.filterStr.trim();
+    this.selectable = sList
+      .map(s => {
+        return {
+          name: s,
+          visible:  s.indexOf(trimedSearch) != -1
+        }
+      });
+  }
+
+  constructor() {
+  }
 
   ngOnInit() {
+    this.list$.subscribe((array) => this.buildSelectables(array))
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes && changes['filterStr']) {
+      this.buildSelectables(this.selectable.map(e => e.name));
+    }
   }
 
 }

@@ -14,7 +14,10 @@
       <div class="arrow-up"></div>
       <div class="white-round-edg">
         <div class="multi-select-dd">
-          <app-multi-select-list #selection_list [list$]="opts$"></app-multi-select-list>
+          <app-multi-select-list #selection_list
+                                 [filterStr]="searchString"
+                                 [selected]="selectedOpts"
+                                 [list$]="opts$"></app-multi-select-list>
         </div>
         <div class="drop-down-btns">
           <div class="btn-holder">
@@ -26,6 +29,7 @@
                     (click)="onApplyClick($event)">Apply</button>
           </div>
         </div>
+
       </div>
     </div>
   </div>

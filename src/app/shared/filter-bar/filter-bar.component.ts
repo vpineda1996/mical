@@ -12,7 +12,14 @@ export class FilterBarComponent implements OnInit {
   selectHandlers = [this.onSelectCountry, this.onSelectIntervention, this.onSelectCrop,
     this.onSelectClimate, this.onSelectSoil, this.onSelectStudyDur, this.onApply, async () => {}];
 
-  activeSelection: BUTTON_ID = BUTTON_ID.NONE;
+  filters = {
+    country: [""],
+    intervention: [""],
+    crop: [""],
+    climate: [""],
+    soil: [""],
+    duration: [""],
+  }
 
   constructor() { }
 
