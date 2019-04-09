@@ -19,44 +19,44 @@ export class FilterBarComponent implements OnInit {
   ngOnInit() {
   }
 
-  async onSelectButton(btnId: BUTTON_ID) {
+  async onSelectButton(btnId: BUTTON_ID, selectedOpts: string[]) {
     // highlight current button
     if (btnId != BUTTON_ID.APPLY)
-      this.selectedBtn[btnId] = !this.selectedBtn[btnId];
+      this.selectedBtn[btnId] = !!selectedOpts.length;
 
     // wait to see the user's answer
-    await this.selectHandlers[btnId]();
+    await this.selectHandlers[btnId](selectedOpts);
 
     // check if we should highlight button
     this.selectedBtn[BUTTON_ID.APPLY] = this.selectedBtn.some((v, idx) => v && idx != BUTTON_ID.APPLY);
   }
 
-  async onSelectCountry() {
+  async onSelectCountry(selectedOpts: string[]) {
 
   }
 
-  async onSelectIntervention() {
+  async onSelectIntervention(selectedOpts: string[]) {
 
 
   }
 
-  async onSelectCrop() {
+  async onSelectCrop(selectedOpts: string[]) {
 
   }
 
-  async onSelectClimate() {
+  async onSelectClimate(selectedOpts: string[]) {
 
   }
 
-  async onSelectSoil() {
+  async onSelectSoil(selectedOpts: string[]) {
 
   }
 
-  async onSelectStudyDur() {
+  async onSelectStudyDur(selectedOpts: string[]) {
 
   }
 
-  async onApply() {
+  async onApply(ignore: string[]) {
 
   }
 

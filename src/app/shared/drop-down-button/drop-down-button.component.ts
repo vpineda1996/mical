@@ -1,5 +1,7 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {BUTTON_ID} from '../filter-bar/filter-bar.component';
+import {of} from 'rxjs';
+import {MultiSelectListComponent} from '../multi-select-list/multi-select-list.component';
 
 @Component({
   selector: 'app-drop-down-button',
@@ -14,13 +16,19 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   @Input()
   selected = false;
 
+  @ViewChild('search_bar') sb: ElementRef;
+
+  @ViewChild('selection_list') sl: MultiSelectListComponent;
+
   protected activeSelection = false;
   protected searchString = "";
 
   protected existingSelection = false;
 
+  opts$ = of(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]);
+
   @Input()
-  onOptSelected = (id: BUTTON_ID, selctedOp: string) => {};
+  onOptSelected = (id: BUTTON_ID, selctedOpts: string[]) => {};
 
   protected clearListener(e: Event) {
     this.activeSelection = false;
@@ -30,12 +38,19 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
     e.stopPropagation();
   }
 
+  protected getSelection(): string[] {
+    return (this.sl) ? Object.keys(this.sl.selected) : [];
+  }
+
   protected onButtonClick(event: Event) {
     this.activeSelection = true;
 
-    // todo vpineda, active selection
-    this.onOptSelected(this.id, "A");
-
+    // delay focusing the element & allow element to render
+    setTimeout(() => {
+      if (this.activeSelection && this.sb.nativeElement) {
+        this.sb.nativeElement.focus();
+      }
+    });
     event.stopPropagation();
   }
 
@@ -49,12 +64,13 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
 
   protected onApplyClick(event: Event) {
     // todo vpineda
-
+    this.onOptSelected(this.id, this.getSelection());
     event.stopPropagation();
   }
 
   protected onClearClick(event: Event) {
-    // todo vpineda
+    // clear selection
+    this.sl.selected = {};
     event.stopPropagation();
   }
 
@@ -69,5 +85,6 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     window.removeEventListener('click', this.clearListener.bind(this));
   }
+
 
 }

@@ -1,0 +1,9 @@
+<div class="multi-select-holder">
+  <div class="selection-entry" *ngFor="let o of list$ | async as opts; index as i"
+       (click)="onClick(o)" matRipple >
+      <!--<div class="click"></div>-->
+    <mat-pseudo-checkbox class="click-box"
+                         [state]="(selected[o] ? 'checked' : 'unchecked' )"></mat-pseudo-checkbox>
+    <div>{{o}}</div>
+  </div>
+</div>

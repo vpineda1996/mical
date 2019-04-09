@@ -15,7 +15,7 @@ button {
   color: var(--orange-accent);
 }
 
-div {
+.btn-holder {
   padding: 8px;
   display: inline-block;
 }
@@ -50,6 +50,7 @@ div {
 
 .white-round-edg {
   background-color: white;
+  padding: 0;
   border-radius: 5px;
 }
 
@@ -67,6 +68,10 @@ div {
 }
 
 .drop-down-btns {
+  padding: 34px;
+}
+
+.drop-down-btns .btn-holder{
   padding: 0;
 }
 
@@ -95,4 +100,9 @@ div {
   border-right: 12px solid transparent;
 
   border-bottom: 12px solid white;
+}
+
+.multi-select-dd {
+  margin: 0 15px;
+  padding-top: 35px;
 }
