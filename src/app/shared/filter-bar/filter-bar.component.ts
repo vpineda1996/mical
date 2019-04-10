@@ -9,18 +9,16 @@ export class FilterBarComponent implements OnInit {
 
   ButtonIds = BUTTON_ID;
   selectedBtn = [false, false, false, false, false, false, false, false];
-  selectHandlers = [this.onSelectCountry, this.onSelectIntervention, this.onSelectCrop,
-    this.onSelectClimate, this.onSelectSoil, this.onSelectStudyDur, this.onApply, async () => {}];
 
-  filters = {
-    country: [""],
-    intervention: [""],
-    crop: [""],
-    climate: [""],
-    soil: [""],
-    duration: [""],
+  protected filters = {
+    country: {},
+    intervention: {},
+    crop: {},
+    climate: {},
+    soil: {},
+    duration: {},
   }
-
+  
   constructor() { }
 
   ngOnInit() {
@@ -31,40 +29,8 @@ export class FilterBarComponent implements OnInit {
     if (btnId != BUTTON_ID.APPLY)
       this.selectedBtn[btnId] = !!selectedOpts.length;
 
-    // wait to see the user's answer
-    await this.selectHandlers[btnId](selectedOpts);
-
     // check if we should highlight button
     this.selectedBtn[BUTTON_ID.APPLY] = this.selectedBtn.some((v, idx) => v && idx != BUTTON_ID.APPLY);
-  }
-
-  async onSelectCountry(selectedOpts: string[]) {
-
-  }
-
-  async onSelectIntervention(selectedOpts: string[]) {
-
-
-  }
-
-  async onSelectCrop(selectedOpts: string[]) {
-
-  }
-
-  async onSelectClimate(selectedOpts: string[]) {
-
-  }
-
-  async onSelectSoil(selectedOpts: string[]) {
-
-  }
-
-  async onSelectStudyDur(selectedOpts: string[]) {
-
-  }
-
-  async onApply(ignore: string[]) {
-
   }
 
 }

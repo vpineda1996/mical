@@ -1,4 +1,4 @@
-import {AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
 import {BUTTON_ID} from '../filter-bar/filter-bar.component';
 import {of} from 'rxjs';
 import {MultiSelectListComponent} from '../multi-select-list/multi-select-list.component';
@@ -22,7 +22,22 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
 
   protected activeSelection = false;
   protected searchString = "";
+
   protected selectedOpts : {[key:string]: boolean} = {};
+
+  @Input("selection")
+  get selection() {
+    return this.selectedOpts;
+  }
+
+  @Output("selection") 
+  selectedChange = new EventEmitter<{[key:string]: boolean}>();
+  set selection(opts: {[key:string]: boolean}) {
+    if (opts) {
+      this.selectedOpts = opts;
+      this.selectedChange.emit(this.selectedOpts);
+    }
+  }
 
   protected existingSelection = false;
 
@@ -53,7 +68,9 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
 
   protected closeDropDown(e: Event) {
     this.activeSelection = false;
-    this.onOptSelected(this.id, this.getSelection());
+    this.selection = (this.sl) ? this.sl.selected : undefined;
+    this.onOptSelected(this.id, Object.keys(this.selectedOpts));
+    e.stopPropagation();
   }
 
   protected sinkClickEvents(e: Event) {
@@ -61,13 +78,7 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   }
 
   protected getSelection(): string[] {
-    // the dropdown hasnt been init, restore old opts
-    if (!this.sl) {
-      return Object.keys(this.selectedOpts)
-    } else {
-      this.selectedOpts = this.sl.selected;
-      return Object.keys(this.sl.selected)
-    }
+    return Object.keys(this.selectedOpts)
   }
 
   protected onButtonClick(event: Event) {
@@ -91,13 +102,14 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   }
 
   protected onApplyClick(event: Event) {
-    this.onOptSelected(this.id, this.getSelection());
+    this.selection = (this.sl) ? this.sl.selected : undefined;;
+    this.onOptSelected(this.id, Object.keys(this.selectedOpts));
     event.stopPropagation();
   }
 
   protected onClearClick(event: Event) {
     // clear selection
-    this.sl.selected = {};
+    this.selection = {};
     event.stopPropagation();
   }
 
