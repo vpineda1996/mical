@@ -12,6 +12,7 @@
   <app-drop-down-button
     [selected]="selectedBtn[ButtonIds.INTERVENTION]"
     [onOptSelected]="this.onSelectButton.bind(this)"
+    [opts$]="interventions$"
     [selection]="filters.intervention" 
     (selection)="filters.intervention=$event"
     [id]="ButtonIds.INTERVENTION">

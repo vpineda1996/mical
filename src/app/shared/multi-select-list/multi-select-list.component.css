@@ -12,6 +12,17 @@
   margin-left: 20px;
 }
 
+.name {
+  text-transform: capitalize;
+}
+
+.spinner-holder {
+  height: 80px;
+  padding-left: 80px;
+  padding-right: 80px;
+  overflow: hidden;
+}
+
 .selection-entry .mat-pseudo-checkbox-checked {
   background: var(--dark-blue);
 }

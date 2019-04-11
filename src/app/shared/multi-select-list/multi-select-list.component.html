@@ -1,10 +1,18 @@
 <div class="multi-select-holder">
-  <div class="selection-entry" *ngFor="let o of selectable; index as i"
-       (click)="onClick(o.name)" matRipple >
-    <div *ngIf="o.visible">
-      <mat-pseudo-checkbox class="click-box"
-                           [state]="(selected[o.name] ? 'checked' : 'unchecked' )"></mat-pseudo-checkbox>
-      <div>{{o.name}}</div>
+  <div *ngIf="(list$ | async); else loading">
+    <div class="selection-entry" *ngFor="let o of selectable; index as i"
+         (click)="onClick(o.name)" matRipple >
+      <div *ngIf="o.visible">
+        <mat-pseudo-checkbox class="click-box"
+                             [state]="(selected[o.name] ? 'checked' : 'unchecked' )"></mat-pseudo-checkbox>
+        <div class="name">{{o.name}}</div>
+      </div>
     </div>
   </div>
+  <ng-template #loading>
+    <div class="spinner-holder">
+      <mat-progress-spinner
+        [mode]="'indeterminate'" [diameter]="'60'"></mat-progress-spinner>
+    </div>
+  </ng-template>
 </div>

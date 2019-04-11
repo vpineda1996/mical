@@ -5,15 +5,14 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {MapExplorerModule} from './map-explorer/map-explorer.module';
 import {AppRoutingModule} from './app-routing.module';
-import {DataProviderService} from './services/data-provider.service';
 import {ColorProviderService} from './services/color-provider.service';
 import {ChartProviderService} from './services/chart-provider.service';
-import {QueryProviderService} from './services/query-provider.service';
 import {NavBarComponent} from './nav-bar/nav-bar.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HomeModule} from './home/home.module';
 import {AboutModule} from './about/about.module';
 import {ContactModule} from './contact/contact.module';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -31,15 +30,13 @@ import {ContactModule} from './contact/contact.module';
     MapExplorerModule,
     HomeModule,
     AboutModule,
-    ContactModule
+    ContactModule,
+
+    SharedModule.forRoot()
   ],
   providers: [
     ColorProviderService,
     ChartProviderService,
-
-    // Data providers
-    DataProviderService,
-    QueryProviderService,
   ],
   bootstrap: [AppComponent]
 })

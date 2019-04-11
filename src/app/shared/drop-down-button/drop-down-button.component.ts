@@ -1,6 +1,6 @@
-import {AfterViewChecked, AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {BUTTON_ID} from '../filter-bar/filter-bar.component';
-import {of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {MultiSelectListComponent} from '../multi-select-list/multi-select-list.component';
 
 @Component({
@@ -41,27 +41,8 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
 
   protected existingSelection = false;
 
-  opts$ = of([
-    "basket",
-    "flash",
-    "feeling",
-    "redundancy",
-    "restrain",
-    "decay",
-    "amputate",
-    "corn",
-    "outline",
-    "discipline",
-    "glass",
-    "orgy",
-    "weakness",
-    "selection",
-    "fragrant",
-    "ash",
-    "reception",
-    "healthy",
-    "breathe",
-    "arrangement"]);
+  @Input()
+  opts$ : Observable<string[]>;
 
   @Input()
   onOptSelected = (id: BUTTON_ID, selctedOpts: string[]) => {};
@@ -93,17 +74,10 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
     event.stopPropagation();
   }
 
-  protected onActiveInput(event: Event) {
-    let keyE = <KeyboardEvent> event;
-    if (keyE.key == "Enter") {
-      // todo vpineda new search
-      return;
-    }
-  }
-
   protected onApplyClick(event: Event) {
-    this.selection = (this.sl) ? this.sl.selected : undefined;;
+    this.selection = (this.sl) ? this.sl.selected : undefined;
     this.onOptSelected(this.id, Object.keys(this.selectedOpts));
+    this.activeSelection = false;
     event.stopPropagation();
   }
 

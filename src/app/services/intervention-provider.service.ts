@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {API_ROUTE, DEFAULT_INTERVENTIONS, INTERVENTION_KEY, INTERVENTION_ROUTE, SERVER_URL} from '../util/constants';
+import {API_ROUTE, DEFAULT_INTERVENTIONS, INTERVENTION_KEY, INTERVENTION_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {OutcomeTableProviderService} from './outcome-table-provider.service';
 
@@ -32,7 +32,7 @@ export class InterventionProviderService {
   }
 
   private parseInterventions(str: string) {
-    let intKeys = str.split(",").map(val => parseInt(val, 10));
+    let intKeys = str.split(",").map(val => val.trim());
     intKeys.map((key) => {
       this.http.get(this.interventionUrl(key)).subscribe((intervention: Intervention) => {
         this._intervention[intervention.sKey] = intervention;
@@ -41,12 +41,12 @@ export class InterventionProviderService {
     });
   }
 
-  private interventionUrl(... end: number[]) {
+  private interventionUrl(... end: string[]) {
     return [SERVER_URL, API_ROUTE, INTERVENTION_ROUTE, ...end].join("/");
   }
 
   private tableUrl() {
-      return [SERVER_URL, API_ROUTE, this.outcomeTableProviderService.table, INTERVENTION_ROUTE].join("/");
+      return [SERVER_URL, API_ROUTE, OUTCOME_TABLE_ROUTE, INTERVENTION_ROUTE, this.outcomeTableProviderService.table].join("/");
   }
 
 

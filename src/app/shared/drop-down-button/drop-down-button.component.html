@@ -6,8 +6,7 @@
 <div *ngIf="activeSelection" class="btn-holder">
   <div class="search-container mat-stroked-button selected" (click)="sinkClickEvents($event)">
     <i class="fas fa-search btn-ico-margin"></i>
-    <input #search_bar class="button-search" name="search" [(ngModel)]="searchString"
-           (keypress)="onActiveInput($event)">
+    <input #search_bar class="button-search" name="search" [(ngModel)]="searchString">
   </div>
   <div class="drop-down-holder" (click)="sinkClickEvents($event)">
     <div class="drop-down-pad">

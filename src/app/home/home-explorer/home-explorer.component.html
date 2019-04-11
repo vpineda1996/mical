@@ -7,7 +7,7 @@
     <div class="search-container">
       <p class="search-title">Which studies are you looking for?</p>
       <div class="seach-bar-opts-container">
-        <app-filter-bar></app-filter-bar>
+        <app-filter-bar (onApply)="onApply($event)"></app-filter-bar>
     </div>
   </div>
 </div>

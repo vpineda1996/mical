@@ -9,6 +9,10 @@ import {Subject} from 'rxjs';
 class GeoFilter implements Filter {
   bnds: LngLatBounds;
 
+  build() {
+    return undefined;
+  }
+
   compile(): string {
     if (this.bnds === undefined) return "";
     let east = this.bnds.getEast();
