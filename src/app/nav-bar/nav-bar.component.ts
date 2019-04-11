@@ -25,6 +25,10 @@ export class NavBarComponent implements OnInit {
   ngOnInit() {
   }
 
+  nav(loc: string) {
+    this.router.navigate([loc]);
+  }
+
 }
 
 export enum NavBarView {

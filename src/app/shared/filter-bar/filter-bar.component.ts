@@ -15,7 +15,7 @@ export class FilterBarComponent implements OnInit {
   ButtonIds = BUTTON_ID;
   selectedBtn = [false, false, false, false, false, false, false, false];
 
-  protected filters = {
+  filters = {
     country: {},
     intervention: {},
     crop: {},
@@ -24,7 +24,7 @@ export class FilterBarComponent implements OnInit {
     duration: {},
   };
 
-  protected interventions$: Observable<string[]> =
+  interventions$: Observable<string[]> =
     this.interventionProvider.allInterventions.pipe(
       map(ints => ints.map(i => i.sKey))
     );

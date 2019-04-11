@@ -20,7 +20,7 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
 
   @ViewChild('selection_list') sl: MultiSelectListComponent;
 
-  protected activeSelection = false;
+  activeSelection = false;
   protected searchString = "";
 
   protected selectedOpts : {[key:string]: boolean} = {};
