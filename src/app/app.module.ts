@@ -8,6 +8,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { ChartProviderService } from './services/chart-provider.service';
 import { ColorProviderService } from './services/color-provider.service';
 import { SharedModule } from './shared/shared.module';
+import { HomeModule } from './home/home.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { SharedModule } from './shared/shared.module';
 
     // material imports
     // views modules
+    HomeModule,
 
     SharedModule.forRoot()
   ],

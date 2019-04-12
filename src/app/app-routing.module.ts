@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeExplorerComponent } from './home/home-explorer/home-explorer.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'home',
-    loadChildren: './home/home.module#HomeModule'
+    component: HomeExplorerComponent,
   },
   {
     path: 'map',
