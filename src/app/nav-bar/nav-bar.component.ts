@@ -14,12 +14,11 @@ export class NavBarComponent implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     router.events.pipe(
       filter((e) => (e instanceof NavigationStart)),
-      take(1),
     ).subscribe((e) => {
       let rr = <NavigationStart> e;
       let place = rr.url.split("/")[1];
       this.view = NavBarView[place];
-    })
+    });
   }
 
   ngOnInit() {

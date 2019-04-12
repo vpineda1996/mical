@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Filter} from '../model/filters';
-import {Column} from '../model/datatypes';
-import {ActivatedRoute} from '@angular/router';
-import {DEFAULT_FILTERS, FILTERS_KEY} from '../util/constants';
-import {LngLat, LngLatBounds} from 'mapbox-gl';
-import {Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { Column } from '../model/datatypes';
+import { Filter } from '../model/filters';
+import { DEFAULT_FILTERS, FILTERS_KEY } from '../util/constants';
+import { CustomLngLatBounds } from '../util/typings';
 
 class GeoFilter implements Filter {
-  bnds: LngLatBounds;
+  bnds: CustomLngLatBounds;
 
   build() {
     return undefined;
@@ -53,7 +53,7 @@ export class FilterProviderService {
     return this._filters;
   }
 
-  setGeoFilter(f: LngLatBounds) {
+  setGeoFilter(f: CustomLngLatBounds) {
     this._geoFilter.bnds = f;
     this.announcer.next();
   }

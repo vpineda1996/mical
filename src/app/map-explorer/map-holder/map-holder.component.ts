@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {MapExplorerService} from '../map-explorer.service';
 import * as mapboxgl from 'mapbox-gl';
-import {Observable} from 'rxjs';
-import {Feature, FeatureCollection} from 'geojson';
-import {GeoJsonPoint, PointCollection} from '../../model/map';
-import {FilterProviderService} from '../../services/filter-provider.service';
+import { Observable } from 'rxjs';
+import { GeoJsonPoint, PointCollection } from '../../model/map';
+import { FilterProviderService } from '../../services/filter-provider.service';
+import { MapExplorerService } from '../map-explorer.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-map-holder',
@@ -26,6 +26,8 @@ export class MapHolderComponent implements OnInit {
 
   constructor(private mapService: MapExplorerService,
               private filterProviderService: FilterProviderService) {
+    // @ts-ignore
+    mapboxgl.accessToken = environment.mapbox.accessToken;
   }
 
   ngOnInit() {

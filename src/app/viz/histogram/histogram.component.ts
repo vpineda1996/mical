@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import * as d3 from 'd3';
 import {HistogramDefinition} from '../model/Histogram';
-import * as Chart from 'chart.js';
 import {ColorProviderService} from '../../services/color-provider.service';
 import {Observable} from 'rxjs';
 
@@ -34,37 +33,37 @@ export class HistogramComponent implements OnInit, AfterViewInit {
   async chart() {
     const ctx = this.canvas.nativeElement.getContext("2d");
 
-    this.histogramDfn$.subscribe((defn) => {
-      let chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          datasets: defn.datasets,
-          labels: defn.buckets,
-        },
-        options: {
-          legend: {
-            display: false
-          },
-          layout: {
-            padding: {
-              left: 0,
-              right: 0,
-              top: 0,
-              bottom: 0
-            },
-          },
-          scales: {
-            xAxes: [{
-              stacked: true
-            }],
-            yAxes: [{
-              stacked: true
-            }]
-          },
-          aspectRatio: 1.5
-        }
-      });
-    });
+    // this.histogramDfn$.subscribe((defn) => {
+    //   let chart = new Chart(ctx, {
+    //     type: "bar",
+    //     data: {
+    //       datasets: defn.datasets,
+    //       labels: defn.buckets,
+    //     },
+    //     options: {
+    //       legend: {
+    //         display: false
+    //       },
+    //       layout: {
+    //         padding: {
+    //           left: 0,
+    //           right: 0,
+    //           top: 0,
+    //           bottom: 0
+    //         },
+    //       },
+    //       scales: {
+    //         xAxes: [{
+    //           stacked: true
+    //         }],
+    //         yAxes: [{
+    //           stacked: true
+    //         }]
+    //       },
+    //       aspectRatio: 1.5
+    //     }
+    //   });
+    // });
 
 
     // const margin = ({top: 10, right: 0, bottom: 20, left: 30});

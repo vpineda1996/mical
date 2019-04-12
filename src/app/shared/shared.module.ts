@@ -15,6 +15,7 @@ import {InterventionProviderService} from '../services/intervention-provider.ser
     DropDownButtonComponent,
     MultiSelectListComponent,
   ],
+  
   imports: [
     CommonModule,
     FormsModule,
@@ -25,6 +26,7 @@ import {InterventionProviderService} from '../services/intervention-provider.ser
     MatRippleModule,
     MatProgressSpinnerModule,
   ],
+
   exports: [
     MatButtonModule,
     FilterBarComponent,

@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {HomeExplorerComponent} from './home-explorer/home-explorer.component';
-import {MatButtonModule} from '@angular/material';
-import {SharedModule} from '../shared/shared.module';
+import { NgModule } from '@angular/core';
+import { SharedModule } from '../shared/shared.module';
+import { HomeExplorerComponent } from './home-explorer/home-explorer.component';
+import { HomeRoutingModule } from './home-routing.module';
 
 @NgModule({
   declarations: [
@@ -10,6 +10,7 @@ import {SharedModule} from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
+    HomeRoutingModule,
     SharedModule,
   ]
 })

@@ -4,7 +4,6 @@ import {ColorProviderService} from '../../services/color-provider.service';
 import { DataProviderService } from 'src/app/services/data-provider.service';
 import {map} from 'rxjs/operators';
 import {MapData} from '../../model/datatypes';
-import {ChartDataSets} from 'chart.js';
 import {Observable} from 'rxjs';
 
 
