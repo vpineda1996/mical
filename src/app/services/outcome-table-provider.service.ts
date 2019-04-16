@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DEFAULT_TABLE, OUTCOME_TABLE_KEY} from '../util/constants';
+import {DEFAULT_TABLE, OUTCOME_TABLE_KEY, YIELD_FILTER_COLS} from '../util/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,11 @@ export class OutcomeTableProviderService {
 
   get table() {
     return this._table;
+  }
+
+  // todo vpineda change this to match the given table
+  get filterCols() {
+    return YIELD_FILTER_COLS;
   }
 
 

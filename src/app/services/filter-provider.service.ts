@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import { Column } from '../model/datatypes';
 import { Filter } from '../model/filters';
-import { DEFAULT_FILTERS, FILTERS_KEY } from '../util/constants';
+import {API_ROUTE, DEFAULT_FILTERS, FILTERS_KEY, INTERVENTION_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
 import { CustomLngLatBounds } from '../util/typings';
+import {OutcomeTableProviderService} from './outcome-table-provider.service';
+import {HttpClient} from '@angular/common/http';
+import {Intervention} from './intervention-provider.service';
+import {flatMap, map, share} from 'rxjs/operators';
 
 class GeoFilter implements Filter {
   bnds: CustomLngLatBounds;
@@ -53,6 +57,22 @@ export class FilterProviderService {
     return this._filters;
   }
 
+
+  private _cache: {[col: string]: string[]} = {};
+  filtersForCol(col: string) : Observable<string[]> {
+    console.log("here!");
+    let start = of(this._cache);
+    let ans = start.pipe(
+      flatMap((cache) => {
+        if(cache[col]) return of(cache[col]);
+        return <Observable<string[]>>this.http.get(this.filtersUrl(col))
+      }),
+      share()
+    );
+    ans.subscribe((v) => this._cache[col] = v);
+    return ans;
+  }
+
   setGeoFilter(f: CustomLngLatBounds) {
     this._geoFilter.bnds = f;
     this.announcer.next();
@@ -62,18 +82,21 @@ export class FilterProviderService {
     return this._geoFilter.compile();
   }
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private outcomeTableProvider: OutcomeTableProviderService,
+              private http: HttpClient) {
     this.route.queryParamMap.subscribe((qMap) => {
       if (qMap.has(FILTERS_KEY)) this._filters = this.parseFilterOpts(qMap.get(FILTERS_KEY));
     })
   }
 
   private parseFilterOpts(str: string): Filter {
+    // todo vpineda how do you grab these filters?
     return DEFAULT_FILTERS;
   }
 
-  filterOn(column: Column, filter: Filter) {
-
+  private filtersUrl(... end: string[]) {
+    return [SERVER_URL, API_ROUTE, OUTCOME_TABLE_ROUTE, this.outcomeTableProvider.table, ...end].join("/");
   }
 
 }

@@ -23,6 +23,14 @@
   font-size: 120%;
 }
 
+.pure-button {
+  background-color: transparent;
+}
+
+.pure-button:hover {
+  background-image: none;
+}
+
 .home-menu .home-title {
   font-size: 70%;
   text-transform: none;

@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {MapData} from '../model/datatypes';
 import {Observable} from 'rxjs';
 import {API_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
+import {share} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class QueryProviderService {
   getMapData(): Observable<Array<MapData>> {
     let ans =  <Observable<Array<MapData>>> this.http.get(this.buildMapURL());
     ans.subscribe(undefined, errorFn);
-    return ans;
+    return ans.pipe(share());
   }
 
   buildMapURL(): string {

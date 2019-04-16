@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Filter} from '../../model/filters';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FilterProviderService} from '../../services/filter-provider.service';
 import {INTERVENTION_KEY} from '../../util/constants';
@@ -18,10 +17,13 @@ export class HomeExplorerComponent implements OnInit {
   }
 
   onApply(f: {[section: string]: string[]}) {
+    let fs: {[type: string]: string} = {};
+    if (f['intervention'].length) {
+      fs[INTERVENTION_KEY] = f['intervention'].join(",");
+    }
+
     this.router.navigate(['map'], {
-      queryParams: {
-        [INTERVENTION_KEY]: f['intervention'].join(","),
-      }
+      queryParams: fs
     });
   }
 

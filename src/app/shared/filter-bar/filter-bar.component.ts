@@ -4,6 +4,9 @@ import {InterventionProviderService} from '../../services/intervention-provider.
 import {element} from 'protractor';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {FilterProviderService} from '../../services/filter-provider.service';
+import {YIELD_FILTER_COLS} from '../../util/constants';
+import {OutcomeTableProviderService} from '../../services/outcome-table-provider.service';
 
 @Component({
   selector: 'app-filter-bar',
@@ -29,12 +32,23 @@ export class FilterBarComponent implements OnInit {
       map(ints => ints.map(i => i.sKey))
     );
 
+  crops$: Observable<string[]>;
+  climate$: Observable<string[]> ;
+  soil$: Observable<string[]> ;
+  duration$: Observable<string[]>;
+
   @Output("onApply")
   applyEmitter = new EventEmitter();
   
-  constructor(protected interventionProvider: InterventionProviderService) { }
+  constructor(private outcomeProvider: OutcomeTableProviderService,
+              private interventionProvider: InterventionProviderService,
+              private filterProvider: FilterProviderService) { }
 
   ngOnInit() {
+    this.crops$ = this.filterProvider.filtersForCol(YIELD_FILTER_COLS.CROP);
+    this.climate$ = this.filterProvider.filtersForCol(YIELD_FILTER_COLS.CLIMATE);
+    this.soil$ = this.filterProvider.filtersForCol(YIELD_FILTER_COLS.SOIL);
+    this.duration$ = this.filterProvider.filtersForCol(YIELD_FILTER_COLS.DURATION);
   }
 
   async onSelectButton(btnId: BUTTON_ID, selectedOpts: string[]) {

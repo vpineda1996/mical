@@ -12,6 +12,14 @@ export const DEFAULT_TABLE = 'yield';
 
 export const FILTERS_KEY = 'f';
 export const DEFAULT_FILTERS = new EmptyFilter();
+export const FILTER_COL = 'filterCols';
+
+export const YIELD_FILTER_COLS = {
+  SOIL: FILTER_COL + "." + "soil",
+  CLIMATE: FILTER_COL + "." + "climate",
+  DURATION: FILTER_COL + "." + "duration",
+  CROP: FILTER_COL + "." + "crop"
+};
 
 export const INTERVENTION_KEY = 'intervention';
 export const INTERVENTION_ROUTE = 'intervention';
@@ -21,6 +29,7 @@ export const DEFAULT_INTERVENTIONS = {
     sKey: 'organic',
     title: 'Organic vs Conventional',
     desc: '',
-    denom: 'Higher yields organic',
+    denom: 'Hgher yields organic',
     numerator: 'Higher yields conventional',
-  }};
+  }
+};

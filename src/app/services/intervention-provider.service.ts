@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {API_ROUTE, DEFAULT_INTERVENTIONS, INTERVENTION_KEY, INTERVENTION_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {OutcomeTableProviderService} from './outcome-table-provider.service';
+import {share} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class InterventionProviderService {
 
   // TODO: vpineda filter interventions based on the current table
   get allInterventions(): Observable<Intervention[]> {
-    return <Observable<Intervention[]>> this.http.get(this.tableUrl());
+    return <Observable<Intervention[]>> this.http.get(this.tableUrl()).pipe(share());
   }
 
 
