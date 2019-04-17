@@ -1,14 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import {Observable, of, Subject} from 'rxjs';
-import { Column } from '../model/datatypes';
-import { Filter } from '../model/filters';
-import {API_ROUTE, DEFAULT_FILTERS, FILTERS_KEY, INTERVENTION_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
+import { Observable, of, Subject } from 'rxjs';
+import { flatMap, share } from 'rxjs/operators';
+import { Filter, RegexFilter, CompoundFilter, Comparator, EmptyFilter } from '../model/filters';
+import { API_ROUTE, COLUMN_FILTERS_STORAGE_KEY, DEFAULT_FILTERS, OUTCOME_TABLE_ROUTE, SERVER_URL } from '../util/constants';
 import { CustomLngLatBounds } from '../util/typings';
-import {OutcomeTableProviderService} from './outcome-table-provider.service';
-import {HttpClient} from '@angular/common/http';
-import {Intervention} from './intervention-provider.service';
-import {flatMap, map, share} from 'rxjs/operators';
+import { OutcomeTableProviderService } from './outcome-table-provider.service';
 
 class GeoFilter implements Filter {
   bnds: CustomLngLatBounds;
@@ -48,19 +45,40 @@ class GeoFilter implements Filter {
   providedIn: 'root'
 })
 export class FilterProviderService {
-
-  private _filters: Filter = DEFAULT_FILTERS;
   private _geoFilter: GeoFilter = new GeoFilter();
   public announcer: Subject<any> = new Subject();
 
+  private get storage() {
+    let opts = window.sessionStorage.getItem(COLUMN_FILTERS_STORAGE_KEY);
+    try {
+      return JSON.parse(opts);
+    } catch (e) {
+      window.sessionStorage.setItem(COLUMN_FILTERS_STORAGE_KEY, "{}");
+    }
+    return {};
+  }
+
+  private set storage(store: {[col:string]: string[]}) {
+    window.sessionStorage.setItem(COLUMN_FILTERS_STORAGE_KEY, JSON.stringify(store));
+  }
+
   get filters() {
-    return this._filters;
+    return this.parseFilterOpts(this.storage);
+  }
+
+  filterOn(col: string, opts: string[]) {
+    let st = this.storage;
+    if (opts.length == 0 && st[col] !== undefined) {
+      delete st[col];
+    } else {
+      st[col] = opts;
+    }
+    this.storage = st;
   }
 
 
   private _cache: {[col: string]: string[]} = {};
   filtersForCol(col: string) : Observable<string[]> {
-    console.log("here!");
     let start = of(this._cache);
     let ans = start.pipe(
       flatMap((cache) => {
@@ -82,17 +100,21 @@ export class FilterProviderService {
     return this._geoFilter.compile();
   }
 
-  constructor(private route: ActivatedRoute,
-              private outcomeTableProvider: OutcomeTableProviderService,
+  constructor(private outcomeTableProvider: OutcomeTableProviderService,
               private http: HttpClient) {
-    this.route.queryParamMap.subscribe((qMap) => {
-      if (qMap.has(FILTERS_KEY)) this._filters = this.parseFilterOpts(qMap.get(FILTERS_KEY));
-    })
+    if (window.sessionStorage.getItem(COLUMN_FILTERS_STORAGE_KEY) === null) {
+      window.sessionStorage.setItem(COLUMN_FILTERS_STORAGE_KEY, "{}");
+    }
   }
 
-  private parseFilterOpts(str: string): Filter {
+  private parseFilterOpts(opts: {[col:string]: string[]}): Filter {
     // todo vpineda how do you grab these filters?
-    return DEFAULT_FILTERS;
+    let fs = Object.keys(opts).map(k => {
+      let ors = opts[k];
+      let aFors = ors.map(s => new RegexFilter(s,k));
+      return (aFors.length) ? new CompoundFilter(Comparator.OR, aFors) : null;
+    }).filter(v => v != null);
+    return (fs.length) ? new CompoundFilter(Comparator.AND, fs) : new EmptyFilter();
   }
 
   private filtersUrl(... end: string[]) {

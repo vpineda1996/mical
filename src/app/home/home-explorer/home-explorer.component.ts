@@ -11,7 +11,7 @@ import {INTERVENTION_KEY} from '../../util/constants';
 export class HomeExplorerComponent implements OnInit {
 
 
-  constructor(private router: Router, private filter: FilterProviderService) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }

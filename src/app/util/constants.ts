@@ -12,6 +12,7 @@ export const DEFAULT_TABLE = 'yield';
 
 export const FILTERS_KEY = 'f';
 export const DEFAULT_FILTERS = new EmptyFilter();
+export const COLUMN_FILTERS_STORAGE_KEY = 'COL_FILTERS'
 export const FILTER_COL = 'filterCols';
 
 export const YIELD_FILTER_COLS = {

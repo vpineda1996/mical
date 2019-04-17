@@ -1,12 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Comparator, CompoundFilter, RegexFilter} from '../../model/filters';
-import {InterventionProviderService} from '../../services/intervention-provider.service';
-import {element} from 'protractor';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {FilterProviderService} from '../../services/filter-provider.service';
-import {YIELD_FILTER_COLS} from '../../util/constants';
-import {OutcomeTableProviderService} from '../../services/outcome-table-provider.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { FilterProviderService } from '../../services/filter-provider.service';
+import { InterventionProviderService } from '../../services/intervention-provider.service';
+import { OutcomeTableProviderService } from '../../services/outcome-table-provider.service';
+import { YIELD_FILTER_COLS } from '../../util/constants';
+import { boundingBox } from 'src/app/util/util.algo';
 
 @Component({
   selector: 'app-filter-bar',
@@ -45,10 +44,10 @@ export class FilterBarComponent implements OnInit {
               private filterProvider: FilterProviderService) { }
 
   ngOnInit() {
-    this.crops$ = this.filterProvider.filtersForCol(YIELD_FILTER_COLS.CROP);
-    this.climate$ = this.filterProvider.filtersForCol(YIELD_FILTER_COLS.CLIMATE);
-    this.soil$ = this.filterProvider.filtersForCol(YIELD_FILTER_COLS.SOIL);
-    this.duration$ = this.filterProvider.filtersForCol(YIELD_FILTER_COLS.DURATION);
+    this.crops$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.CROP);
+    this.climate$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.CLIMATE);
+    this.soil$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.SOIL);
+    this.duration$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.DURATION);
   }
 
   async onSelectButton(btnId: BUTTON_ID, selectedOpts: string[]) {
@@ -73,7 +72,20 @@ export class FilterBarComponent implements OnInit {
       return p;
     }, <{[section: string]: string[]}>{});
 
-    this.applyEmitter.emit(properties);
+    // notify the filter provider of the new filters
+    this.filterProvider.filterOn(this.outcomeProvider.filterCols.CROP, properties.crop);
+    this.filterProvider.filterOn(this.outcomeProvider.filterCols.CLIMATE, properties.climate);
+    this.filterProvider.filterOn(this.outcomeProvider.filterCols.SOIL, properties.soil);
+    this.filterProvider.filterOn(this.outcomeProvider.filterCols.DURATION, properties.duration);
+
+
+    let applyParams = {
+      intervention: properties.intervention,
+      // todo vpinda grab bbox of countries
+      area: boundingBox([[0,0], [0, 10], [30, -1]]),
+    }
+
+    this.applyEmitter.emit(applyParams);
 
   }
 
