@@ -42,6 +42,7 @@ button {
 .drop-down-holder {
   position: absolute;
   display: block;
+  z-index: 3;
 }
 
 .drop-down-pad {

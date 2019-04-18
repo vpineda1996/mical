@@ -21,24 +21,23 @@ export class DataProviderService {
   private summaryQueries: Subject<HistogramData>[] = [];
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
 
-  private updateWithDebounce = (function() {
-    let curTimeout;
-    return () => {
-      if (curTimeout != null) {
-        clearTimeout(curTimeout);
-      }
-      curTimeout = setTimeout(this.update.bind(this), DEBOUNCE_WAIT);
-    }
-  })();
-
   
   constructor(private interventionProviderService: InterventionProviderService,
               private outcomeTableProvider: OutcomeTableProviderService,
               private filterProvider: FilterProviderService,
               private queryProvider: QueryProviderService) {
+    let curTimeout;
+    let updateWithDebounce = () => {
+      if (curTimeout != null) {
+        clearTimeout(curTimeout);
+      }
+      curTimeout = setTimeout(this.update.bind(this), DEBOUNCE_WAIT);
+    };
+    
     filterProvider.announcer.subscribe(() => {
-      this.updateWithDebounce();
-    })
+      updateWithDebounce();
+    });
+    
     this.setupGeoDataListener()
     this.update();
   }

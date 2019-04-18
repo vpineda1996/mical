@@ -85,7 +85,6 @@ export class MapHolderComponent implements OnInit {
       });
 
       this.map.on('move', () => {
-        console.log("updating bounds");
         this.filterProviderService.setGeoFilter(this.map.getBounds());
       });
 

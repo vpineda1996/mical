@@ -1,10 +1,10 @@
 
 /**
  * Returns the bounding box of the given points
- * @param a the 
+ * @param a the array of points
  */
 export function boundingBox(a: [number, number][]): [number, number][]{
-    let up =  90, down = 0, l = 10000, r = -10000;
+    let up =  90, down = -90, l = 10000, r = -10000;
     a.forEach(([x, y]) => {
         up = Math.min(x, up);
         down  = Math.max(x, down);

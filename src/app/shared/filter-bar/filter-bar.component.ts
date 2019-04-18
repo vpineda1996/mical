@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { FilterProviderService } from '../../services/filter-provider.service';
 import { InterventionProviderService } from '../../services/intervention-provider.service';
 import { OutcomeTableProviderService } from '../../services/outcome-table-provider.service';
@@ -44,7 +44,19 @@ export class FilterBarComponent implements OnInit {
   
   constructor(private outcomeProvider: OutcomeTableProviderService,
               private interventionProvider: InterventionProviderService,
-              private filterProvider: FilterProviderService) { }
+              private filterProvider: FilterProviderService) {
+    let fn = (arr: string[]) => {
+      if (arr == null) return {};
+      return arr.reduce((a, str) => {
+        a[str] = true;
+        return a;
+      }, {});
+    };
+    this.filters.crop = fn(this.filterProvider.enabledFilters(this.outcomeProvider.filterCols.CROP));
+    this.filters.climate = fn(this.filterProvider.enabledFilters(this.outcomeProvider.filterCols.CLIMATE));
+    this.filters.soil = fn(this.filterProvider.enabledFilters(this.outcomeProvider.filterCols.SOIL));
+    this.filters.duration = fn(this.filterProvider.enabledFilters(this.outcomeProvider.filterCols.DURATION));
+  }
 
   ngOnInit() {
     this.crops$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.CROP);
@@ -87,11 +99,9 @@ export class FilterBarComponent implements OnInit {
       // todo vpinda grab bbox of countries
       area: boundingBox([[0,0], [0, 10], [30, -1]]),
     }
-
+    this.selectedBtn = this.selectedBtn.map( () => false );
     this.applyEmitter.emit(applyParams);
-
   }
-
 }
 
 export enum BUTTON_ID {

@@ -14,9 +14,6 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   id: BUTTON_ID;
 
   @Input()
-  selected = false;
-
-  @Input()
   dropDownMargin = "60px";
 
   @ViewChild('search_bar') sb: ElementRef;
@@ -24,6 +21,7 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   @ViewChild('selection_list') sl: MultiSelectListComponent;
 
   activeSelection = false;
+  selected = false;
   protected searchString = "";
 
   protected selectedOpts : {[key:string]: boolean} = {};
@@ -37,6 +35,7 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   selectedChange = new EventEmitter<{[key:string]: boolean}>();
   set selection(opts: {[key:string]: boolean}) {
     if (opts) {
+      this.selected = !! Object.entries(opts).length;
       this.selectedOpts = opts;
       this.selectedChange.emit(this.selectedOpts);
     }

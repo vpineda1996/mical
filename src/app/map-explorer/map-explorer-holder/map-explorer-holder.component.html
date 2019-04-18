@@ -1,11 +1,22 @@
 <div class="container">
-  <div class="map-container pure-g">
-      <div class="map-view pure-u-1">
+  <div class="sub-container pure-g">
+      <div class="main-view pure-u-1">
+        <div>
           <div class="filter-container">
             <app-filter-bar [dropDownMargin]="'20px'"></app-filter-bar>
           </div>
-        <app-map-holder class="map-holder-style">
+          <div class="switch-container">
+              <label class="switch">
+                <input type="checkbox" [(ngModel)]="showGraphs" (change)="onSwitchView($event)">
+                <span class="slider round"></span>
+              </label>
+          </div>
+        </div>
+        <app-map-holder *ngIf="!showGraphs; else graph"class="map-holder-style">
         </app-map-holder>
+        <ng-template #graph>
+          <div>Nothing</div>
+        </ng-template>
       </div>
         <!-- <app-graphics-holder class="">
         </app-graphics-holder> -->

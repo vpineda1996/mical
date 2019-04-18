@@ -33,16 +33,17 @@ export class QueryProviderService {
 
   buildURL(): string {
      let url = [SERVER_URL, API_ROUTE, OUTCOME_TABLE_ROUTE, this.outcomeTableProvider.table].join("/");
-
+     let startedQ = false;
      // set geofilter
      let areaFilter = this.filterProvider.geoFilter;
      if (areaFilter !== "") {
+       startedQ = true;
        url += "?area=" + areaFilter;
      }
 
      // set other filters
      let customF = this.filterProvider.filters.compile();
-     url += "?f=" + customF;
+     url += ((startedQ) ? "&" : "?") + "f=" + customF;
      console.log("Querying: " + url);
      return url;
   }

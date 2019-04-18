@@ -1,6 +1,5 @@
 <div class="search-bar-opts">
   <app-drop-down-button
-    [selected]="selectedBtn[ButtonIds.COUNTRY]"
     [onOptSelected]="this.onSelectButton.bind(this)"
     [selection]="filters.country" 
     (selection)="filters.country=$event"
@@ -11,7 +10,6 @@
   </app-drop-down-button>
 
   <app-drop-down-button
-    [selected]="selectedBtn[ButtonIds.INTERVENTION]"
     [onOptSelected]="this.onSelectButton.bind(this)"
     [opts$]="interventions$"
     [selection]="filters.intervention" 
@@ -21,7 +19,6 @@
   </app-drop-down-button>
 
   <app-drop-down-button
-    [selected]="selectedBtn[ButtonIds.CROP]"
     [onOptSelected]="this.onSelectButton.bind(this)"
     [opts$]="crops$"
     [selection]="filters.crop" 
@@ -34,7 +31,6 @@
 
 
   <app-drop-down-button
-    [selected]="selectedBtn[ButtonIds.CLIMATE]"
     [onOptSelected]="this.onSelectButton.bind(this)"
     [opts$]="climate$"
     [selection]="filters.climate" 
@@ -46,7 +42,6 @@
 
 
   <app-drop-down-button
-    [selected]="selectedBtn[ButtonIds.SOIL]"
     [onOptSelected]="this.onSelectButton.bind(this)"
     [opts$]="soil$"
     [selection]="filters.soil"
@@ -58,7 +53,6 @@
 
 
   <app-drop-down-button
-    [selected]="selectedBtn[ButtonIds.DURATION]"
     [onOptSelected]="this.onSelectButton.bind(this)"
     [opts$]="duration$"
     [selection]="filters.duration" 

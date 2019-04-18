@@ -66,6 +66,10 @@ export class FilterProviderService {
     return this.parseFilterOpts(this.storage);
   }
 
+  enabledFilters(col: string): string[] {
+    return this.storage[col];
+  }
+
   filterOn(col: string, opts: string[]) {
     let st = this.storage;
     if (opts.length == 0 && st[col] !== undefined) {

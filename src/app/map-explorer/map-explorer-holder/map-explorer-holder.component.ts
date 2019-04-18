@@ -10,6 +10,8 @@ export class MapExplorerHolderComponent implements OnInit {
   View = NavBarView;
   height = window.innerHeight;
 
+  showGraphs = false;
+
   constructor() { }
 
   ngOnInit() {
