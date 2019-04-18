@@ -7,6 +7,7 @@ import { MapExplorerHolderComponent } from './map-explorer-holder/map-explorer-h
 import { MapExplorerModuleRoutingModule } from './map-explorer-router.module';
 import { MapExplorerService } from './map-explorer.service';
 import { MapHolderComponent } from './map-holder/map-holder.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { MapHolderComponent } from './map-holder/map-holder.component';
     FormsModule,
     VizModule,
     
+    SharedModule
   ],
   declarations: [
     MapHolderComponent,

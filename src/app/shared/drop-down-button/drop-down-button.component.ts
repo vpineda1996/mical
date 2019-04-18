@@ -51,6 +51,7 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
     this.activeSelection = false;
     this.selection = (this.sl) ? this.sl.selected : undefined;
     this.onOptSelected(this.id, Object.keys(this.selectedOpts));
+    window.removeEventListener('click', this.closeDropDown.bind(this));
     e.stopPropagation();
   }
 
@@ -70,15 +71,13 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
       if (this.activeSelection && this.sb.nativeElement) {
         this.sb.nativeElement.focus();
       }
+      // register close listener
+      window.addEventListener('click', this.closeDropDown.bind(this));
     });
-    event.stopPropagation();
   }
 
   protected onApplyClick(event: Event) {
-    this.selection = (this.sl) ? this.sl.selected : undefined;
-    this.onOptSelected(this.id, Object.keys(this.selectedOpts));
-    this.activeSelection = false;
-    event.stopPropagation();
+    this.closeDropDown(event);
   }
 
   protected onClearClick(event: Event) {
@@ -92,7 +91,7 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    window.addEventListener('click', this.closeDropDown.bind(this));
+    
   }
 
   ngOnDestroy() {
