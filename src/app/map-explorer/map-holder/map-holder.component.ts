@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { GeoJsonPoint, PointCollection } from '../../model/map';
 import { FilterProviderService } from '../../services/filter-provider.service';
 import { MapExplorerService } from '../map-explorer.service';
 import { environment } from 'src/environments/environment.prod';
+import {delay, take} from 'rxjs/operators';
+import {AnonymousSubject} from 'rxjs/internal-compatibility';
 
 @Component({
   selector: 'app-map-holder',
@@ -33,6 +35,12 @@ export class MapHolderComponent implements OnInit {
   ngOnInit() {
     this.markers$ = this.mapService.getMarkers();
     this.initializeMap();
+  }
+
+  onResize(e: Event) {
+    setTimeout(() => {
+      if (this.map) this.map.resize();
+    }, 100);
   }
 
   private initializeMap() {

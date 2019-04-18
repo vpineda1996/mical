@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^6.1.10",
     "@angular/platform-browser-dynamic": "^6.1.10",
     "@angular/router": "^6.1.10",
+    "angular-resize-event": "^1.0.0",
     "core-js": "^2.6.5",
     "d3": "^5.9.2",
     "mapbox-gl": "^0.50.0",

@@ -1,26 +1,40 @@
 <div class="container">
   <div class="sub-container pure-g">
-      <div class="main-view pure-u-1">
-        <div>
-          <div class="filter-container">
-            <app-filter-bar [dropDownMargin]="'20px'"></app-filter-bar>
-          </div>
-          <div class="switch-container">
-              <label class="switch">
-                <input type="checkbox" [(ngModel)]="showGraphs">
-                <span class="slider round"></span>
-              </label>
+    <div class="main-view pure-u-1">
+      <div class="control-container">
+        <div class="filter-container">
+          <app-filter-bar [dropDownMargin]="'20px'"></app-filter-bar>
+        </div>
+        <div class="switch-container">
+          <div class="switch-label">Map View</div>
+          <div>
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="showMap">
+              <span class="slider round">
+                <i class="fas" [class.fa-check]="showMap" [class.fa-times]="!showMap"></i>
+              </span>
+            </label>
           </div>
         </div>
-        <app-map-holder *ngIf="!showGraphs; else graph"class="map-holder-style">
-        </app-map-holder>
-        <ng-template #graph>
-          <div>Nothing</div>
-        </ng-template>
       </div>
-        <!-- <app-graphics-holder class="">
-        </app-graphics-holder> -->
+      <div class="map-holder-style pure-g"  *ngIf="showMap; else graph">
+        <div class="results-holder pure-u-1-2 pure-u-lg-1-3 pure-u-xl-1-4" [class.hide]="!showResults">
+          <label class="hide-container">
+            <input type="checkbox" [(ngModel)]="showResults">
+            <img [src]="(showResults) ? '../../../assets/icons/close.svg' : '../../../assets/icons/open.svg'">
+          </label>
+          <app-results *ngIf="showResults"></app-results>
+        </div>
+        <app-map-holder class="map-holder-style pure-u-1-2 pure-u-lg-2-3 pure-u-xl-3-4" [class.pure-u-1]="!showResults">
+        </app-map-holder>
+      </div>
+      <ng-template #graph>
+        <div>Nothing</div>
+      </ng-template>
     </div>
+    <!-- <app-graphics-holder class="">
+    </app-graphics-holder> -->
+  </div>
 </div>
 
 

@@ -8,6 +8,8 @@ import { MapExplorerModuleRoutingModule } from './map-explorer-router.module';
 import { MapExplorerService } from './map-explorer.service';
 import { MapHolderComponent } from './map-holder/map-holder.component';
 import { SharedModule } from '../shared/shared.module';
+import { ResultsComponent } from './results/results.component';
+import {AngularResizedEventModule} from 'angular-resize-event';
 
 @NgModule({
   imports: [
@@ -15,13 +17,15 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     FormsModule,
     VizModule,
+    AngularResizedEventModule,
     
-    SharedModule
+    SharedModule,
   ],
   declarations: [
     MapHolderComponent,
     GraphicsHolderComponent,
     MapExplorerHolderComponent,
+    ResultsComponent,
   ],
   providers: [
     MapExplorerService

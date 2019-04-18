@@ -20,7 +20,9 @@ export class InterventionProviderService {
 
   // TODO: vpineda filter interventions based on the current table
   get allInterventions(): Observable<Intervention[]> {
-    return <Observable<Intervention[]>> this.http.get(this.tableUrl()).pipe(share());
+    return <Observable<Intervention[]>> this.http
+      .get(tableUrl(this.outcomeTableProviderService.table))
+      .pipe(share());
   }
 
 
@@ -35,22 +37,24 @@ export class InterventionProviderService {
   private parseInterventions(str: string) {
     let intKeys = str.split(",").map(val => val.trim());
     intKeys.map((key) => {
-      this.http.get(this.interventionUrl(key)).subscribe((intervention: Intervention) => {
+      this.http.get(interventionUrl(key)).subscribe((intervention: Intervention) => {
         this._intervention[intervention.sKey] = intervention;
         this._interventions$.next(this._intervention);
       }, errorFn);
     });
   }
 
-  private interventionUrl(... end: string[]) {
-    return [SERVER_URL, API_ROUTE, INTERVENTION_ROUTE, ...end].join("/");
-  }
-
-  private tableUrl() {
-      return [SERVER_URL, API_ROUTE, OUTCOME_TABLE_ROUTE, INTERVENTION_ROUTE, this.outcomeTableProviderService.table].join("/");
-  }
 
 
+
+}
+
+function interventionUrl(... end: string[]) {
+  return [SERVER_URL, API_ROUTE, INTERVENTION_ROUTE, ...end].join("/");
+}
+
+function tableUrl(tableName: string) {
+  return [SERVER_URL, API_ROUTE, OUTCOME_TABLE_ROUTE, INTERVENTION_ROUTE, tableName].join("/");
 }
 
 let errorFn = (err) => {
