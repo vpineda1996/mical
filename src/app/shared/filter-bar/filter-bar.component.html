@@ -4,7 +4,8 @@
     [onOptSelected]="this.onSelectButton.bind(this)"
     [selection]="filters.country" 
     (selection)="filters.country=$event"
-    [id]="ButtonIds.COUNTRY">
+    [id]="ButtonIds.COUNTRY"
+    [dropDownMargin]="dropDownMargin">
     <i class="fas fa-search btn-ico-margin"></i>
     <span>Seach country</span>
   </app-drop-down-button>
@@ -25,7 +26,8 @@
     [opts$]="crops$"
     [selection]="filters.crop" 
     (selection)="filters.crop=$event"
-    [id]="ButtonIds.CROP">
+    [id]="ButtonIds.CROP"
+    [dropDownMargin]="dropDownMargin">
     <i class="fas fa-seedling btn-ico-margin"></i>
     <span>Search crop</span>
   </app-drop-down-button>
@@ -37,7 +39,8 @@
     [opts$]="climate$"
     [selection]="filters.climate" 
     (selection)="filters.climate=$event"
-    [id]="ButtonIds.CLIMATE">
+    [id]="ButtonIds.CLIMATE"
+    [dropDownMargin]="dropDownMargin">
     <span>Climate</span>
   </app-drop-down-button>
 
@@ -48,7 +51,8 @@
     [opts$]="soil$"
     [selection]="filters.soil"
     (selection)="filters.soil=$event"
-    [id]="ButtonIds.SOIL">
+    [id]="ButtonIds.SOIL"
+    [dropDownMargin]="dropDownMargin">
     <span>Soil</span>
   </app-drop-down-button>
 
@@ -59,7 +63,8 @@
     [opts$]="duration$"
     [selection]="filters.duration" 
     (selection)="filters.duration=$event"
-    [id]="ButtonIds.DURATION">
+    [id]="ButtonIds.DURATION"
+    [dropDownMargin]="dropDownMargin">
     <span>Study duration</span>
   </app-drop-down-button>
 

@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Observable, of} from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-multi-select-list',
@@ -37,11 +38,20 @@ export class MultiSelectListComponent implements OnInit, OnChanges {
       });
   }
 
+  error: boolean = false;
+  protected onLoadError(e? : HttpErrorResponse) {
+    this.error = true;
+  }
+
   constructor() {
   }
 
   ngOnInit() {
-    this.list$.subscribe((array) => this.buildSelectables(array))
+    if (this.list$) {
+      this.list$.subscribe((array) => this.buildSelectables(array), this.onLoadError.bind(this));
+    } else {
+      this.onLoadError();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

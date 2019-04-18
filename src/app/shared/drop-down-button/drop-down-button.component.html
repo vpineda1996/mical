@@ -9,7 +9,7 @@
     <input #search_bar class="button-search" name="search" [(ngModel)]="searchString">
   </div>
   <div class="drop-down-holder" (click)="sinkClickEvents($event)">
-    <div class="drop-down-pad">
+    <div [style.marginTop]="dropDownMargin">
       <div class="arrow-up"></div>
       <div class="white-round-edg">
         <div class="multi-select-dd">

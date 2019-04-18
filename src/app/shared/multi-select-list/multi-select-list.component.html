@@ -10,9 +10,14 @@
     </div>
   </div>
   <ng-template #loading>
-    <div class="spinner-holder">
+    <div class="spinner-holder" *ngIf="!error; else error">
       <mat-progress-spinner
         [mode]="'indeterminate'" [diameter]="'60'"></mat-progress-spinner>
     </div>
+    <ng-template #error>
+        <div>
+          An error has occured, try reloading.
+        </div>
+    </ng-template>
   </ng-template>
 </div>

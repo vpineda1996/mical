@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FilterProviderService } from '../../services/filter-provider.service';
@@ -25,6 +25,9 @@ export class FilterBarComponent implements OnInit {
     soil: {},
     duration: {},
   };
+
+  @Input()
+  dropDownMargin = "60px";
 
   interventions$: Observable<string[]> =
     this.interventionProvider.allInterventions.pipe(

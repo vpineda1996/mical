@@ -16,6 +16,9 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   @Input()
   selected = false;
 
+  @Input()
+  dropDownMargin = "60px";
+
   @ViewChild('search_bar') sb: ElementRef;
 
   @ViewChild('selection_list') sl: MultiSelectListComponent;
@@ -47,11 +50,13 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   @Input()
   onOptSelected = (id: BUTTON_ID, selctedOpts: string[]) => {};
 
+
+  private _closeBinded = this.closeDropDown.bind(this);
   protected closeDropDown(e: Event) {
     this.activeSelection = false;
     this.selection = (this.sl) ? this.sl.selected : undefined;
     this.onOptSelected(this.id, Object.keys(this.selectedOpts));
-    window.removeEventListener('click', this.closeDropDown.bind(this));
+    window.removeEventListener('click', this._closeBinded);
     e.stopPropagation();
   }
 
@@ -72,7 +77,7 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
         this.sb.nativeElement.focus();
       }
       // register close listener
-      window.addEventListener('click', this.closeDropDown.bind(this));
+      window.addEventListener('click', this._closeBinded);
     });
   }
 
@@ -95,7 +100,7 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    window.removeEventListener('click', this.closeDropDown.bind(this));
+    window.removeEventListener('click', this._closeBinded);
   }
 
 
