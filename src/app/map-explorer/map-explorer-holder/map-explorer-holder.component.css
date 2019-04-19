@@ -23,7 +23,7 @@
 .control-container:after {
   content: "";
   position: absolute;
-  z-index: 9;
+  z-index: 4;
   box-shadow: 0 -3px 0px rgba(255, 255,255, 1), 0 2px 4px 0 rgba(0, 0, 0, .10);
   left: 0;
   right: 0;
@@ -146,7 +146,7 @@ input:checked {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  border: 1px solid var(--orange-accent);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -154,7 +154,7 @@ input:checked {
 .slider i {
   position: absolute;
   content: "";
-  padding: 8px 9px 8px 9px;
+  padding: 6px 8px 6px 8px;
   height: 15px;
   width: 13px;
   left: 5px;
@@ -162,9 +162,9 @@ input:checked {
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
+  border: 1px solid var(--orange-accent);
   color: var(--dark-grey);
 }
-
 input:checked + .slider {
   background-color: var(--orange-accent);
 }
@@ -177,8 +177,8 @@ input:checked + .slider i {
   -webkit-transform: translateX(31px);
   -ms-transform: translateX(31px);
   transform: translateX(31px);
-  padding: 8px 8px 8px 8px;
-  height: 15px;
+  padding: 7px 6px 7px 7px;
+  height: 14px;
   width: 15px;
 }
 

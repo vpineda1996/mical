@@ -1,20 +1,20 @@
 
 <div class="header">
   <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-    <a (click)="nav('home')" class="pure-button pure-menu-heading">
+    <a mat-ripple (click)="nav('home')" class="pure-button pure-menu-heading">
         <i class="menu-icon fas fa-tractor"></i>
         <a class="pure-menu-heading home-title" >AEvidence</a>
     </a>
     
 
     <ul class="pure-menu-list">
-      <li class="pure-menu-item pure-button" [class.pure-menu-selected]="view === 1">
+      <li mat-ripple class="pure-menu-item pure-button" [class.pure-menu-selected]="view === 1">
         <a (click)="nav('about')" class="pure-menu-link">About</a>
       </li>
-      <li class="pure-menu-item pure-button" [class.pure-menu-selected]="view === 2">
+      <li mat-ripple class="pure-menu-item pure-button" [class.pure-menu-selected]="view === 2">
         <a (click)="nav('map')" class="pure-menu-link">Explore</a>
       </li>
-      <li class="pure-menu-item pure-button" [class.pure-menu-selected]="view === 3">
+      <li mat-ripple class="pure-menu-item pure-button" [class.pure-menu-selected]="view === 3">
         <a (click)="nav('contact')" class="pure-menu-link">Contact</a>
       </li>
     </ul>

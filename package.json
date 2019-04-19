@@ -24,6 +24,8 @@
     "angular-resize-event": "^1.0.0",
     "core-js": "^2.6.5",
     "d3": "^5.9.2",
+    "flot": "^3.0.2",
+    "jquery": "^3.4.0",
     "mapbox-gl": "^0.50.0",
     "rxjs": "~6.2.0",
     "zone.js": "^0.8.29"

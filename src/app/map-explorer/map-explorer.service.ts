@@ -24,8 +24,7 @@ export class MapExplorerService {
   }
 
   getMarkers(): Observable<Array<GeoJsonPoint>> {
-    // todo vpineda ask for the right column
-    const ret: Observable<Array<GeoJsonPoint>> = this.dataProvider.getGeoDataPoints(<Column[]>[]).pipe(
+    const ret: Observable<Array<GeoJsonPoint>> = this.dataProvider.getGeoDataPoints().pipe(
       map((data: GeoData) => {
         return <GeoJsonPoint[]>data.datum.features;
       }));

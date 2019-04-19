@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Column, MapData, HistogramData} from '../model/datatypes';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {HistogramData, MapData} from '../model/datatypes';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {FeatureCollection} from 'geojson';
 import {GeoData, GeoJsonPoint, PointCollection} from '../model/map';
-import {map} from 'rxjs/operators';
+import {debounceTime, flatMap, map, reduce} from 'rxjs/operators';
 import {QueryProviderService} from './query-provider.service';
-import { InterventionProviderService } from './intervention-provider.service';
-import { OutcomeTableProviderService } from './outcome-table-provider.service';
-import { FilterProviderService } from './filter-provider.service';
+import {Intervention, InterventionProviderService} from './intervention-provider.service';
+import {FilterProviderService} from './filter-provider.service';
 
 
 const DEBOUNCE_WAIT = 500;
@@ -17,57 +16,79 @@ const DEBOUNCE_WAIT = 500;
 })
 export class DataProviderService {
 
-  private data: Subject<Array<MapData>> = new Subject();
-  private summaryQueries: Subject<HistogramData>[] = [];
+  private mapData: Subject<Array<MapData>> = new Subject();
+  private interventions: Intervention[] = [];
+  private interventionQueries: Subject<{[intervention:string]: HistogramData}> = new BehaviorSubject({});
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
 
   
   constructor(private interventionProviderService: InterventionProviderService,
-              private outcomeTableProvider: OutcomeTableProviderService,
               private filterProvider: FilterProviderService,
               private queryProvider: QueryProviderService) {
-    let curTimeout;
-    let updateWithDebounce = () => {
-      if (curTimeout != null) {
-        clearTimeout(curTimeout);
-      }
-      curTimeout = setTimeout(this.update.bind(this), DEBOUNCE_WAIT);
-    };
-    
-    filterProvider.announcer.subscribe(() => {
-      updateWithDebounce();
+
+    // 1. create a fn to listen to the filter provider
+    filterProvider.announcer.pipe(
+      debounceTime(DEBOUNCE_WAIT)
+    ).subscribe(() => {
+      this.updateHistograms();
     });
     
-    this.setupGeoDataListener()
-    this.update();
+    this.setupGeoDataListener();
+    this.setupHisogramListener();
+    this.updateAll();
   }
 
   setupGeoDataListener(): void {
-    let transformed = this.data.pipe(
+    this.mapData.pipe(
       map((newData) => {
         return newData.map(v => 
           new GeoJsonPoint(<[number, number]> v.coords.coordinates, v)
         )
       })
-    );
-    transformed.subscribe((points) => {
+    ).subscribe((points) => {
       this.geoDataSubject.next(new GeoData(new PointCollection(points)));
-    })
+    });
   }
 
-  update() {
+  setupHisogramListener() {
+    this.interventionProviderService.activeInterventions.subscribe((int) => {
+      this.interventions = Object.values(int);
+      this.updateHistograms();
+    });
+  }
+
+  updateAll() {
+    this.updateMapData();
+    this.updateHistograms();
+  }
+
+  updateHistograms() {
+    of(...this.interventions).pipe(
+      flatMap((intervention) => {
+        return this.queryProvider.getHistogramData(intervention)
+      }),
+      reduce((acc, v, idx) => {
+        acc[this.interventions[idx].key] = v;
+        return acc;
+      }, {})
+    ).subscribe((hData) => {
+      this.interventionQueries.next(hData);
+    });
+  }
+
+  updateMapData() {
     // do database query
     this.queryProvider.getMapData().subscribe((value: Array<MapData>) => {
-      this.data.next(value);
-    })
+      this.mapData.next(value);
+    });
   }
 
-  getGeoDataPoints(columns: Column[]): Observable<GeoData> {
+  getGeoDataPoints(): Observable<GeoData> {
     return this.geoDataSubject;
   }
 
-  getData(): Observable<Array<MapData>> {
-    return this.data;
+  getHistogramData(): Observable<{[intervention:string]: HistogramData}> {
+    return this.interventionQueries;
   }
 }
 

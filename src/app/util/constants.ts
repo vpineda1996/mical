@@ -5,6 +5,7 @@ export const SERVER_URL = "http://localhost:8888";
 export const API_ROUTE = "api";
 
 export const OUTCOME_TABLE_ROUTE = 'table';
+export const HISTOGRAM_ROUTE = 'histogram';
 
 
 export const OUTCOME_TABLE_KEY = 't';

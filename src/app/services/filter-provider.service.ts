@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { flatMap, share } from 'rxjs/operators';
 import { Filter, RegexFilter, CompoundFilter, Comparator, EmptyFilter } from '../model/filters';
@@ -46,7 +46,7 @@ class GeoFilter implements Filter {
 })
 export class FilterProviderService {
   private _geoFilter: GeoFilter = new GeoFilter();
-  public announcer: Subject<any> = new Subject();
+  public announcer: EventEmitter<any> = new EventEmitter();
 
   private get storage() {
     let opts = window.sessionStorage.getItem(COLUMN_FILTERS_STORAGE_KEY);

@@ -31,6 +31,10 @@
   background-image: none;
 }
 
+.pure-button:active {
+  box-shadow: none;
+}
+
 .home-menu .home-title {
   font-size: 70%;
   text-transform: none;

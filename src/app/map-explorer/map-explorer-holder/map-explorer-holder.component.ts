@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { NavBarView } from 'src/app/nav-bar/nav-bar.component';
+import {DataProviderService} from '../../services/data-provider.service';
 
 @Component({
   selector: 'app-map-explorer-holder',
@@ -13,7 +14,11 @@ export class MapExplorerHolderComponent implements OnInit {
   showMap = true;
   showResults = true;
 
-  constructor() { }
+  constructor(private dataProvider: DataProviderService) { }
+
+  onApply(data: {[key:string]: string[]}) {
+    this.dataProvider.updateAll();
+  }
 
   ngOnInit() {
   }

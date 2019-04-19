@@ -3,7 +3,9 @@
     <div class="main-view pure-u-1">
       <div class="control-container">
         <div class="filter-container">
-          <app-filter-bar [dropDownMargin]="'20px'"></app-filter-bar>
+          <app-filter-bar
+            (onApply)="onApply($event)"
+            [dropDownMargin]="'20px'"></app-filter-bar>
         </div>
         <div class="switch-container">
           <div class="switch-label">Map View</div>
