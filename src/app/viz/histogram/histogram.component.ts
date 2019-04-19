@@ -29,11 +29,41 @@ export class HistogramComponent implements OnInit, AfterViewInit {
     this.chart();
   }
 
+  buildBar() {
+    return {
+      data: this.histogramDfn.bar,
+      label: this.histogramDfn.title,
+      bars: {
+        show: true,
+        fill: 1,
+        align: "center",
+        lineWidth: 0,
+        barWidth: 1
+      }
+    };
+  }
 
-  async chart() {
-    $.plot(this.holder.nativeElement, [this.histogramDfn.bar, this.histogramDfn.dist]);
+  buildDensity() {
+    return {
+      data:  this.histogramDfn.dist,
+      yaxis: 1,
+      lines: {
+        show: true,
+        lineWidth: 4,
+      }
+    };
   }
 
 
-
+  async chart() {
+    let opts = {
+      series: {},
+      xaxis: {
+        autoScale: "none",
+        color: "yellow",
+        min: -2, max: 2,
+    },
+    }
+    $.plot(this.holder.nativeElement, [this.buildBar(), this.buildDensity()], opts);
+  }
 }

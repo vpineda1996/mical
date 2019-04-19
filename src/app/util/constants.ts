@@ -25,13 +25,4 @@ export const YIELD_FILTER_COLS = {
 
 export const INTERVENTION_KEY = 'intervention';
 export const INTERVENTION_ROUTE = 'intervention';
-export const DEFAULT_INTERVENTIONS = {
-  'organic': {
-    key: 1,
-    sKey: 'organic',
-    title: 'Organic vs Conventional',
-    desc: '',
-    denom: 'Hgher yields organic',
-    numerator: 'Higher yields conventional',
-  }
-};
+export const DEFAULT_INTERVENTIONS = {};
