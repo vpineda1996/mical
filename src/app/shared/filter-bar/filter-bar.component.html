@@ -1,0 +1,70 @@
+<div class="search-bar-opts">
+  <app-drop-down-button
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [selection]="filters.country" 
+    (selection)="filters.country=$event"
+    [id]="ButtonIds.COUNTRY"
+    [dropDownMargin]="dropDownMargin">
+    <i class="fas fa-search btn-ico-margin"></i>
+    <span>Seach country</span>
+  </app-drop-down-button>
+
+  <app-drop-down-button
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [opts$]="interventions$"
+    [selection]="filters.intervention" 
+    (selection)="filters.intervention=$event"
+    [id]="ButtonIds.INTERVENTION"
+    [dropDownMargin]="dropDownMargin">
+    <span>Intervention</span>
+  </app-drop-down-button>
+
+  <app-drop-down-button
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [opts$]="crops$"
+    [selection]="filters.crop" 
+    (selection)="filters.crop=$event"
+    [id]="ButtonIds.CROP"
+    [dropDownMargin]="dropDownMargin">
+    <i class="fas fa-seedling btn-ico-margin"></i>
+    <span>Search crop</span>
+  </app-drop-down-button>
+
+
+  <app-drop-down-button
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [opts$]="climate$"
+    [selection]="filters.climate" 
+    (selection)="filters.climate=$event"
+    [id]="ButtonIds.CLIMATE"
+    [dropDownMargin]="dropDownMargin">
+    <span>Climate</span>
+  </app-drop-down-button>
+
+
+  <app-drop-down-button
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [opts$]="soil$"
+    [selection]="filters.soil"
+    (selection)="filters.soil=$event"
+    [id]="ButtonIds.SOIL"
+    [dropDownMargin]="dropDownMargin">
+    <span>Soil</span>
+  </app-drop-down-button>
+
+
+  <app-drop-down-button
+    [onOptSelected]="this.onSelectButton.bind(this)"
+    [opts$]="duration$"
+    [selection]="filters.duration" 
+    (selection)="filters.duration=$event"
+    [id]="ButtonIds.DURATION"
+    [dropDownMargin]="dropDownMargin">
+    <span>Study duration</span>
+  </app-drop-down-button>
+
+  <div last-btn class="btn-holder" [class.selected]="selectedBtn[ButtonIds.APPLY]">
+  <button mat-stroked-button class="apply-btn" (click)="onSelectButton(ButtonIds.APPLY, [])">Apply</button>
+</div>
+
+</div>

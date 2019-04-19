@@ -1,0 +1,17 @@
+.container {
+  padding: 26px 29px;
+}
+.title {
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.title p {
+  margin-top: 21px;
+  margin-bottom: 25px;
+}
+
+p {
+  font-family: var(--text-font);
+}

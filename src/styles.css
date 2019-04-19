@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+  --orange-accent: #FFB03A;
+  --dark-blue: #4B6ECB;
+  --light-blue: #A5D6FF;
+  --dark-grey: #3f3f3f;
+  --light-backgrnd: #F6F7FA;
+  --white-color: #ffffff;
+  --text-font: 'Source Sans Pro', sans-serif;
+}

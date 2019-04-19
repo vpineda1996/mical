@@ -1,0 +1,23 @@
+.apply-btn {
+  border-color: var(--orange-accent);
+  border-radius: 2em;
+  text-transform: uppercase;
+  color: var(--dark-grey);
+  font-weight: bold;
+  height: 42px;
+  letter-spacing: 0.05em;
+}
+
+.selected .apply-btn {
+  background-color: var(--orange-accent);
+  border-color: transparent;
+}
+
+.search-bar-opts div {
+  padding: 8px;
+  display: inline;
+}
+
+.btn-ico-margin {
+  margin-right: 0.3em;
+}

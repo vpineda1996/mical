@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {API_ROUTE, DEFAULT_INTERVENTIONS, INTERVENTION_KEY, INTERVENTION_ROUTE, SERVER_URL} from '../util/constants';
+import {API_ROUTE, DEFAULT_INTERVENTIONS, INTERVENTION_KEY, INTERVENTION_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {OutcomeTableProviderService} from './outcome-table-provider.service';
+import {share} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,9 @@ export class InterventionProviderService {
 
   // TODO: vpineda filter interventions based on the current table
   get allInterventions(): Observable<Intervention[]> {
-    return <Observable<Intervention[]>> this.http.get(this.tableUrl());
+    return <Observable<Intervention[]>> this.http
+      .get(tableUrl(this.outcomeTableProviderService.table))
+      .pipe(share());
   }
 
 
@@ -32,24 +35,26 @@ export class InterventionProviderService {
   }
 
   private parseInterventions(str: string) {
-    let intKeys = str.split(",").map(val => parseInt(val, 10));
+    let intKeys = str.split(",").map(val => val.trim());
     intKeys.map((key) => {
-      this.http.get(this.interventionUrl(key)).subscribe((intervention: Intervention) => {
+      this.http.get(interventionUrl(key)).subscribe((intervention: Intervention) => {
         this._intervention[intervention.sKey] = intervention;
         this._interventions$.next(this._intervention);
       }, errorFn);
     });
   }
 
-  private interventionUrl(... end: number[]) {
-    return [SERVER_URL, API_ROUTE, INTERVENTION_ROUTE, ...end].join("/");
-  }
-
-  private tableUrl() {
-      return [SERVER_URL, API_ROUTE, this.outcomeTableProviderService.table, INTERVENTION_ROUTE].join("/");
-  }
 
 
+
+}
+
+function interventionUrl(... end: string[]) {
+  return [SERVER_URL, API_ROUTE, INTERVENTION_ROUTE, ...end].join("/");
+}
+
+function tableUrl(tableName: string) {
+  return [SERVER_URL, API_ROUTE, OUTCOME_TABLE_ROUTE, INTERVENTION_ROUTE, tableName].join("/");
 }
 
 let errorFn = (err) => {

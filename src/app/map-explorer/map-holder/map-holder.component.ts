@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {MapExplorerService} from '../map-explorer.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import {Observable} from 'rxjs';
-import {Feature, FeatureCollection} from 'geojson';
-import {GeoJsonPoint, PointCollection} from '../../model/map';
-import {FilterProviderService} from '../../services/filter-provider.service';
+import {Observable, of} from 'rxjs';
+import { GeoJsonPoint, PointCollection } from '../../model/map';
+import { FilterProviderService } from '../../services/filter-provider.service';
+import { MapExplorerService } from '../map-explorer.service';
+import { environment } from 'src/environments/environment.prod';
+import {delay, take} from 'rxjs/operators';
+import {AnonymousSubject} from 'rxjs/internal-compatibility';
 
 @Component({
   selector: 'app-map-holder',
@@ -26,11 +28,19 @@ export class MapHolderComponent implements OnInit {
 
   constructor(private mapService: MapExplorerService,
               private filterProviderService: FilterProviderService) {
+    // @ts-ignore
+    mapboxgl.accessToken = environment.mapbox.accessToken;
   }
 
   ngOnInit() {
     this.markers$ = this.mapService.getMarkers();
     this.initializeMap();
+  }
+
+  onResize(e: Event) {
+    setTimeout(() => {
+      if (this.map) this.map.resize();
+    }, 100);
   }
 
   private initializeMap() {
@@ -83,7 +93,6 @@ export class MapHolderComponent implements OnInit {
       });
 
       this.map.on('move', () => {
-        console.log("updating bounds");
         this.filterProviderService.setGeoFilter(this.map.getBounds());
       });
 

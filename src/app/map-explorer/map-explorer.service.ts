@@ -1,16 +1,13 @@
-import {Injectable} from '@angular/core';
-import * as mapboxgl from 'mapbox-gl';
-import {environment} from '../../environments/environment';
-import {Observable} from 'rxjs';
-import {MapExplorerHolderComponent} from './map-explorer-holder/map-explorer-holder.component';
-import {DataProviderService} from '../services/data-provider.service';
-import {Column} from '../model/datatypes';
-import {map} from 'rxjs/operators';
-import {GeoJSON} from 'geojson';
-import {GeoData, GeoJsonPoint} from '../model/map';
-import {ColorProviderService} from '../services/color-provider.service';
-import {ActivatedRoute} from '@angular/router';
-import {Filter} from '../model/filters';
+import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { GeoJSON } from 'geojson';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Column } from '../model/datatypes';
+import { GeoData, GeoJsonPoint } from '../model/map';
+import { ColorProviderService } from '../services/color-provider.service';
+import { DataProviderService } from '../services/data-provider.service';
+import { MapExplorerHolderComponent } from './map-explorer-holder/map-explorer-holder.component';
 
 const CLUSTER_LAYER_NAME = 'clusters';
 const CLUSTER_LAYER_TAGS_NAME = 'cluster-tag';
@@ -23,13 +20,11 @@ const POINT_LAYER = 'point_layer';
 export class MapExplorerService {
 
   constructor(private dataProvider: DataProviderService, private colorProvider: ColorProviderService, private route: ActivatedRoute) {
-    // @ts-ignore
-    mapboxgl.accessToken = environment.mapbox.accessToken;
+
   }
 
   getMarkers(): Observable<Array<GeoJsonPoint>> {
-    // todo vpineda ask for the right column
-    const ret: Observable<Array<GeoJsonPoint>> = this.dataProvider.getGeoDataPoints(<Column[]>[]).pipe(
+    const ret: Observable<Array<GeoJsonPoint>> = this.dataProvider.getGeoDataPoints().pipe(
       map((data: GeoData) => {
         return <GeoJsonPoint[]>data.datum.features;
       }));
