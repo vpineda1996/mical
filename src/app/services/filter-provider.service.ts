@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { flatMap, share } from 'rxjs/operators';
+import { flatMap, share, debounce, debounceTime } from 'rxjs/operators';
 import { Filter, RegexFilter, CompoundFilter, Comparator, EmptyFilter } from '../model/filters';
-import { API_ROUTE, COLUMN_FILTERS_STORAGE_KEY, DEFAULT_FILTERS, OUTCOME_TABLE_ROUTE, SERVER_URL } from '../util/constants';
+import { API_ROUTE, COLUMN_FILTERS_STORAGE_KEY, DEFAULT_FILTERS, OUTCOME_TABLE_ROUTE, SERVER_URL, AREA_KEY } from '../util/constants';
 import { CustomLngLatBounds } from '../util/typings';
 import { OutcomeTableProviderService } from './outcome-table-provider.service';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { BoundingBox } from '../util/util.algo';
 
 class GeoFilter implements Filter {
   bnds: CustomLngLatBounds;
@@ -95,9 +97,22 @@ export class FilterProviderService {
     return ans;
   }
 
+  private geoDebounceS = new Subject();
+  private geoDebounceP = this.geoDebounceS.pipe(
+    debounceTime(100)
+  ).subscribe((f: CustomLngLatBounds) => {
+    let mParams = new BoundingBox(f.getNorth(), 
+        f.getWest(),
+        f.getSouth(), 
+        f.getEast())
+    this._geoFilter.bnds = mParams;
+  });
   setGeoFilter(f: CustomLngLatBounds) {
-    this._geoFilter.bnds = f;
-    this.announcer.next();
+    this.geoDebounceS.next(f);
+  }
+
+  get boundingBox(): CustomLngLatBounds {
+    return this._geoFilter.bnds;
   }
 
   get geoFilter(): string {
@@ -105,9 +120,20 @@ export class FilterProviderService {
   }
 
   constructor(private outcomeTableProvider: OutcomeTableProviderService,
+              private activeRoute: ActivatedRoute,
+              private route: Router,
               private http: HttpClient) {
     if (window.sessionStorage.getItem(COLUMN_FILTERS_STORAGE_KEY) === null) {
       window.sessionStorage.setItem(COLUMN_FILTERS_STORAGE_KEY, "{}");
+    }
+    activeRoute.queryParamMap.subscribe(this.parseAreaOpts.bind(this));
+  }
+
+  private parseAreaOpts(pm: ParamMap) {
+    let ak = pm.get(AREA_KEY);
+    if (ak) {
+      this._geoFilter.bnds = BoundingBox.uncompress(ak);
+      this.announcer.next();
     }
   }
 

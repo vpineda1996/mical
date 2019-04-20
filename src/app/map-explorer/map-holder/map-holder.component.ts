@@ -96,6 +96,14 @@ export class MapHolderComponent implements OnInit {
         this.filterProviderService.setGeoFilter(this.map.getBounds());
       });
 
+      this.filterProviderService.announcer.subscribe(() => {
+        let bbox = this.filterProviderService.boundingBox;
+        this.map.fitBounds([
+          [bbox.getWest(), bbox.getNorth()], 
+          [bbox.getEast(), bbox.getSouth()]
+        ]);
+      })
+
       /// get source
       this.source = this.map.getSource('firebase');
 

@@ -1,6 +1,7 @@
 <div class="search-bar-opts">
   <app-drop-down-button
     [onOptSelected]="this.onSelectButton.bind(this)"
+    [opts$]="location$"
     [selection]="filters.country" 
     (selection)="filters.country=$event"
     [id]="ButtonIds.COUNTRY"

@@ -21,6 +21,8 @@
       "core-js/es7/reflect": [
         "node_modules/core-js/proposals/reflect-metadata"
       ]
-    }
+    },
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
   }
 }

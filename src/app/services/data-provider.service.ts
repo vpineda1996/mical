@@ -8,7 +8,6 @@ import {QueryProviderService} from './query-provider.service';
 import {Intervention, InterventionProviderService} from './intervention-provider.service';
 import {FilterProviderService} from './filter-provider.service';
 
-
 const DEBOUNCE_WAIT = 500;
 
 @Injectable({
@@ -35,7 +34,9 @@ export class DataProviderService {
     
     this.setupGeoDataListener();
     this.setupHisogramListener();
-    this.updateAll();
+    
+    this.updateMapData();
+    this.updateHistograms();
   }
 
   setupGeoDataListener(): void {
@@ -55,11 +56,6 @@ export class DataProviderService {
       this.interventions = Object.values(int);
       this.updateHistograms();
     });
-  }
-
-  updateAll() {
-    this.updateMapData();
-    this.updateHistograms();
   }
 
   updateHistograms() {

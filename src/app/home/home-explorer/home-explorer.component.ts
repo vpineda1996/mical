@@ -11,20 +11,13 @@ import {INTERVENTION_KEY} from '../../util/constants';
 export class HomeExplorerComponent implements OnInit {
 
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
   onApply(f: {[section: string]: string[]}) {
-    let fs: {[type: string]: string} = {};
-    if (f['intervention'].length) {
-      fs[INTERVENTION_KEY] = f['intervention'].join(",");
-    }
 
-    this.router.navigate(['map'], {
-      queryParams: fs
-    });
   }
 
 }

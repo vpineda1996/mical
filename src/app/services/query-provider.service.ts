@@ -4,7 +4,7 @@ import {OutcomeTableProviderService} from './outcome-table-provider.service';
 import {FilterProviderService} from './filter-provider.service';
 import {HttpClient} from '@angular/common/http';
 import {HistogramData, MapData} from '../model/datatypes';
-import {Observable} from 'rxjs';
+import {Observable, BehaviorSubject} from 'rxjs';
 import {API_ROUTE, HISTOGRAM_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
 import {share} from 'rxjs/operators';
 
@@ -12,6 +12,7 @@ import {share} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class QueryProviderService {
+  private cSubject = new BehaviorSubject({});
 
   constructor(private interventionProviderService: InterventionProviderService,
               private outcomeTableProvider: OutcomeTableProviderService,

@@ -1,11 +1,13 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, from, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { BoundingBox, boundingBox } from 'src/app/util/util.algo';
 import { FilterProviderService } from '../../services/filter-provider.service';
 import { InterventionProviderService } from '../../services/intervention-provider.service';
 import { OutcomeTableProviderService } from '../../services/outcome-table-provider.service';
-import { YIELD_FILTER_COLS } from '../../util/constants';
-import { boundingBox } from 'src/app/util/util.algo';
+import { AREA_KEY, INTERVENTION_KEY } from '../../util/constants';
+import Countries from '../../../assets/json/countries.json'
 
 @Component({
   selector: 'app-filter-bar',
@@ -34,6 +36,7 @@ export class FilterBarComponent implements OnInit {
       map(ints => ints.map(i => i.sKey))
     );
 
+  location$: Observable<string[]>;
   crops$: Observable<string[]>;
   climate$: Observable<string[]> ;
   soil$: Observable<string[]> ;
@@ -44,7 +47,8 @@ export class FilterBarComponent implements OnInit {
   
   constructor(private outcomeProvider: OutcomeTableProviderService,
               private interventionProvider: InterventionProviderService,
-              private filterProvider: FilterProviderService) {
+              private filterProvider: FilterProviderService,
+              private router: Router) {
     let fn = (arr: string[]) => {
       if (arr == null) return {};
       return arr.reduce((a, str) => {
@@ -52,6 +56,13 @@ export class FilterBarComponent implements OnInit {
         return a;
       }, {});
     };
+
+    // set intervention
+    this.interventionProvider.activeInterventions.subscribe((ints) => {
+      this.filters.intervention = fn(Object.keys(ints));
+    })
+
+    // set filter col opts, to on
     this.filters.crop = fn(this.filterProvider.enabledFilters(this.outcomeProvider.filterCols.CROP));
     this.filters.climate = fn(this.filterProvider.enabledFilters(this.outcomeProvider.filterCols.CLIMATE));
     this.filters.soil = fn(this.filterProvider.enabledFilters(this.outcomeProvider.filterCols.SOIL));
@@ -63,6 +74,7 @@ export class FilterBarComponent implements OnInit {
     this.climate$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.CLIMATE);
     this.soil$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.SOIL);
     this.duration$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.DURATION);
+    this.location$ = of(Object.keys(Countries));
   }
 
   async onSelectButton(btnId: BUTTON_ID, selectedOpts: string[]) {
@@ -93,14 +105,30 @@ export class FilterBarComponent implements OnInit {
     this.filterProvider.filterOn(this.outcomeProvider.filterCols.SOIL, properties.soil);
     this.filterProvider.filterOn(this.outcomeProvider.filterCols.DURATION, properties.duration);
 
+    let pts = properties.country.reduce((acc, c) => {
+      let coords = Countries[c]
+      acc.push([coords[1], coords[0]]);
+      acc.push([coords[3], coords[2]]);
+      return acc;
+    }, <[number, number][]>[]);
 
     let applyParams = {
       intervention: properties.intervention,
-      // todo vpinda grab bbox of countries
-      area: boundingBox([[0,0], [0, 10], [30, -1]]),
+      area: boundingBox(pts),
     }
     this.selectedBtn = this.selectedBtn.map( () => false );
     this.applyEmitter.emit(applyParams);
+
+    // once we emit, switch views
+    let fs: {[type: string]: string} = {};
+    fs[INTERVENTION_KEY] = applyParams.intervention.join(",")
+    if (applyParams.area.compress() !== "") {
+      fs[AREA_KEY] = applyParams.area.compress()
+    }
+    this.router.navigate(['map'], {
+      queryParams: fs,
+      queryParamsHandling: ''
+    });
   }
 }
 

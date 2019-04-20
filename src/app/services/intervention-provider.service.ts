@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {API_ROUTE, DEFAULT_INTERVENTIONS, INTERVENTION_KEY, INTERVENTION_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, of} from 'rxjs';
 import {OutcomeTableProviderService} from './outcome-table-provider.service';
-import {share} from 'rxjs/operators';
+import {share, map, flatMap, reduce, filter} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -36,16 +36,21 @@ export class InterventionProviderService {
 
   private parseInterventions(str: string) {
     let intKeys = str.split(",").map(val => val.trim());
-    intKeys.map((key) => {
-      this.http.get(interventionUrl(key)).subscribe((intervention: Intervention) => {
-        this._intervention[intervention.sKey] = intervention;
-        this._interventions$.next(this._intervention);
-      }, errorFn);
-    });
+    let req = of(...intKeys).pipe(
+      filter((k) => k != ""),
+      flatMap((key) => {
+        return <Observable<Intervention>> this.http.get(interventionUrl(key));
+      }),
+      reduce((acc, v: Intervention) => {
+        acc[v.sKey] = v;
+        return acc;
+      }, {})
+    );
+    req.subscribe((v: InterventionData) => {
+      this._intervention = v;
+      this._interventions$.next(this._intervention);
+    })
   }
-
-
-
 
 }
 
