@@ -98,13 +98,21 @@
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.50);
 }
 
-.hide-container img {
+.hide-container span {
   position: absolute;
   margin: auto;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
+  background-image: url(../../../assets/icons/open.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.hide-container span.opened {
+
+  background-image: url(../../../assets/icons/close.svg)
 }
 
 .results-holder.hide {
