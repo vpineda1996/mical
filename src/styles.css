@@ -15,3 +15,25 @@ body {
   --white-color: #ffffff;
   --text-font: 'Source Sans Pro', sans-serif;
 }
+
+h4 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  color: var(--dark-grey);
+}
+
+h3 {
+  font-family: var(--text-font);
+  font-weight: bold;
+  font-size: 1.5em;
+  color: var(--dark-grey);
+}
+
+p {
+  font-family: var(--text-font);
+  color: var(--dark-grey);
+}
+
+.dblue-fnt {
+  color: var(--dark-blue);
+}

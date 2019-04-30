@@ -1,0 +1,18 @@
+<svg width="75px" height="75px" viewBox="0 0 75 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <path d="M26,30 L22,30 C22,37.4091146 28.26875,43.4166667 36,43.4166667 L36,52.0416667 C36,52.56875 36.45,53 37,53 L39,53 C39.55,53 40,52.56875 40,52.0416667 L40,43.4166667 C40,36.0075521 33.73125,30 26,30 Z M49.0569888,26 C43.8694648,26 39.3596457,28.9219031 37,33.2387792 C38.7065845,35.1364452 39.9695803,37.4425494 40.6349634,40 C47.5783596,39.2648115 53,33.2827648 53,26 L49.0569888,26 Z" id="path-1"></path>
+    </defs>
+    <g id="Final-Designs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="3.0-About" transform="translate(-330.000000, -812.000000)">
+            <g id="Group-9" transform="translate(265.000000, 811.000000)">
+                <g id="Group-4" transform="translate(65.000000, 1.000000)">
+                    <circle id="Oval" fill="#3F3F3F" cx="37.5" cy="37.5" r="37.5"></circle>
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="seedling" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
