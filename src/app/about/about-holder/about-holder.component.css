@@ -4,6 +4,7 @@
   top: 60px;
   width: 100%;
   bottom: 0;
+  --splash-image-height: 670px;
 }
 
 .image-container {
@@ -11,7 +12,7 @@
   left: 0;
   right: 0;
   top: -60px;
-  height: 670px;
+  height: var(--splash-image-height);
   background-image: url("./../../../assets/background/about-img.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -30,6 +31,10 @@
   text-align: center;
 }
 
+.section-c * {
+  text-align: center;
+}
+
 .section-container > :nth-child(odd) {
   background-color: white;
 }
@@ -38,7 +43,7 @@
   background-color: var(--light-backgrnd)
 }
 
-.section-a .icon {
+.section .icon {
   height: 75px;
   background-repeat: no-repeat;
   background-position: center;
@@ -69,6 +74,56 @@
   text-align: center;
 }
 
+.section-c .icon-view {
+  margin: 60px auto;
+}
+
+.section-c .title {
+  margin: 104px 0 0px 0;
+}
+
+.section-c h4 {
+  text-transform: uppercase;
+}
+
+.section-container .footer {
+  height: 200px;
+  background-color: var(--dark-grey);
+}
+
+.footer > :first-child {
+  margin-top: 51px;
+}
+
+.footer h4 {
+  text-transform: uppercase;
+}
+
+.footer p {
+  font-family: var(--text-font);
+}
+
+.footer p,.footer h4 {
+  margin: 3px 0;
+  text-align: center;
+  color: var(--white-color);
+}
+
+.splash, .splash-subhead {
+  color: white;
+}
+
+.splash {
+  height: 600px;
+  display: flex;
+  margin: 0 30px 0 30px;
+  width: 80%;
+}
+
+.splash-head {
+  text-transform: uppercase;
+}
+
 
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
@@ -78,6 +133,11 @@
 @media (min-width: 48em) {
   .container {
     top: 67px;
+  }
+
+  .splash {
+    margin: 0 auto 0 70px;
+    width: 400px;
   }
 }
   
@@ -89,5 +149,9 @@
 @media (min-width: 78em) {
   .container {
     top: 77px;
+  }
+  
+  .splash {
+    margin: 0 auto 0 140px;
   }
 }
