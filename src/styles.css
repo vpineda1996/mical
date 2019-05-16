@@ -38,6 +38,10 @@ p {
   color: var(--dark-blue);
 }
 
+.center-view {
+  margin: auto;
+}
+
 
 /** About page specific material **/
 

@@ -49,10 +49,6 @@
   background-position: center;
 }
 
-.center-view {
-  margin: auto;
-}
-
 .icon-view {
   margin: 125px auto;
   width: 60%;
@@ -111,6 +107,8 @@
 
 .splash, .splash-subhead {
   color: white;
+  font-size: 16px;
+  line-height: 25px;
 }
 
 .splash {
