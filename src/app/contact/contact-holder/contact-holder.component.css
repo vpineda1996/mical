@@ -1,0 +1,87 @@
+.container {
+  position: absolute;
+  left: 0;
+  top: 60px;
+  width: 100%;
+  bottom: 0;
+  --splash-image-height: 670px;
+}
+
+.image-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -60px;
+  height: var(--splash-image-height);
+  background-image: url("./../../../assets/background/contact-img.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+.spacer {
+  height: 50%;
+} 
+
+.splash, .splash-subhead {
+  color: var(--dark-grey);
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.splash {
+  height: 400px;
+  display: flex;
+  margin: 0 30px 0 30px;
+  width: 80%;
+}
+
+.splash-head {
+  text-transform: uppercase;
+}
+
+.contact-map {
+  background-image: url("./../../../assets/background/map-contact.svg");
+  height: 620px;
+}
+
+.contact-holder {
+  margin: 71px 0;
+}
+
+.contact-form h4 {
+  letter-spacing: 1.12px;
+}
+
+
+
+/*
+ * -- TABLET (AND UP) MEDIA QUERIES --
+ * On tablets and other medium-sized devices, we want to customize some
+ * of the mobile styles.
+ */
+ @media (min-width: 48em) {
+  .container {
+    top: 67px;
+  }
+
+  .splash {
+    margin: 0 auto 0 70px;
+    width: 500px;
+  }
+}
+  
+/*
+ * -- DESKTOP (AND UP) MEDIA QUERIES --
+ * On desktops and other large devices, we want to over-ride some
+ * of the mobile and tablet styles.
+ */
+@media (min-width: 78em) {
+  .container {
+    top: 77px;
+  }
+  
+  .splash {
+    margin: 0 auto 0 140px;
+  }
+}

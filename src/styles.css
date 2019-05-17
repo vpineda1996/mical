@@ -15,3 +15,63 @@ body {
   --white-color: #ffffff;
   --text-font: 'Source Sans Pro', sans-serif;
 }
+
+h4 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  color: var(--dark-grey);
+}
+
+h3 {
+  font-family: var(--text-font);
+  font-weight: bold;
+  font-size: 1.5em;
+  color: var(--dark-grey);
+}
+
+p {
+  font-family: var(--text-font);
+  color: var(--dark-grey);
+}
+
+.dblue-fnt {
+  color: var(--dark-blue);
+}
+
+.center-view {
+  margin: auto;
+}
+
+
+/** About page specific material **/
+
+.section-b .mat-expansion-indicator {
+  background-image: url("./assets/icons/arrow-down.svg");
+  background-position: center;
+  background-size: cover;
+  width: 18px;
+  height: 18px;
+}
+
+.section-b .mat-expansion-indicator::after {
+  border-style: none;
+  border-width: 0;
+}
+
+.section-b .mat-expansion-panel-spacing {
+  margin: 0;
+}
+
+.section-b .mat-expansion-panel {
+  box-shadow: 2px 2px 7px 0 rgba(0,0,0,0.10);
+  border-radius: 2px;
+  margin: 16px 0;
+  color: var(--dark-grey);
+}
+
+.section-b .mat-expansion-panel-header-title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--dark-grey);
+}

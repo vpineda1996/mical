@@ -1,19 +1,155 @@
 .container {
-    height: 70%;
-    width: 100%;
-    margin: auto;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+  position: absolute;
+  left: 0;
+  top: 60px;
+  width: 100%;
+  bottom: 0;
+  --splash-image-height: 670px;
 }
 
-.container-wrapper {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
+.image-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -60px;
+  height: var(--splash-image-height);
+  background-image: url("./../../../assets/background/about-img.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
 }
 
+.spacer {
+  height: 50%;
+} 
+
+.section {
+  position: relative;
+}
+
+.section-a * {
+  text-align: center;
+}
+
+.section-c * {
+  text-align: center;
+}
+
+.section-container > :nth-child(odd) {
+  background-color: white;
+}
+
+.section-container > :nth-child(even) {
+  background-color: var(--light-backgrnd)
+}
+
+.section .icon {
+  height: 75px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.icon-view {
+  margin: 125px auto;
+  width: 60%;
+}
+
+.plant {
+  background-image: url("./../../../assets/icons/plant-cicle.svg");
+}
+
+.graph {
+  background-image: url("./../../../assets/icons/bars-cicle.svg");
+}
+
+.database {
+  background-image: url("./../../../assets/icons/database-circle.svg");
+}
+
+.section-b .title {
+  text-align: center;
+}
+
+.section-c .icon-view {
+  margin: 60px auto;
+}
+
+.section-c .title {
+  margin: 104px 0 0px 0;
+}
+
+.section-c h4 {
+  text-transform: uppercase;
+}
+
+.section-container .footer {
+  height: 200px;
+  background-color: var(--dark-grey);
+}
+
+.footer > :first-child {
+  margin-top: 51px;
+}
+
+.footer h4 {
+  text-transform: uppercase;
+}
+
+.footer p {
+  font-family: var(--text-font);
+}
+
+.footer p,.footer h4 {
+  margin: 3px 0;
+  text-align: center;
+  color: var(--white-color);
+}
+
+.splash, .splash-subhead {
+  color: white;
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.splash {
+  height: 600px;
+  display: flex;
+  margin: 0 30px 0 30px;
+  width: 80%;
+}
+
+.splash-head {
+  text-transform: uppercase;
+}
+
+
+/*
+ * -- TABLET (AND UP) MEDIA QUERIES --
+ * On tablets and other medium-sized devices, we want to customize some
+ * of the mobile styles.
+ */
+@media (min-width: 48em) {
+  .container {
+    top: 67px;
+  }
+
+  .splash {
+    margin: 0 auto 0 70px;
+    width: 400px;
+  }
+}
+  
+/*
+ * -- DESKTOP (AND UP) MEDIA QUERIES --
+ * On desktops and other large devices, we want to over-ride some
+ * of the mobile and tablet styles.
+ */
+@media (min-width: 78em) {
+  .container {
+    top: 77px;
+  }
+  
+  .splash {
+    margin: 0 auto 0 140px;
+  }
+}
