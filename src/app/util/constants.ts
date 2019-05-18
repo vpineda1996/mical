@@ -1,7 +1,7 @@
 // TODO: vpineda this is harcoded, should be removed!
 import {EmptyFilter} from '../model/filters';
 
-export const SERVER_URL = "http://localhost:8888";
+export const SERVER_URL = "http://" + window.location.hostname + ":8888";
 export const API_ROUTE = "api";
 
 export const OUTCOME_TABLE_ROUTE = 'table';
