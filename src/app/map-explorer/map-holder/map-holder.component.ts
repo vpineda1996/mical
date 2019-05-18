@@ -96,7 +96,8 @@ export class MapHolderComponent implements OnInit {
         this.filterProviderService.setGeoFilter(this.map.getBounds());
       });
 
-      this.filterProviderService.announcer.subscribe(() => {
+      this.filterProviderService.announcer.subscribe((opts) => {
+        if (opts.isMapUpdate) return;
         let bbox = this.filterProviderService.boundingBox;
         this.map.fitBounds([
           [bbox.getWest(), bbox.getNorth()], 

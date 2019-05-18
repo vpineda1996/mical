@@ -1,7 +1,9 @@
 <div class="graphics-holder pure-g">
-  <div class="pure-u-1" *ngFor="let def of myHistDefs$ | async">
-    <viz-histogram [histogramDfn]="def">
-    </viz-histogram>
+  <div [ngClass]="histogramClassStyle" *ngFor="let def of myHistDefs$ | async">
+    <div *ngIf="def != null">
+      <viz-histogram [histogramDfn]="def">
+      </viz-histogram>
+    </div>
   </div>
 
 </div>

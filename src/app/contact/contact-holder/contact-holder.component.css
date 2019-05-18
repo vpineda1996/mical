@@ -47,10 +47,21 @@
 
 .contact-holder {
   margin: 71px 0;
+  background-color: var(--white-color);
 }
 
 .contact-form h4 {
   letter-spacing: 1.12px;
+}
+
+.contact-form label {
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1.12px;
+}
+
+textarea {
+  resize: none;
 }
 
 

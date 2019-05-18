@@ -63,10 +63,10 @@ export class FilterBarComponent implements OnInit {
     })
 
     // set filter col opts, to on
-    this.filters.crop = fn(this.filterProvider.enabledFilters(this.outcomeProvider.filterCols.CROP));
-    this.filters.climate = fn(this.filterProvider.enabledFilters(this.outcomeProvider.filterCols.CLIMATE));
-    this.filters.soil = fn(this.filterProvider.enabledFilters(this.outcomeProvider.filterCols.SOIL));
-    this.filters.duration = fn(this.filterProvider.enabledFilters(this.outcomeProvider.filterCols.DURATION));
+    this.filters.crop = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.CROP));
+    this.filters.climate = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.CLIMATE));
+    this.filters.soil = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.SOIL));
+    this.filters.duration = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.DURATION));
   }
 
   ngOnInit() {

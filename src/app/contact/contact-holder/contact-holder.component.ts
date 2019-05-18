@@ -7,9 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactHolderComponent implements OnInit {
 
+  message = {
+    from: "",
+    email: "",
+    msg: ""
+  }
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSubmit(e: Event) {
+    alert(`NOT IMPLEMENTED \n\
+    FROM: ${this.message.from}\n\
+    EMAIL: ${this.message.email}\n\
+    msg: ${this.message.msg}, try using email instead!`)
   }
 
 }

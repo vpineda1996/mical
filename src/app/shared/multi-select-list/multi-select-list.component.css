@@ -23,6 +23,11 @@
   overflow: hidden;
 }
 
+.error-box {
+  width: 150px;
+  margin: auto;
+}
+
 .selection-entry .mat-pseudo-checkbox-checked {
   background: var(--dark-blue);
 }

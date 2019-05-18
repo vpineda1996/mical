@@ -10,6 +10,7 @@ import { MapHolderComponent } from './map-holder/map-holder.component';
 import { SharedModule } from '../shared/shared.module';
 import { ResultsComponent } from './results/results.component';
 import {AngularResizedEventModule} from 'angular-resize-event';
+import {GraphExplorerHolderComponent} from "./graph-explorer-holder/graph-explorer-holder.component";
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import {AngularResizedEventModule} from 'angular-resize-event';
     GraphicsHolderComponent,
     MapExplorerHolderComponent,
     ResultsComponent,
+    GraphExplorerHolderComponent,
   ],
   providers: [
     MapExplorerService

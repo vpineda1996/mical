@@ -87,6 +87,10 @@ button {
   letter-spacing: 0.05em;
 }
 
+.apply-btn[disabled] {
+  border-color: rgba(0,0,0,.26);
+}
+
 .selected.apply-btn {
   background-color: var(--orange-accent);
   border-color: transparent;

@@ -5,7 +5,7 @@ import { invalid } from "@angular/compiler/src/render3/view/util";
  * @param a the array of points
  */
 export function boundingBox(a: [number, number][]): BoundingBox{
-  let up =  90, down = -90, l = 10000, r = -10000;
+  let up =  90, down = -90, l = 180, r = -180;
   a.forEach(([x, y]) => {
     up = Math.min(x, up);
     down  = Math.max(x, down);

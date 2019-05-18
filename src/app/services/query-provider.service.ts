@@ -4,15 +4,14 @@ import {OutcomeTableProviderService} from './outcome-table-provider.service';
 import {FilterProviderService} from './filter-provider.service';
 import {HttpClient} from '@angular/common/http';
 import {HistogramData, MapData} from '../model/datatypes';
-import {Observable, BehaviorSubject} from 'rxjs';
+import {Observable, BehaviorSubject, of} from 'rxjs';
 import {API_ROUTE, HISTOGRAM_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
-import {share} from 'rxjs/operators';
+import {catchError, share} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QueryProviderService {
-  private cSubject = new BehaviorSubject({});
 
   constructor(private interventionProviderService: InterventionProviderService,
               private outcomeTableProvider: OutcomeTableProviderService,
@@ -27,7 +26,11 @@ export class QueryProviderService {
   }
 
   getHistogramData(intervention: Intervention): Observable<HistogramData>  {
-    return <Observable<HistogramData>> this.http.get(this.buildHistogramURL(intervention));
+    return <Observable<HistogramData>> this.http.get(this.buildHistogramURL(intervention)).pipe(
+      catchError((err, caught) => {
+        return of(null);
+      })
+    );
   }
 
   buildMapURL(): string {
