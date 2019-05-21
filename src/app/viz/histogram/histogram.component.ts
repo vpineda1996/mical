@@ -38,7 +38,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
         fill: 1,
         align: "center",
         lineWidth: 0,
-        barWidth: 1
+        barWidth: 1,
       }
     };
   }
@@ -50,6 +50,8 @@ export class HistogramComponent implements OnInit, AfterViewInit {
       lines: {
         show: true,
         lineWidth: 4,
+        fill: 1,
+        fillColor: {colors: [{ opacity: 0.1 }, { opacity: 0.8 }]}
       }
     };
   }
@@ -58,12 +60,18 @@ export class HistogramComponent implements OnInit, AfterViewInit {
   async chart() {
     let opts = {
       series: {},
-      xaxis: {
-        autoScale: "none",
-        color: "yellow",
-        min: -2, max: 2,
-    },
-    }
+      xaxis: {},
+      yaxis: {
+        gridLines: false,
+      },
+      grid: {
+        borderWidth: 0,
+        tickColor: (t, axis) => {
+          if (t.v == 0) return "#4B6ECB";
+          return "#D8D8D8";
+        }
+      },
+    };
     $.plot(this.holder.nativeElement, [this.buildBar(), this.buildDensity()], opts);
   }
 }
