@@ -24,7 +24,7 @@
     "angular-resize-event": "^1.0.0",
     "core-js": "^3.0.1",
     "d3": "^5.9.2",
-    "flot": "^3.0.2",
+    "flot": "github:AgriculturalEvidence/flot.git#master",
     "jquery": "^3.4.0",
     "mapbox-gl": "^0.50.0",
     "rxjs": "^6.4.0",

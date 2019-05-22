@@ -1,4 +1,19 @@
-<div class="histogramHolder" #histogramHolder>
-  <canvas class="histogram-canvas" #histogramCanvas ></canvas>
+<mat-card>
+<div>
+  <div class="title dblue-fnt">{{histogramDfn.title}}</div>
+  <div class="pure-g">
+    <div class="pure-u-2-5 denom">
+      <div class="arrow"></div>
+      <p>{{histogramDfn.labels.denom}}</p>
+    </div> 
+    <div class="pure-g pure-u-2-5 numerator">
+      <div class="num-aligner">
+          <p>{{histogramDfn.labels.numerator}}</p>
+          <div class="arrow right-arrow"></div>
+      </div>
+    </div>
+  </div>
+  <div class="histogramHolder" #histogramHolder>
+  </div>
 </div>
-
+</mat-card>

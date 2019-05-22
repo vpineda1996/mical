@@ -106,13 +106,14 @@
   top: 0;
   bottom: 0;
   background-image: url(../../../assets/icons/open.svg);
+  transition: 0.1s transform;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .hide-container span.opened {
-
-  background-image: url(../../../assets/icons/close.svg)
+  transition: 0.1s transform;
+  transform: rotate(180deg);
 }
 
 .results-holder.hide {

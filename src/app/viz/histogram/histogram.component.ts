@@ -52,7 +52,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
         lineWidth: 4,
         fill: 1,
         fillColor: {colors: [{ opacity: 0.1 }, { opacity: 0.8 }]}
-      }
+      },
     };
   }
 
@@ -60,15 +60,23 @@ export class HistogramComponent implements OnInit, AfterViewInit {
   async chart() {
     let opts = {
       series: {},
-      xaxis: {},
+      xaxis: {
+        tickFormatter: (n) => Math.round(n * 100) + "%",
+        showMinorTicks: false,
+      },
       yaxis: {
         gridLines: false,
+        showMinorTicks: false,
       },
       grid: {
         borderWidth: 0,
         tickColor: (t, axis) => {
           if (t.v == 0) return "#4B6ECB";
           return "#D8D8D8";
+        },
+        tickWidth: (t, axis) => {
+          if (t.v == 0) return 5;
+          return 1;
         }
       },
     };

@@ -2,3 +2,39 @@
   height: 300px;
   width: 100%;
 }
+
+.denom {
+  margin-right: auto;
+  display: flex;
+}
+
+.arrow {
+  background-image: url("./../../../assets/icons/graph-arrow.svg");
+  height: 12px;
+  width: 30px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: auto 5px auto 0;
+}
+
+.num-aligner {
+  display: flex;
+}
+
+.right-arrow {
+  transform: rotate(180deg);
+  margin: auto 0 auto 5px;
+}
+
+.numerator p {
+  text-align: right;
+}
+
+.title {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding-left: 8px;
+  padding-top: 5px;
+}
