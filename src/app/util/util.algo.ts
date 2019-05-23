@@ -1,5 +1,3 @@
-import { invalid } from "@angular/compiler/src/render3/view/util";
-
 /**
  * Returns the bounding box of the given points
  * @param a the array of points
@@ -12,13 +10,14 @@ export function boundingBox(a: [number, number][]): BoundingBox{
     l = Math.min(y, l);
     r = Math.max(y, r);
   });
-
-  return new BoundingBox(up, l, down, r);
+  let bb = new BoundingBox(up, l, down, r);
+  if (!a || !a.length) bb.valid = false;
+  return bb;
 }
 
 export class BoundingBox {
 
-  protected valid = true;
+  public valid = true;
   constructor(public up: number, 
               public l: number,
               public down: number,

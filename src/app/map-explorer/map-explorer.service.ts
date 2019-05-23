@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { GeoJSON } from 'geojson';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Column } from '../model/datatypes';
-import { GeoData, GeoJsonPoint } from '../model/map';
-import { ColorProviderService } from '../services/color-provider.service';
-import { DataProviderService } from '../services/data-provider.service';
-import { MapExplorerHolderComponent } from './map-explorer-holder/map-explorer-holder.component';
+import {Injectable} from '@angular/core';
+import {GeoJSON} from 'geojson';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {GeoData, GeoJsonPoint} from '../model/map';
+import {ColorProviderService} from '../services/color-provider.service';
+import {DataProviderService} from '../services/data-provider.service';
+import {MapExplorerHolderComponent} from './map-explorer-holder/map-explorer-holder.component';
+import {CustomLngLatBounds} from "../util/typings";
+import {FilterProviderService} from "../services/filter-provider.service";
+import {BoundingBox} from "../util/util.algo";
 
 const CLUSTER_LAYER_NAME = 'clusters';
 const CLUSTER_LAYER_TAGS_NAME = 'cluster-tag';
@@ -19,8 +20,13 @@ const POINT_LAYER = 'point_layer';
 })
 export class MapExplorerService {
 
-  constructor(private dataProvider: DataProviderService, private colorProvider: ColorProviderService, private route: ActivatedRoute) {
 
+  public boundsEvent: BehaviorSubject<CustomLngLatBounds>;
+
+  constructor(private dataProvider: DataProviderService,
+              private colorProvider: ColorProviderService,
+              private filterProvider: FilterProviderService) {
+    this.setupBoundeEvent();
   }
 
   getMarkers(): Observable<Array<GeoJsonPoint>> {
@@ -123,4 +129,20 @@ export class MapExplorerService {
     };
   }
 
+  private setupBoundeEvent() {
+    let gf = this.filterProvider.boundingBox;
+    if (gf) {
+      this.boundsEvent = new BehaviorSubject(gf);
+    } else {
+      this.boundsEvent = new BehaviorSubject(
+        new BoundingBox(90, -180, -90, 180)
+      );
+    }
+
+    this.filterProvider.announcer.subscribe((opts) => {
+      if (opts.isMapUpdate) return;
+      let bbox = this.filterProvider.boundingBox;
+      this.boundsEvent.next(bbox);
+    })
+  }
 }

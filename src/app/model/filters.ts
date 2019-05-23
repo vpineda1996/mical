@@ -57,23 +57,7 @@ export class GeoFilter implements Filter {
     let west = this.bnds.getWest();
     let north = this.bnds.getNorth();
     let south = this.bnds.getSouth();
-    let arr = [];
-    if (east - west >= 360) {
-      arr = [[north, -180], [south, -180], [south, 180], [north, 180]];
-    } else {
-      // check if east goes around
-      if (east > 180) {
-        // TODO: vpineda AE-45
-        arr = [[north, 180], [south, 180], [south, west], [north, west]];
-      } else if (west < -180) {
-        // TODO: vpineda AE-45
-        arr = [[north, east], [south, east], [south, -180], [north, -180]];
-      } else {
-        arr = [[north, east], [south, east], [south, west], [north, west]];
-      }
-    }
-    return arr.map((loc) => {
-      return loc[0] + "," + loc[1];
-    }).join(",");
+    let arr = [north, east, south, west];
+    return arr.join(",");
   }
 }
