@@ -1,4 +1,4 @@
-<div class="multi-select-holder">
+<div class="multi-select-holder custom-scroll-bar">
   <div *ngIf="(list$ | async); else loading">
     <div class="selection-entry" *ngFor="let o of selectable; index as i"
          (click)="onClick(o.name)" matRipple >

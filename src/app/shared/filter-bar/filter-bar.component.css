@@ -18,6 +18,10 @@
   display: inline;
 }
 
+.search-bar-opts {
+  display: inline-flex;
+}
+
 .btn-ico-margin {
   margin-right: 0.3em;
 }

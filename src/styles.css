@@ -85,3 +85,20 @@ p {
   text-transform: uppercase;
   color: var(--dark-grey);
 }
+
+
+.custom-scroll-bar::-webkit-scrollbar {
+  width: 8px;
+  background-color: white;
+  z-index: 5;
+}
+
+.custom-scroll-bar::-webkit-scrollbar-track {
+  border: 1px solid var(--light-blue);
+  border-radius: 4px;
+}
+
+.custom-scroll-bar::-webkit-scrollbar-thumb {
+  background: var(--light-blue);
+  border-radius: 4px;
+}

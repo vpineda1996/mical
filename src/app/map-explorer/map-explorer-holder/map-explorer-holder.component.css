@@ -14,10 +14,15 @@
   z-index: 3;
   margin-top: 8px;
   margin-bottom: 8px;
+  display: flex;
+  overflow-x: auto;
 }
 
 .control-container {
   position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
 }
 
 .control-container:after {
@@ -59,10 +64,8 @@
 
 .switch-container{
   display: flex;
-  position: absolute;
-  top: 0;
-  right: 0;
   padding: 17px 31px 17px 10px;
+  margin-left: auto;
 }
 
 .switch-label {

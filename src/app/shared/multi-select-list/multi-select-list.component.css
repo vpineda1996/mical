@@ -43,19 +43,3 @@
   max-height: 250px;
   overflow-y: auto;
 }
-
-.multi-select-holder::-webkit-scrollbar {
-  width: 8px;
-  background-color: white;
-  z-index: 5;
-}
-
-.multi-select-holder::-webkit-scrollbar-track {
-  border: 1px solid var(--light-blue);
-  border-radius: 4px;
-}
-
-.multi-select-holder::-webkit-scrollbar-thumb {
-  background: var(--light-blue);
-  border-radius: 4px;
-}
