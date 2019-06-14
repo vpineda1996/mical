@@ -28,12 +28,12 @@ export class MultiSelectListComponent implements OnInit, OnChanges {
   }
 
   protected buildSelectables(sList: string[]) {
-    let trimedSearch = this.filterStr.trim();
+    let trimedSearch = this.filterStr.trim().toLocaleLowerCase();
     this.selectable = sList
       .map(s => {
         return {
           name: s,
-          visible:  s.indexOf(trimedSearch) != -1
+          visible:  s.toLocaleLowerCase().indexOf(trimedSearch) != -1
         }
       });
   }

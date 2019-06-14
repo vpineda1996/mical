@@ -11,12 +11,14 @@
   <div class="drop-down-holder" (click)="sinkClickEvents($event)">
     <div [style.marginTop]="dropDownMargin">
       <div class="arrow-up"></div>
-      <div class="white-round-edg">
+      <div appFitToWindow [max-size]="395" class="white-round-edg">
         <div class="multi-select-dd">
-          <app-multi-select-list #selection_list
-                                 [filterStr]="searchString"
-                                 [selected]="selectedOpts"
-                                 [list$]="opts$"></app-multi-select-list>
+          <div appFitToWindow [bottom-offset]="110" [max-size]="250" class="custom-scroll-bar">
+            <app-multi-select-list #selection_list
+                                   [filterStr]="searchString"
+                                   [selected]="selectedOpts"
+                                   [list$]="opts$"></app-multi-select-list>
+          </div>
         </div>
         <div *ngIf="opts$ | async; else error" class="drop-down-btns">
           <div class="btn-holder">

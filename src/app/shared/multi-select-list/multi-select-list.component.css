@@ -38,8 +38,3 @@
   width: 8px;
   height: 3px;
 }
-
-.multi-select-holder {
-  max-height: 250px;
-  overflow-y: auto;
-}

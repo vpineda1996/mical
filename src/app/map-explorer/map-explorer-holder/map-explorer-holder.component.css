@@ -166,11 +166,11 @@ input:checked {
 .slider i {
   position: absolute;
   content: "";
-  padding: 6px 8px 6px 8px;
-  height: 15px;
-  width: 13px;
+  padding: 6px 9px 5px 9px;
+  height: 17px;
+  width: 11px;
   left: 5px;
-  bottom: 5px;
+  bottom: 4px;
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
@@ -181,16 +181,12 @@ input:checked + .slider {
   background-color: var(--orange-accent);
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 3px var(--orange-accent);
-}
-
 input:checked + .slider i {
-  -webkit-transform: translateX(31px);
-  -ms-transform: translateX(31px);
-  transform: translateX(31px);
-  padding: 7px 6px 7px 7px;
-  height: 14px;
+  -webkit-transform: translateX(28px);
+  -ms-transform: translateX(28px);
+  transform: translateX(28px);
+  padding: 6px 8px 5px 7px;
+  height: 17px;
   width: 15px;
 }
 

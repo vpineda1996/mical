@@ -8,12 +8,14 @@ import { MultiSelectListComponent } from './multi-select-list/multi-select-list.
 import {DataProviderService} from '../services/data-provider.service';
 import {QueryProviderService} from '../services/query-provider.service';
 import {InterventionProviderService} from '../services/intervention-provider.service';
+import { FitToWindowDirective } from './fit-to-window.directive';
 
 @NgModule({
   declarations: [
     FilterBarComponent,
     DropDownButtonComponent,
     MultiSelectListComponent,
+    FitToWindowDirective,
   ],
   
   imports: [
