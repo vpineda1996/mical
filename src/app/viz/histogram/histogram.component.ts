@@ -70,7 +70,8 @@ export class HistogramComponent implements OnInit, AfterViewInit {
       },
       grid: {
         borderWidth: 0,
-        tickColor: (t, axis) => {
+        tickColor: (t, axis, ctx) => {
+          ctx.lineCap = "round";
           if (t.v == 0) return "#4B6ECB";
           return "#D8D8D8";
         },
