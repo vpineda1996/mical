@@ -1,6 +1,4 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-
-import {Observable} from 'rxjs';
 import 'flot';
 import {HistogramData} from '../../model/datatypes';
 
@@ -33,6 +31,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
     return {
       data: this.histogramDfn.bar,
       label: this.histogramDfn.title,
+      color: "#FFB03A",
       bars: {
         show: true,
         fill: 1,
@@ -46,12 +45,13 @@ export class HistogramComponent implements OnInit, AfterViewInit {
   buildDensity() {
     return {
       data:  this.histogramDfn.dist,
+      color: "black",
       yaxis: 1,
       lines: {
         show: true,
-        lineWidth: 4,
+        lineWidth: 1,
         fill: 1,
-        fillColor: {colors: [{ opacity: 0.1 }, { opacity: 0.8 }]}
+        fillColor: {colors: ["#FFFFFF00", "#4B6ECBF0"]}
       },
     };
   }
@@ -63,14 +63,21 @@ export class HistogramComponent implements OnInit, AfterViewInit {
       xaxis: {
         tickFormatter: (n) => Math.round(n * 100) + "%",
         showMinorTicks: false,
+        font: {
+          family: "Source Sans Pro",
+          weight: "bold"
+        },
+        tickLength: 0
       },
       yaxis: {
         gridLines: false,
         showMinorTicks: false,
+        font: "Source Sans Pro",
+        tickLength: 0
       },
       grid: {
         borderWidth: 0,
-        tickColor: (t, axis, ctx) => {
+        tickColor: (t, axis, ctx: CanvasRenderingContext2D) => {
           ctx.lineCap = "round";
           if (t.v == 0) return "#4B6ECB";
           return "#D8D8D8";

@@ -23,3 +23,7 @@ p {
   font-family: var(--text-font);
   margin: 0;
 }
+
+.cards-container {
+  margin: 0 18px;
+}

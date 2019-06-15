@@ -1,6 +1,6 @@
 <mat-card>
 <div>
-  <div class="title dblue-fnt">{{histogramDfn.title}}</div>
+  <div class="title">{{histogramDfn.title}}</div>
   <div class="pure-g">
     <div class="pure-u-2-5 denom">
       <div class="arrow"></div>
@@ -13,7 +13,16 @@
       </div>
     </div>
   </div>
-  <div class="histogramHolder" #histogramHolder>
+  <aside>
+    <div class="axis y-axis" >No. Experiments</div>
+    <div class="histogramHolder" #histogramHolder></div>
+  </aside>
+  <div>
+    <div class="axis x-axis">Log Ratio</div>
+  </div>
+  <div class="desc-holder">
+    <div class="bar-icon"></div>
+    <div class="pure-u-3-4 description dblue-fnt">On average, organic yields 10% better than conventional agricultural methods.</div>
   </div>
 </div>
 </mat-card>

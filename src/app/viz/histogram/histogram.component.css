@@ -1,6 +1,10 @@
 .histogramHolder {
-  height: 300px;
-  width: 100%;
+  height: 137px;
+  flex: 1;
+}
+
+* {
+  line-height: 1em;
 }
 
 .denom {
@@ -37,4 +41,53 @@
   font-weight: bold;
   padding-left: 8px;
   padding-top: 5px;
+}
+
+aside {
+  display: block;
+  position: relative;
+  padding-left: 1em;
+}
+
+.axis {
+  font-family: var(--text-font);
+  font-size: 10px;
+  text-align: center;
+}
+
+.y-axis {
+  /* Abs positioning makes it not take up vert space */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 137px;
+
+  /* Border is the new background */
+  background: none;
+
+  /* Rotate from top left corner (not default) */
+  transform-origin: 0 0;
+  transform: rotate(-90deg);
+}
+
+.x-axis {
+  padding: 8px 0;
+}
+
+.bar-icon {
+  background-image: url("./../../../assets/icons/bar-icon.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 19px;
+}
+
+.desc-holder {
+  display: flex;
+  justify-content: center;
+}
+
+.description {
+  margin-left: 7px;
+  font-family: var(--text-font);
+  font-weight: bold;
 }
