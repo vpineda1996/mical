@@ -11,7 +11,7 @@
 }
 
 .filter-container {
-  z-index: 3;
+  z-index: 9;
   margin-top: 8px;
   margin-bottom: 8px;
   display: flex;
@@ -106,7 +106,7 @@
   margin: auto;
   left: 0;
   right: 0;
-  top: 0;
+  top: 6px;
   bottom: 0;
   background-image: url(../../../assets/icons/open.svg);
   transition: 0.1s transform;
@@ -116,7 +116,8 @@
 
 .hide-container span.opened {
   transition: 0.1s transform;
-  transform: rotate(180deg);
+  transform: rotate(180deg) translateY(4px);
+  -webkit-transform: rotate(180deg) translateY(4px);
 }
 
 .results-holder.hide {

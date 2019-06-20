@@ -1,7 +1,7 @@
 .container {
   position: absolute;
   left: 0;
-  top: 60px;
+  top: 53px;
   width: 100%;
   bottom: 0;
   --splash-image-height: 670px;
@@ -42,11 +42,13 @@
 
 .contact-map {
   background-image: url("./../../../assets/background/map-contact.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 620px;
 }
 
 .contact-holder {
-  margin: 71px 0;
+  padding: 71px 0;
   background-color: var(--white-color);
 }
 
@@ -73,7 +75,7 @@ textarea {
  */
  @media (min-width: 48em) {
   .container {
-    top: 67px;
+    top: 60px;
   }
 
   .splash {
@@ -89,7 +91,7 @@ textarea {
  */
 @media (min-width: 78em) {
   .container {
-    top: 77px;
+    top: 70px;
   }
   
   .splash {
