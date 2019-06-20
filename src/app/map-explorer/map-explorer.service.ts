@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {GeoJSON} from 'geojson';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {GeoData, GeoJsonPoint} from '../model/map';
@@ -9,10 +8,7 @@ import {MapExplorerHolderComponent} from './map-explorer-holder/map-explorer-hol
 import {CustomLngLatBounds} from "../util/typings";
 import {FilterProviderService} from "../services/filter-provider.service";
 import {BoundingBox} from "../util/util.algo";
-
-const CLUSTER_LAYER_NAME = 'clusters';
-const CLUSTER_LAYER_TAGS_NAME = 'cluster-tag';
-const POINT_LAYER = 'point_layer';
+import {CLUSTER_LAYER_NAME, CLUSTER_LAYER_TAGS_NAME, POINT_LAYER} from "../util/constants";
 
 
 @Injectable({
@@ -37,17 +33,9 @@ export class MapExplorerService {
     return ret;
   }
 
-  createMarker(newMarker: GeoJSON) {
-
-  }
-
-  removeMarker($key: string) {
-
-  }
-
   getLayers(dataSourceId: string): {names: string[], layerDef: any[]} {
     // todo vpineda remove this harcoded thing
-    const steps = [100, 700];
+    const steps = [100, 200, 700];
     return {
       names: [CLUSTER_LAYER_NAME, CLUSTER_LAYER_TAGS_NAME, POINT_LAYER],
       layerDef: [

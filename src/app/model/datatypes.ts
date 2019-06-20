@@ -24,6 +24,7 @@ export type SeriesEntry = [number, number][]
 
 export interface HistogramData {
   title: string,
+  desc: string,
   bar: SeriesEntry,
   dist: SeriesEntry,
   ticks: Ticks,

@@ -35,7 +35,7 @@ export class QueryProviderService {
 
   buildMapURL(): string {
     let baseURL = this.buildURL();
-    baseURL += "&cols=coords";
+    baseURL += "&cols=coords,interventionType";
     return baseURL;
   }
 

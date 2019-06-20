@@ -5,6 +5,8 @@ import {GeoJsonPoint, PointCollection} from '../../model/map';
 import {FilterProviderService} from '../../services/filter-provider.service';
 import {MapExplorerService} from '../map-explorer.service';
 import {environment} from 'src/environments/environment.prod';
+import {CLUSTER_LAYER_NAME, POINT_LAYER} from "../../util/constants";
+import {MapboxEvent} from "mapbox-gl";
 
 @Component({
   selector: 'app-map-holder',
@@ -57,6 +59,74 @@ export class MapHolderComponent implements OnInit {
 
   }
 
+  setupClusterListeners() {
+    // inspect a cluster on click
+    this.map.on('click', CLUSTER_LAYER_NAME,  (e) => {
+      let features: any = this.map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+      let clusterId = features[0].properties.cluster_id;
+      this.source.getClusterExpansionZoom(clusterId, (err, zoom) => {
+        if (err)
+          return;
+
+        this.map.easeTo({
+          center: features[0].geometry.coordinates,
+          zoom: zoom
+        });
+      });
+    });
+
+    this.map.on('mouseenter', 'clusters',  () => {
+      this.map.getCanvas().style.cursor = 'pointer';
+    });
+    this.map.on('mouseleave', 'clusters',  () => {
+      this.map.getCanvas().style.cursor = '';
+    });
+  }
+
+  setupTooltip() {
+    let popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false
+    });
+
+    let mouseEnterHandler = (e) => {
+      // Change the cursor style as a UI indicator.
+      this.map.getCanvas().style.cursor = 'pointer';
+
+      // todo vpineda set the right type here
+      let feature: any = e.features[0];
+
+
+      let coordinates = feature.geometry.coordinates.slice();
+      let description = "<div>Hello!</div>";
+
+      // Ensure that if the map is zoomed out such that multiple
+      // copies of the feature are visible, the popup appears
+      // over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+
+      // Populate the popup and set its coordinates
+      // based on the feature found.
+      // todo vpineda setup popup
+      // popup.setLngLat(coordinates)
+      //   .setHTML(description)
+      //   .addTo(this.map);
+    };
+
+    let mouseLeaveHandler = (e) => {
+      // this.map.getCanvas().style.cursor = '';
+      // popup.remove();
+    }
+
+    this.map.on('mouseenter', POINT_LAYER, mouseEnterHandler);
+    this.map.on('mouseleave', POINT_LAYER, mouseLeaveHandler);
+
+    this.map.on('mouseenter', CLUSTER_LAYER_NAME, mouseEnterHandler);
+    this.map.on('mouseleave', CLUSTER_LAYER_NAME, mouseLeaveHandler);
+  }
+
   buildMap() {
     this.map = new mapboxgl.Map({
       container: 'map',
@@ -70,24 +140,19 @@ export class MapHolderComponent implements OnInit {
     this.map.addControl(new mapboxgl.NavigationControl());
 
 
-    //// Add Marker on Click
-    this.map.on('click', (event) => {
-      const coordinates = [event.lngLat.lng, event.lngLat.lat];
-      const newMarker   = new GeoJsonPoint(<any> coordinates, { message: this.message });
-      this.mapService.createMarker(newMarker);
-    });
-
-
-    /// Add realtime firebase data on map load
+    /// Add realtime dataService data on map load
     this.map.on('load', (event) => {
 
       /// register source
-      this.map.addSource('firebase', {
+      this.map.addSource('places', {
         type: 'geojson',
         data: {
           type: 'FeatureCollection',
           features: []
-        }
+        },
+        cluster: true,
+        clusterMaxZoom: 12, // Max zoom to cluster points on
+        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
       });
 
       this.map.on('move', () => {
@@ -104,7 +169,7 @@ export class MapHolderComponent implements OnInit {
       });
 
       /// get source
-      this.source = this.map.getSource('firebase');
+      this.source = this.map.getSource('places');
 
       /// subscribe to realtime database and set data source
       this.markers$.subscribe(markers => {
@@ -114,21 +179,20 @@ export class MapHolderComponent implements OnInit {
 
 
       /// create map layers with realtime data
-      const layers = this.mapService.getLayers('firebase');
+      const layers = this.mapService.getLayers('places');
       layers.layerDef.map((layer, idx) => {
           this.map.addLayer(layer);
         }
       );
     });
 
+    this.setupClusterListeners();
+    this.setupTooltip();
+
   }
 
 
   /// Helpers
-
-  removeMarker(marker) {
-    this.mapService.removeMarker(marker.$key);
-  }
 
   flyTo(data: GeoJsonPoint) {
     this.map.flyTo({
