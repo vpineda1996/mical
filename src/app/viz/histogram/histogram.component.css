@@ -24,6 +24,7 @@
 
 .num-aligner {
   display: flex;
+  justify-content: flex-end;
 }
 
 .right-arrow {
