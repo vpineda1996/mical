@@ -6,8 +6,8 @@
     (selection)="filters.country=$event"
     [id]="ButtonIds.COUNTRY"
     [dropDownMargin]="dropDownMargin">
-    <i class="fas fa-search btn-ico-margin"></i>
-    <span>Seach country</span>
+    <i *ngIf="!selectedBtn[ButtonIds.COUNTRY]" class="fas fa-search btn-ico-margin"></i>
+    <span >{{btnLabels[ButtonIds.COUNTRY]}}</span>
   </app-drop-down-button>
 
   <app-drop-down-button
@@ -17,7 +17,7 @@
     (selection)="filters.intervention=$event"
     [id]="ButtonIds.INTERVENTION"
     [dropDownMargin]="dropDownMargin">
-    <span>Intervention</span>
+    <span>{{btnLabels[ButtonIds.INTERVENTION]}}</span>
   </app-drop-down-button>
 
   <app-drop-down-button
@@ -27,8 +27,8 @@
     (selection)="filters.crop=$event"
     [id]="ButtonIds.CROP"
     [dropDownMargin]="dropDownMargin">
-    <i class="fas fa-seedling btn-ico-margin"></i>
-    <span>Search crop</span>
+    <i *ngIf="!selectedBtn[ButtonIds.COUNTRY]" class="fas fa-seedling btn-ico-margin"></i>
+    <span>{{btnLabels[ButtonIds.CROP]}}</span>
   </app-drop-down-button>
 
 
@@ -39,7 +39,7 @@
     (selection)="filters.climate=$event"
     [id]="ButtonIds.CLIMATE"
     [dropDownMargin]="dropDownMargin">
-    <span>Climate</span>
+    <span>{{btnLabels[ButtonIds.CLIMATE]}}</span>
   </app-drop-down-button>
 
 
@@ -50,7 +50,7 @@
     (selection)="filters.soil=$event"
     [id]="ButtonIds.SOIL"
     [dropDownMargin]="dropDownMargin">
-    <span>Soil</span>
+    <span>{{btnLabels[ButtonIds.SOIL]}}</span>
   </app-drop-down-button>
 
 
@@ -61,7 +61,7 @@
     (selection)="filters.duration=$event"
     [id]="ButtonIds.DURATION"
     [dropDownMargin]="dropDownMargin">
-    <span>Study duration</span>
+    <span>{{btnLabels[ButtonIds.DURATION]}}</span>
   </app-drop-down-button>
 
   <div last-btn class="btn-holder" [class.selected]="selectedBtn[ButtonIds.APPLY]">

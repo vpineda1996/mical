@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, from, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { BoundingBox, boundingBox } from 'src/app/util/util.algo';
-import { FilterProviderService } from '../../services/filter-provider.service';
-import { InterventionProviderService } from '../../services/intervention-provider.service';
-import { OutcomeTableProviderService } from '../../services/outcome-table-provider.service';
-import { AREA_KEY, INTERVENTION_KEY } from '../../util/constants';
-import Countries from '../../../assets/json/countries.json'
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Router} from '@angular/router';
+import {Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {boundingBox} from 'src/app/util/util.algo';
+import {FilterProviderService} from '../../services/filter-provider.service';
+import {InterventionProviderService} from '../../services/intervention-provider.service';
+import {OutcomeTableProviderService} from '../../services/outcome-table-provider.service';
+import {AREA_KEY, INTERVENTION_KEY} from '../../util/constants';
+import Countries from '../../../assets/json/countries.json';
 
 @Component({
   selector: 'app-filter-bar',
@@ -27,6 +27,8 @@ export class FilterBarComponent implements OnInit {
     soil: {},
     duration: {},
   };
+
+  btnLabels = BTN_LABELS.slice();
 
   @Input()
   dropDownMargin = "60px";
@@ -60,7 +62,7 @@ export class FilterBarComponent implements OnInit {
     // set intervention
     this.interventionProvider.activeInterventions.subscribe((ints) => {
       this.filters.intervention = fn(Object.keys(ints));
-    })
+    });
 
     // set filter col opts, to on
     this.filters.crop = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.CROP));
@@ -78,11 +80,22 @@ export class FilterBarComponent implements OnInit {
   }
 
   async onSelectButton(btnId: BUTTON_ID, selectedOpts: string[]) {
-
     // highlight current button
-    if (btnId != BUTTON_ID.APPLY)
+    if (btnId != BUTTON_ID.APPLY) {
       this.selectedBtn[btnId] = !!selectedOpts.length;
-    else {
+      // set the btn label
+      switch (selectedOpts.length) {
+        case 0:
+          this.btnLabels[btnId] = BTN_LABELS[btnId];
+          break;
+        case 1:
+          this.btnLabels[btnId] = selectedOpts[0];
+          break;
+        default:
+          this.btnLabels[btnId] = BTN_LABELS[btnId] + " • " + selectedOpts.length;
+          break;
+      }
+    } else {
       this.handleApply()
     }
 
@@ -91,8 +104,6 @@ export class FilterBarComponent implements OnInit {
   }
 
   handleApply() {
-    // todo vpineda country & duration filter
-
     let properties = Object.keys(this.filters).reduce((p, k) => {
       let sec = this.filters[k];
       p[k] = Object.keys(sec);
@@ -106,7 +117,7 @@ export class FilterBarComponent implements OnInit {
     this.filterProvider.filterOn(this.outcomeProvider.filterCols.DURATION, properties.duration);
 
     let pts = properties.country.reduce((acc, c) => {
-      let coords = Countries[c]
+      let coords = Countries[c];
       acc.push([coords[1], coords[0]]);
       acc.push([coords[3], coords[2]]);
       return acc;
@@ -115,13 +126,13 @@ export class FilterBarComponent implements OnInit {
     let applyParams = {
       intervention: properties.intervention,
       area: boundingBox(pts),
-    }
+    };
     this.selectedBtn = this.selectedBtn.map( () => false );
     this.applyEmitter.emit(applyParams);
 
     // once we emit, switch views
     let fs: {[type: string]: string} = {};
-    fs[INTERVENTION_KEY] = applyParams.intervention.join(",")
+    fs[INTERVENTION_KEY] = applyParams.intervention.join(",");
     if (applyParams.area.compress() !== "") {
       fs[AREA_KEY] = applyParams.area.compress()
     }
@@ -131,7 +142,7 @@ export class FilterBarComponent implements OnInit {
     });
   }
 }
-
+export const BTN_LABELS = ["Search country", "Intervention", "Search crop", "Climate", "Soil", "Study Duration", "Apply"];
 export enum BUTTON_ID {
   COUNTRY, INTERVENTION, CROP, CLIMATE, SOIL, DURATION, APPLY, NONE
 }
