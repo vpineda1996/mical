@@ -30,7 +30,8 @@ export interface HistogramData {
   ticks: Ticks,
   labels: {
     denom: string,
-    numerator: string
+    numerator: string,
+    xlabel: string
   }
 }
 
