@@ -33,6 +33,9 @@ export class FilterBarComponent implements OnInit {
   @Input()
   dropDownMargin = "60px";
 
+  @Input()
+  useApplyBtn = true;
+
   interventions$: Observable<string[]> =
     this.interventionProvider.allInterventions.pipe(
       map(ints => ints.map(i => i.sKey))
@@ -94,6 +97,10 @@ export class FilterBarComponent implements OnInit {
         default:
           this.btnLabels[btnId] = BTN_LABELS[btnId] + " • " + selectedOpts.length;
           break;
+      }
+      // handle apply on this case only if the apply btn is disabled
+      if (!this.useApplyBtn) {
+        this.handleApply()
       }
     } else {
       this.handleApply()

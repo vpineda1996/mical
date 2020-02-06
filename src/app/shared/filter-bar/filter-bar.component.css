@@ -25,3 +25,7 @@
 .btn-ico-margin {
   margin-right: 0.3em;
 }
+
+.btn-hidden {
+  visibility: hidden;
+}
