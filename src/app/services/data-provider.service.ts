@@ -33,7 +33,7 @@ export class DataProviderService {
     });
 
     this.setupGeoDataListener();
-    this.setupHisogramListener();
+    this.setupActiveInterventionsListener();
 
     this.updateMapData();
     this.updateHistograms();
@@ -51,7 +51,7 @@ export class DataProviderService {
     });
   }
 
-  setupHisogramListener() {
+  setupActiveInterventionsListener() {
     this.interventionProviderService.activeInterventions.subscribe((int) => {
       this.interventions = Object.values(int);
       this.updateMapData();
