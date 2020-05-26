@@ -20,7 +20,6 @@ export class DataProviderService {
   private interventionQueries: Subject<{[intervention:string]: HistogramData}> = new BehaviorSubject({});
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
 
-  
   constructor(private interventionProviderService: InterventionProviderService,
               private filterProvider: FilterProviderService,
               private queryProvider: QueryProviderService) {
@@ -29,12 +28,13 @@ export class DataProviderService {
     filterProvider.announcer.pipe(
       debounceTime(DEBOUNCE_WAIT)
     ).subscribe(() => {
+      this.updateMapData();
       this.updateHistograms();
     });
-    
+
     this.setupGeoDataListener();
     this.setupHisogramListener();
-    
+
     this.updateMapData();
     this.updateHistograms();
   }
@@ -42,7 +42,7 @@ export class DataProviderService {
   setupGeoDataListener(): void {
     this.mapData.pipe(
       map((newData) => {
-        return newData.map(v => 
+        return newData.map(v =>
           new GeoJsonPoint(<[number, number]> v.coords.coordinates, v)
         )
       })
@@ -54,6 +54,7 @@ export class DataProviderService {
   setupHisogramListener() {
     this.interventionProviderService.activeInterventions.subscribe((int) => {
       this.interventions = Object.values(int);
+      this.updateMapData();
       this.updateHistograms();
     });
   }
@@ -73,9 +74,19 @@ export class DataProviderService {
   }
 
   updateMapData() {
+    // maintain a hash set for unique intervention keys and quick access
+    const keys = {};
+    this.interventions.forEach(intervention => {
+      const currentInterventionKey = intervention.key;
+      if (!keys[currentInterventionKey]) {
+        keys[intervention.key] = true;
+      }
+    });
     // do database query
     this.queryProvider.getMapData().subscribe((value: Array<MapData>) => {
-      this.mapData.next(value);
+      // only keep map data that belong to the selected interventions
+      const selectedInterventions = value.filter(v => keys[v.interventionType]);
+      this.mapData.next(selectedInterventions);
     });
   }
 
