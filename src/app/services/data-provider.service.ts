@@ -16,7 +16,8 @@ const DEBOUNCE_WAIT = 500;
 export class DataProviderService {
 
   private mapData: Subject<Array<MapData>> = new Subject();
-  private interventions: Intervention[] = [];
+  private selectedInterventions: Intervention[] = [];
+  private allInterventions: Intervention[] = [];
   private interventionQueries: Subject<{[intervention:string]: HistogramData}> = new BehaviorSubject({});
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
 
@@ -34,6 +35,7 @@ export class DataProviderService {
 
     this.setupGeoDataListener();
     this.setupActiveInterventionsListener();
+    this.setupAllInterventionsListener();
 
     this.updateMapData();
     this.updateHistograms();
@@ -53,19 +55,30 @@ export class DataProviderService {
 
   setupActiveInterventionsListener() {
     this.interventionProviderService.activeInterventions.subscribe((int) => {
-      this.interventions = Object.values(int);
+      this.selectedInterventions = Object.values(int);
       this.updateMapData();
       this.updateHistograms();
     });
   }
 
+  setupAllInterventionsListener() {
+    this.interventionProviderService.allInterventions.subscribe((int) => {
+      this.allInterventions = Object.values(int);
+      this.updateHistograms();
+    });
+  }
+
   updateHistograms() {
-    of(...this.interventions).pipe(
+    // if no interventions are selected, display all by default
+    const displayedInterventions = this.selectedInterventions.length === 0
+      ? this.allInterventions
+      : this.selectedInterventions;
+    of(...displayedInterventions).pipe(
       flatMap((intervention) => {
         return this.queryProvider.getHistogramData(intervention)
       }),
       reduce((acc, v, idx) => {
-        acc[this.interventions[idx].key] = v;
+        acc[displayedInterventions[idx].key] = v;
         return acc;
       }, {})
     ).subscribe((hData) => {
@@ -76,7 +89,7 @@ export class DataProviderService {
   updateMapData() {
     // maintain a hash set for unique intervention keys and quick access
     const keys = {};
-    this.interventions.forEach(intervention => {
+    this.selectedInterventions.forEach(intervention => {
       const currentInterventionKey = intervention.key;
       if (!keys[currentInterventionKey]) {
         keys[intervention.key] = true;
