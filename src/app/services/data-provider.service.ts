@@ -84,8 +84,11 @@ export class DataProviderService {
     });
     // do database query
     this.queryProvider.getMapData().subscribe((value: Array<MapData>) => {
-      // only keep map data that belong to the selected interventions
-      const selectedInterventions = value.filter(v => keys[v.interventionType]);
+      // if no interventions are selected, display all by default
+      // otherwise, only keep map data that belong to the selected interventions
+      const selectedInterventions = Object.keys(keys).length === 0
+        ? value
+        : value.filter(v => keys[v.interventionType]);
       this.mapData.next(selectedInterventions);
     });
   }
