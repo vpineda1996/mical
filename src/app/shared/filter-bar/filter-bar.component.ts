@@ -37,7 +37,7 @@ export class FilterBarComponent implements OnInit {
   useApplyBtn = true;
 
   interventions$: Observable<string[]> =
-    this.interventionProvider.allInterventions.pipe(
+    this.interventionProvider.allObservableInterventions.pipe(
       map(ints => ints.map(i => i.sKey))
     );
 
@@ -49,7 +49,7 @@ export class FilterBarComponent implements OnInit {
 
   @Output("onApply")
   applyEmitter = new EventEmitter();
-  
+
   constructor(private outcomeProvider: OutcomeTableProviderService,
               private interventionProvider: InterventionProviderService,
               private filterProvider: FilterProviderService,

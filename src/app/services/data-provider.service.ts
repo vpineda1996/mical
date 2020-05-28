@@ -62,7 +62,7 @@ export class DataProviderService {
   }
 
   setupAllInterventionsListener() {
-    this.interventionProviderService.allInterventions.subscribe((int) => {
+    this.interventionProviderService.allObservableInterventions.subscribe((int) => {
       this.allInterventions = Object.values(int);
       this.updateHistograms();
     });

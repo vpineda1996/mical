@@ -27,6 +27,7 @@ export const YIELD_FILTER_COLS = {
 export const INTERVENTION_KEY = 'intervention';
 export const INTERVENTION_ROUTE = 'intervention';
 export const DEFAULT_INTERVENTIONS = {};
+export const INTERVENTIONS_STORAGE_KEY = 'INTERVENTIONS';
 
 export const CLUSTER_LAYER_NAME = 'clusters';
 export const CLUSTER_LAYER_TAGS_NAME = 'cluster-tag';
