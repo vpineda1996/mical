@@ -29,7 +29,7 @@ export class DataProviderService {
     filterProvider.announcer.pipe(
       debounceTime(DEBOUNCE_WAIT)
     ).subscribe(() => {
-      this.updateMapData();
+      this.updateMapData([]);
       this.updateHistograms();
     });
 
@@ -37,7 +37,7 @@ export class DataProviderService {
     this.setupActiveInterventionsListener();
     this.setupAllInterventionsListener();
 
-    this.updateMapData();
+    this.updateMapData([]);
     this.updateHistograms();
   }
 
@@ -56,7 +56,6 @@ export class DataProviderService {
   setupActiveInterventionsListener() {
     this.interventionProviderService.activeInterventions.subscribe((int) => {
       this.selectedInterventions = Object.values(int);
-      this.updateMapData();
       this.updateHistograms();
     });
   }
@@ -86,13 +85,14 @@ export class DataProviderService {
     });
   }
 
-  updateMapData() {
+  updateMapData(selectedInterventions) {
     // maintain a hash set for unique intervention keys and quick access
     const keys = {};
-    this.selectedInterventions.forEach(intervention => {
-      const currentInterventionKey = intervention.key;
-      if (!keys[currentInterventionKey]) {
-        keys[intervention.key] = true;
+    const allInterventions = this.interventionProviderService.allInterventions;
+    allInterventions.forEach(intervention => {
+      const { key: currentInterventionKey, sKey } = intervention;
+      if (!keys[currentInterventionKey] && selectedInterventions.includes(sKey)) {
+        keys[currentInterventionKey] = true;
       }
     });
     // do database query

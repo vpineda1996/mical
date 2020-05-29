@@ -44,14 +44,16 @@ export class InterventionProviderService {
       if (qMap.has(INTERVENTION_KEY)) this.parseInterventions(qMap.get(INTERVENTION_KEY));
     })
 
-    // setup the storage to hold something meaningful
-    if (window.sessionStorage.getItem(INTERVENTIONS_STORAGE_KEY) === null) {
-      window.sessionStorage.setItem(INTERVENTIONS_STORAGE_KEY, "{}");
+    // if storage does not contain interventions then pull data
+    if (
+      !window.sessionStorage.getItem(INTERVENTIONS_STORAGE_KEY)
+      || Object.keys(window.sessionStorage.getItem(INTERVENTIONS_STORAGE_KEY))
+      .length === 0
+    ) {
+      this.allObservableInterventions
+        .pipe(map(ints => ints))
+        .subscribe(res => this.storage = res || []);
     }
-
-    this.allObservableInterventions
-      .pipe(map(ints => ints))
-      .subscribe(res => this.storage = res);
   }
 
   private parseInterventions(str: string) {

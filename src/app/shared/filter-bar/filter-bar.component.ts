@@ -131,7 +131,7 @@ export class FilterBarComponent implements OnInit {
     }, <[number, number][]>[]);
 
     let applyParams = {
-      intervention: properties.intervention,
+      selectedInterventions: properties.intervention,
       area: boundingBox(pts),
     };
     this.selectedBtn = this.selectedBtn.map( () => false );
@@ -139,7 +139,7 @@ export class FilterBarComponent implements OnInit {
 
     // once we emit, switch views
     let fs: {[type: string]: string} = {};
-    fs[INTERVENTION_KEY] = applyParams.intervention.join(",");
+    fs[INTERVENTION_KEY] = applyParams.selectedInterventions.join(",");
     if (applyParams.area.compress() !== "") {
       fs[AREA_KEY] = applyParams.area.compress()
     }
