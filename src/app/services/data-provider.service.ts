@@ -17,7 +17,6 @@ export class DataProviderService {
 
   private mapData: Subject<Array<MapData>> = new Subject();
   private selectedInterventions: Intervention[] = [];
-  private allInterventions: Intervention[] = [];
   private interventionQueries: Subject<{[intervention:string]: HistogramData}> = new BehaviorSubject({});
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
 
