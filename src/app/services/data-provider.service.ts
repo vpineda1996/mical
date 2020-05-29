@@ -35,7 +35,6 @@ export class DataProviderService {
 
     this.setupGeoDataListener();
     this.setupActiveInterventionsListener();
-    this.setupAllInterventionsListener();
 
     this.updateMapData([]);
     this.updateHistograms();
@@ -60,17 +59,10 @@ export class DataProviderService {
     });
   }
 
-  setupAllInterventionsListener() {
-    this.interventionProviderService.allObservableInterventions.subscribe((int) => {
-      this.allInterventions = Object.values(int);
-      this.updateHistograms();
-    });
-  }
-
   updateHistograms() {
     // if no interventions are selected, display all by default
     const displayedInterventions = this.selectedInterventions.length === 0
-      ? this.allInterventions
+      ? this.interventionProviderService.allInterventions
       : this.selectedInterventions;
     of(...displayedInterventions).pipe(
       flatMap((intervention) => {
