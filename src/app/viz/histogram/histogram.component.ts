@@ -21,7 +21,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
   }
 
   @ViewChild('histogramCanvas') canvas: ElementRef;
-  @ViewChild('histogramHolder') holder: ElementRef;
+  @ViewChild('histogramHolder', { static: true }) holder: ElementRef;
 
   ngAfterViewInit(): void {
     this.chart();
