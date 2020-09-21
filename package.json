@@ -28,6 +28,7 @@
     "flot": "github:AgriculturalEvidence/flot.git#master",
     "jquery": "^3.5.1",
     "mapbox-gl": "^1.12.0",
+    "minimalist": "^1.0.0",
     "rxjs": "^6.6.3",
     "zone.js": "^0.10.3"
   },
