@@ -1,7 +1,10 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FilterBarComponent} from './filter-bar/filter-bar.component';
-import {MatButtonModule, MatInputModule, MatProgressSpinnerModule, MatPseudoCheckboxModule, MatRippleModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatPseudoCheckboxModule, MatRippleModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {DropDownButtonComponent} from './drop-down-button/drop-down-button.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MultiSelectListComponent } from './multi-select-list/multi-select-list.component';
@@ -40,7 +43,7 @@ import { FitToWindowDirective } from './fit-to-window.directive';
   ]
 })
 export class SharedModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule,
       providers: [
