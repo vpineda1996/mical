@@ -1,31 +1,67 @@
-# Mical
+# Project Title
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3.
+Zia to fill in.
 
-## Development server
+## Getting Started
 
-Install Angular CLI using `npm install -g @angular/cli` from https://angular.io/guide/setup-local
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-After run `npm install --save-dev @angular-devkit/build-angular`
+### Prerequisites
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+What things you need to install the software and how to install them
 
-## Code scaffolding
+Install Angular CLI 
+```
+npm install -g @angular/cli
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Installing
 
-## Build
+A step by step series of examples that tell you how to get a development env running
+
+Install all project dependencies using npm.
+
+```
+npm install --save-dev @angular-devkit/build-angular
+```
+To run project locally use the command
+
+```
+ng serve
+```
+The app will run locally on the url http://localhost:4200/ 
+
+
+End with an example of getting some data out of the system or using it for a little demo
+
+## Running the tests
+
+The Project contains Unit tests using [Karma](https://karma-runner.github.io), and E2E tests using [Protractor](http://www.protractortest.org/).
+
+### Run Unit Test Suite
+
+```
+Run ng test
+```
+
+### Run E2E Test Suite
+```
+Run ng e2e
+```
+
+## Deployment
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+All dockerfile deployment to heroku is done from the [mical_server](https://github.com/AgriculturalEvidence/mical_server) project. Look at its Readme for instructions on deployment.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Built With
 
-## Running end-to-end tests
+* [Angular](https://angular.io/) - The web framework used
+* [npm](https://www.npmjs.com/) - Package manager for Node JavaScript platform
+* [flot](https://www.flotcharts.org/) - library used to create JavaScript charts
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Contributors
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+* **Jaehun Song** 
+* **Victor Pineda Gonzalez** 
