@@ -47,7 +47,22 @@ export class FilterProviderService {
       }),
       share()
     );
-    ans.subscribe((v) => this._cache[col] = v);
+    ans.subscribe((v) => {
+      if (col === 'filterCols.crop') {
+        v.sort(function(a, b) {
+          const aIgnoreCase = a.toUpperCase();
+          const bIgnoreCase = b.toUpperCase();
+          if (aIgnoreCase < bIgnoreCase) {
+            return -1;
+          }
+          if (aIgnoreCase > bIgnoreCase) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+      this._cache[col] = v
+    });
     return ans;
   }
 
