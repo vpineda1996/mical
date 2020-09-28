@@ -16,11 +16,10 @@ const DEBOUNCE_WAIT = 500;
 export class DataProviderService {
 
   private mapData: Subject<Array<MapData>> = new Subject();
-  private interventions: Intervention[] = [];
+  private selectedInterventions: Intervention[] = [];
   private interventionQueries: Subject<{[intervention:string]: HistogramData}> = new BehaviorSubject({});
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
 
-  
   constructor(private interventionProviderService: InterventionProviderService,
               private filterProvider: FilterProviderService,
               private queryProvider: QueryProviderService) {
@@ -29,20 +28,21 @@ export class DataProviderService {
     filterProvider.announcer.pipe(
       debounceTime(DEBOUNCE_WAIT)
     ).subscribe(() => {
+      this.updateMapData([]);
       this.updateHistograms();
     });
-    
+
     this.setupGeoDataListener();
-    this.setupHisogramListener();
-    
-    this.updateMapData();
+    this.setupActiveInterventionsListener();
+
+    this.updateMapData([]);
     this.updateHistograms();
   }
 
   setupGeoDataListener(): void {
     this.mapData.pipe(
       map((newData) => {
-        return newData.map(v => 
+        return newData.map(v =>
           new GeoJsonPoint(<[number, number]> v.coords.coordinates, v)
         )
       })
@@ -51,20 +51,24 @@ export class DataProviderService {
     });
   }
 
-  setupHisogramListener() {
+  setupActiveInterventionsListener() {
     this.interventionProviderService.activeInterventions.subscribe((int) => {
-      this.interventions = Object.values(int);
+      this.selectedInterventions = Object.values(int);
       this.updateHistograms();
     });
   }
 
   updateHistograms() {
-    of(...this.interventions).pipe(
+    // if no interventions are selected, display all by default
+    const displayedInterventions = this.selectedInterventions.length === 0
+      ? this.interventionProviderService.allInterventions
+      : this.selectedInterventions;
+    of(...displayedInterventions).pipe(
       flatMap((intervention) => {
         return this.queryProvider.getHistogramData(intervention)
       }),
       reduce((acc, v, idx) => {
-        acc[this.interventions[idx].key] = v;
+        acc[displayedInterventions[idx].key] = v;
         return acc;
       }, {})
     ).subscribe((hData) => {
@@ -72,10 +76,24 @@ export class DataProviderService {
     });
   }
 
-  updateMapData() {
+  updateMapData(selectedInterventions) {
+    // maintain a hash set for unique intervention keys and quick access
+    const keys = {};
+    const allInterventions = this.interventionProviderService.allInterventions;
+    allInterventions.forEach(intervention => {
+      const { key: currentInterventionKey, sKey } = intervention;
+      if (!keys[currentInterventionKey] && selectedInterventions.includes(sKey)) {
+        keys[currentInterventionKey] = true;
+      }
+    });
     // do database query
     this.queryProvider.getMapData().subscribe((value: Array<MapData>) => {
-      this.mapData.next(value);
+      // if no interventions are selected, display all by default
+      // otherwise, only keep map data that belong to the selected interventions
+      const selectedInterventions = Object.keys(keys).length === 0
+        ? value
+        : value.filter(v => keys[v.interventionType]);
+      this.mapData.next(selectedInterventions);
     });
   }
 

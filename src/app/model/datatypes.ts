@@ -17,6 +17,7 @@ export class GeoPoint implements Point {
 
 export interface MapData {
   coords: GeoPoint;
+  interventionType: number;
 }
 
 

@@ -16,8 +16,8 @@ export class MapExplorerHolderComponent implements OnInit {
 
   constructor(private dataProvider: DataProviderService) { }
 
-  onApply(data: {[key:string]: string[]}) {
-    this.dataProvider.updateMapData();
+  onApply(data: { selectedInterventions: string[] }) {
+    this.dataProvider.updateMapData(data.selectedInterventions);
   }
 
   ngOnInit() {

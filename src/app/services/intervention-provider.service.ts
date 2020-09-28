@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {API_ROUTE, DEFAULT_INTERVENTIONS, INTERVENTION_KEY, INTERVENTION_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
+import {
+  API_ROUTE,
+  DEFAULT_INTERVENTIONS,
+  INTERVENTION_KEY,
+  INTERVENTION_ROUTE,
+  OUTCOME_TABLE_ROUTE,
+  SERVER_URL,
+  INTERVENTIONS_STORAGE_KEY,
+} from '../util/constants';
 import {BehaviorSubject, Observable, Subject, of} from 'rxjs';
 import {OutcomeTableProviderService} from './outcome-table-provider.service';
 import {share, map, flatMap, reduce, filter} from 'rxjs/operators';
@@ -19,12 +27,15 @@ export class InterventionProviderService {
   }
 
   // TODO: vpineda filter interventions based on the current table
-  get allInterventions(): Observable<Intervention[]> {
+  get allObservableInterventions(): Observable<Intervention[]> {
     return <Observable<Intervention[]>> this.http
       .get(tableUrl(this.outcomeTableProviderService.table))
       .pipe(share());
   }
 
+  get allInterventions(): Intervention[] {
+    return this.storage;
+  }
 
   constructor(private route: ActivatedRoute,
               private outcomeTableProviderService: OutcomeTableProviderService,
@@ -32,6 +43,17 @@ export class InterventionProviderService {
     route.queryParamMap.subscribe((qMap) => {
       if (qMap.has(INTERVENTION_KEY)) this.parseInterventions(qMap.get(INTERVENTION_KEY));
     })
+
+    // if storage does not contain interventions then pull data
+    if (
+      !window.sessionStorage.getItem(INTERVENTIONS_STORAGE_KEY)
+      || Object.keys(window.sessionStorage.getItem(INTERVENTIONS_STORAGE_KEY))
+      .length === 0
+    ) {
+      this.allObservableInterventions
+        .pipe(map(ints => ints))
+        .subscribe(res => this.storage = res || []);
+    }
   }
 
   private parseInterventions(str: string) {
@@ -52,6 +74,19 @@ export class InterventionProviderService {
     })
   }
 
+  private get storage() {
+    let opts = window.sessionStorage.getItem(INTERVENTIONS_STORAGE_KEY);
+    try {
+      return JSON.parse(opts);
+    } catch (e) {
+      window.sessionStorage.setItem(INTERVENTIONS_STORAGE_KEY, "[]");
+    }
+    return [];
+  }
+
+  private set storage(store: Intervention[]) {
+    window.sessionStorage.setItem(INTERVENTIONS_STORAGE_KEY, JSON.stringify(store));
+  }
 }
 
 function interventionUrl(... end: string[]) {
@@ -65,7 +100,6 @@ function tableUrl(tableName: string) {
 let errorFn = (err) => {
   console.log("Error trying to fetch intervention: " + JSON.stringify(err));
 };
-
 
 export interface InterventionData {
   [sKey: string]: Intervention
