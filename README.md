@@ -68,4 +68,5 @@ All dockerfile deployment to heroku is done from the [mical_server](https://gith
 ## Contributors
 
 * **Jaehun Song** 
+* **Candice Pang** 
 * **Victor Pineda Gonzalez** 
