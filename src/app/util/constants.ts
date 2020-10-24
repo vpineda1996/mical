@@ -2,6 +2,8 @@
 import {EmptyFilter} from '../model/filters';
 
 export const SERVER_URL = "https://agevbackend.herokuapp.com";
+// local URL (lets create a dynamic switching type later)
+// export const SERVER_URL = 'http://0.0.0.0:8888/'
 export const API_ROUTE = "api";
 
 export const OUTCOME_TABLE_ROUTE = 'table';
