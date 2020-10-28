@@ -38,7 +38,7 @@ export class FilterBarComponent implements OnInit {
 
   interventions$: Observable<string[]> =
     this.interventionProvider.allObservableInterventions.pipe(
-      map(ints => ints.map(i => i.sKey))
+      map(ints => ints.map(i => i.sKey).sort())
     );
 
   location$: Observable<string[]>;
