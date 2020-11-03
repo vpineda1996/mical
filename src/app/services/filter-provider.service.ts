@@ -48,7 +48,7 @@ export class FilterProviderService {
       share()
     );
     ans.subscribe((v) => {
-      if (col === 'filterCols.crop') {
+      if (col === 'filterCols.crop' || col === 'filterCols.climate') {
         console.log('col: ' + col);
         console.log('v: ' + v);
         v.sort((a, b) => {
@@ -63,6 +63,39 @@ export class FilterProviderService {
           return 0;
         });
       }
+      else if (col == 'filterCols.soil') {
+        v.sort((a, b) => {
+          // a_val represents the USDA CLASS #
+          let a_val = Number(a.split(' ')[2]);
+          let b_val = Number(b.split(' ')[2]);
+          if (a_val < b_val) return -1;
+          else if (b_val > a_val) return 1;
+          else return 0;
+        })
+      }
+      // study duration case
+      else {
+        v.sort((a, b) => {
+          const aIgnoreCase = a.toUpperCase();
+          const bIgnoreCase = b.toUpperCase();
+          if (aIgnoreCase < bIgnoreCase) {
+            return -1;
+          }
+          if (aIgnoreCase > bIgnoreCase) {
+            return 1;
+          }
+          return 0;
+        });
+        // moves the 'Less Than 1 Year' duration to the front of the array
+        v.forEach((duration, i) => {
+          console.log(duration)
+          if (duration === 'less than 1 year') {
+            v.splice(i, 1);
+            v.unshift(duration);
+          }
+        })
+      }
+
       this._cache[col] = v
     });
     return ans;
