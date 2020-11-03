@@ -24,6 +24,9 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
   selected = false;
   protected searchString = "";
 
+  // variable for determining whether the apply button should be orange or not
+  private currentSelectedOpts: {[key:string]: boolean} = {};
+
   protected selectedOpts : {[key:string]: boolean} = {};
 
   @Input("selection")
@@ -80,8 +83,10 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
     });
   }
 
+  // fn call when apply button is clicked
   protected onApplyClick(event: Event) {
     this.closeDropDown(event);
+    Object.assign(this.currentSelectedOpts, this.selectedOpts);
   }
 
   protected onClearClick(event: Event) {
@@ -90,12 +95,18 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
     event.stopPropagation();
   }
 
+  // changes the apply button's color to orange if the input state is modified from original state
+  protected onChangeApplyColour(): boolean {
+    return JSON.stringify(this.currentSelectedOpts) !== JSON.stringify(this.selectedOpts);
+  }
+
   constructor() {
 
   }
 
   ngOnInit() {
-    
+    this.selectedOpts = {};
+    this.currentSelectedOpts = {};
   }
 
   ngOnDestroy() {

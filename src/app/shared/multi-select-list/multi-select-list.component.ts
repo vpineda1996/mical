@@ -19,6 +19,9 @@ export class MultiSelectListComponent implements OnInit, OnChanges {
   @Input()
   filterStr: string = "";
 
+  /***
+   * Checkmark toggle for individual filter types for a filter category
+   */
   protected onClick(idx: string) {
     if (this.selected[idx]) {
       delete this.selected[idx];
