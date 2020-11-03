@@ -110,6 +110,9 @@ export class FilterBarComponent implements OnInit {
     this.selectedBtn[BUTTON_ID.APPLY] = this.selectedBtn.some((v, idx) => v && idx != BUTTON_ID.APPLY);
   }
 
+  /**
+   * Applies the Filter onto the dataset
+   */
   handleApply() {
     let properties = Object.keys(this.filters).reduce((p, k) => {
       let sec = this.filters[k];
