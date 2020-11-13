@@ -28,14 +28,16 @@ export class DataProviderService {
     filterProvider.announcer.pipe(
       debounceTime(DEBOUNCE_WAIT)
     ).subscribe(() => {
-      this.updateMapData([]);
+      let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
+      this.updateMapData(interventionsKeys);
       this.updateHistograms();
     });
 
     this.setupGeoDataListener();
     this.setupActiveInterventionsListener();
 
-    this.updateMapData([]);
+    let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
+    this.updateMapData(interventionsKeys);
     this.updateHistograms();
   }
 
