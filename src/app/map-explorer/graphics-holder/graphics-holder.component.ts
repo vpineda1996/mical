@@ -24,7 +24,9 @@ export class GraphicsHolderComponent implements OnInit {
     public colorProvider: ColorProviderService) {
     this.myHistDefs$ = this.dataProvider.getHistogramData().pipe(
       map(obj => {
-        return Object.values(obj).filter(e => e !== null);
+        return Object.values(obj).filter(e => e !== null).sort((a, b) => {
+          return a.title < b.title ? -1 : 1;
+        })
       })
     );
   }

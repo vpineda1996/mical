@@ -64,6 +64,7 @@ All dockerfile deployment to heroku is done from the [mical_server](https://gith
 * [Angular](https://angular.io/) - The web framework used
 * [npm](https://www.npmjs.com/) - Package manager for Node JavaScript platform
 * [flot](https://www.flotcharts.org/) - library used to create JavaScript charts
+* [RxJS](https://rxjs-dev.firebaseapp.com/guide/overview) - library for composing asynchronous and event-based programs
 
 ## Contributors
 
