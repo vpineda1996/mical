@@ -7,6 +7,9 @@ import {MapExplorerService} from '../map-explorer.service';
 import {environment} from 'src/environments/environment.prod';
 import {CLUSTER_LAYER_NAME, POINT_LAYER} from "../../util/constants";
 import {MapboxEvent} from "mapbox-gl";
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+
 
 @Component({
   selector: 'app-map-holder',
@@ -17,7 +20,7 @@ export class MapHolderComponent implements OnInit {
 
   /// default settings
   map: mapboxgl.Map;
-  style = 'mapbox://styles/mapbox/satellite-v9';
+  style = 'mapbox://styles/mapbox/streets-v11';
   lat = 37.75;
   lng = -122.41;
   message = 'Hello World!';
@@ -138,6 +141,10 @@ export class MapHolderComponent implements OnInit {
 
     /// Add map controls
     this.map.addControl(new mapboxgl.NavigationControl());
+    this.map.addControl(new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl
+    }));
 
 
     /// Add realtime dataService data on map load
