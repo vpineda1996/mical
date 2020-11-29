@@ -70,6 +70,8 @@ button {
 
 .drop-down-btns {
   padding: 34px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .drop-down-btns .btn-holder{
