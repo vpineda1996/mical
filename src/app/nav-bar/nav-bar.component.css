@@ -28,7 +28,7 @@
 }
 
 .pure-button:hover {
-  background-image: none;
+  background-image: none; 
 }
 
 .pure-button:active {
@@ -54,11 +54,11 @@
 }
 
 .home-menu .pure-menu-selected a, .home-menu .pure-menu-selected a:hover {
-  color: white;
+  color: #6FBEF3;
 }
 
 .home-menu a {
-  color: #6FBEF3;
+  color: white;
 }
 .home-menu li a:hover,
 .home-menu li a:focus {

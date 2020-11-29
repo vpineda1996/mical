@@ -29,3 +29,7 @@
 .btn-hidden {
   visibility: hidden;
 }
+
+span {
+  font-family: 'Source Sans Pro', sans-serif;
+}
