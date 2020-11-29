@@ -23,6 +23,7 @@
   display: flex;
   align-items: flex-end;
   width: 100%;
+  text-transform: uppercase;
 }
 
 .control-container:after {
@@ -68,13 +69,17 @@
   margin-left: auto;
 }
 
+.switch-title {
+  margin: auto 23px auto 31px;
+  font-family: var(--text-font);
+}
+
 .switch-label {
   margin: auto 12px auto 0;
   font-family: var(--text-font);
 }
 
 .switch-container > * {
-  text-transform: uppercase;
   display: inline-block;
 }
 

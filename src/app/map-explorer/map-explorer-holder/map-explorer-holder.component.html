@@ -2,6 +2,7 @@
   <div class="sub-container pure-g">
     <div class="main-view pure-u-1">
       <div class="control-container">
+        <div class="switch-title">Filters</div>
         <div class="filter-container">
           <app-filter-bar
             (onApply)="onApply($event)"
@@ -10,7 +11,7 @@
           </app-filter-bar>
         </div>
         <div class="switch-container">
-          <div class="switch-label">Map View</div>
+          <div class="switch-label">Map View</div> 
           <div>
             <label class="switch">
               <input type="checkbox" [(ngModel)]="showMap">
@@ -36,8 +37,6 @@
         <app-graph-explorer-holder></app-graph-explorer-holder>
       </ng-template>
     </div>
-    <!-- <app-graphics-holder class="">
-    </app-graphics-holder> -->
   </div>
 </div>
 
