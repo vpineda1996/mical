@@ -17,7 +17,7 @@ export class MapHolderComponent implements OnInit {
 
   /// default settings
   map: mapboxgl.Map;
-  style = 'mapbox://styles/mapbox/streets-v11';
+  style = 'mapbox://styles/mapbox/satellite-streets-v11';
   lat = 37.75;
   lng = -122.41;
   message = 'Hello World!';
