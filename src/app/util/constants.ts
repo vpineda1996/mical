@@ -1,9 +1,9 @@
 // TODO: vpineda this is harcoded, should be removed!
 import {EmptyFilter} from '../model/filters';
 
-export const SERVER_URL = "https://agevserver.herokuapp.com";
+// export const SERVER_URL = "https://agevserver.herokuapp.com";
 // local URL (lets create a dynamic switching type later)
-// export const SERVER_URL = 'http://127.0.0.1:8888/'
+export const SERVER_URL = 'http://127.0.0.1:8888/'
 export const API_ROUTE = "api";
 
 export const OUTCOME_TABLE_ROUTE = 'table';
@@ -20,10 +20,10 @@ export const COLUMN_FILTERS_STORAGE_KEY = 'COL_FILTERS'
 export const FILTER_COL = 'filterCols';
 
 export const YIELD_FILTER_COLS = {
-  SOIL: FILTER_COL + "." + "soil",
-  CLIMATE: FILTER_COL + "." + "climate",
-  DURATION: FILTER_COL + "." + "duration",
-  CROP: FILTER_COL + "." + "crop"
+  SOIL: FILTER_COL + ".soil",
+  CLIMATE: FILTER_COL + ".climate",
+  DURATION: FILTER_COL + ".duration",
+  CROP: FILTER_COL + ".crop"
 };
 
 export const INTERVENTION_KEY = 'intervention';
