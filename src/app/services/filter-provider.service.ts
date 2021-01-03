@@ -49,8 +49,6 @@ export class FilterProviderService {
     );
     ans.subscribe((v) => {
       if (col === 'filterCols.crop' || col === 'filterCols.climate') {
-        console.log('col: ' + col);
-        console.log('v: ' + v);
         v.sort((a, b) => {
           const aIgnoreCase = a.toUpperCase();
           const bIgnoreCase = b.toUpperCase();
@@ -88,7 +86,6 @@ export class FilterProviderService {
         });
         // moves the 'Less Than 1 Year' duration to the front of the array
         v.forEach((duration, i) => {
-          console.log(duration)
           if (duration === 'less than 1 year') {
             v.splice(i, 1);
             v.unshift(duration);
