@@ -2,10 +2,6 @@
     margin: 12px;
 }
 
-div.title {
-  font-family: 'Source Sans Pro', sans-serif;
-}
-
 #no-results {
   font-weight: bold;
 }
