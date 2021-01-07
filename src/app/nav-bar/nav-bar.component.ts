@@ -9,7 +9,7 @@ import {filter, map, take} from 'rxjs/operators';
 })
 export class NavBarComponent implements OnInit {
 
-  view: NavBarView = NavBarView.home;
+  view: NavBarView = NavBarView.home; 
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     router.events.pipe(
@@ -17,6 +17,8 @@ export class NavBarComponent implements OnInit {
     ).subscribe((e) => {
       let rr = <NavigationStart> e;
       let place = rr.url.split("/")[1];
+      if (place.includes('map'))
+        place = 'map';
       this.view = NavBarView[place];
     });
   }

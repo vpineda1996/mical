@@ -64,7 +64,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
         tickFormatter: (n) => Math.round(n * 100) + "%",
         showMinorTicks: false,
         font: {
-          family: "Source Sans Pro",
+          family: "Roboto",
           weight: "bold"
         },
         tickLength: 0
@@ -72,7 +72,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
       yaxis: {
         gridLines: false,
         showMinorTicks: false,
-        font: "Source Sans Pro",
+        font: "Roboto",
         tickLength: 0
       },
       grid: {
