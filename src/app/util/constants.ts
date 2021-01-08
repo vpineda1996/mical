@@ -20,6 +20,7 @@ export const COLUMN_FILTERS_STORAGE_KEY = 'COL_FILTERS'
 export const FILTER_COL = 'filterCols';
 
 export const YIELD_FILTER_COLS = {
+  COUNTRY: "country",
   SOIL: FILTER_COL + ".soil",
   CLIMATE: FILTER_COL + ".climate",
   DURATION: FILTER_COL + ".duration",

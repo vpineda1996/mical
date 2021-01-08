@@ -7,7 +7,6 @@ import {FilterProviderService} from '../../services/filter-provider.service';
 import {InterventionProviderService} from '../../services/intervention-provider.service';
 import {OutcomeTableProviderService} from '../../services/outcome-table-provider.service';
 import {AREA_KEY, INTERVENTION_KEY} from '../../util/constants';
-import Countries from '../../../assets/json/countries.json';
 
 @Component({
   selector: 'app-filter-bar',
@@ -43,8 +42,8 @@ export class FilterBarComponent implements OnInit {
 
   location$: Observable<string[]>;
   crops$: Observable<string[]>;
-  climate$: Observable<string[]> ;
-  soil$: Observable<string[]> ;
+  climate$: Observable<string[]>;
+  soil$: Observable<string[]>;
   duration$: Observable<string[]>;
 
   @Output("onApply")
@@ -75,14 +74,14 @@ export class FilterBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.location$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.COUNTRY);
     this.crops$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.CROP);
     this.climate$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.CLIMATE);
     this.soil$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.SOIL);
     this.duration$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.DURATION);
-    this.location$ = of(Object.keys(Countries));
   }
 
-  async onSelectButton(btnId: BUTTON_ID, selectedOpts: string[]) {
+  async onSelectButton(btnId: BUTTON_ID, selectedOpts: string[]) { 
     // highlight current button
     if (btnId != BUTTON_ID.APPLY) {
       this.selectedBtn[btnId] = !!selectedOpts.length;
@@ -118,24 +117,18 @@ export class FilterBarComponent implements OnInit {
       let sec = this.filters[k];
       p[k] = Object.keys(sec);
       return p;
-    }, <{[section: string]: string[]}>{});
+    }, <{[section: string]: string[]}>{}); 
 
     // notify the filter provider of the new filters
+    this.filterProvider.filterOn(this.outcomeProvider.filterCols.COUNTRY, properties.country);
     this.filterProvider.filterOn(this.outcomeProvider.filterCols.CROP, properties.crop);
     this.filterProvider.filterOn(this.outcomeProvider.filterCols.CLIMATE, properties.climate);
     this.filterProvider.filterOn(this.outcomeProvider.filterCols.SOIL, properties.soil);
     this.filterProvider.filterOn(this.outcomeProvider.filterCols.DURATION, properties.duration);
 
-    let pts = properties.country.reduce((acc, c) => {
-      let coords = Countries[c];
-      acc.push([coords[1], coords[0]]);
-      acc.push([coords[3], coords[2]]);
-      return acc;
-    }, <[number, number][]>[]);
-
     let applyParams = {
       selectedInterventions: properties.intervention,
-      area: boundingBox(pts),
+      area: boundingBox([]),
     };
     this.selectedBtn = this.selectedBtn.map( () => false );
     this.applyEmitter.emit(applyParams);
@@ -152,6 +145,7 @@ export class FilterBarComponent implements OnInit {
     });
   }
 }
+
 export const BTN_LABELS = ["Search country", "Intervention", "Search crop", "Climate", "Soil", "Study Duration", "Apply"];
 export enum BUTTON_ID {
   COUNTRY, INTERVENTION, CROP, CLIMATE, SOIL, DURATION, APPLY, NONE
