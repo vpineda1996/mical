@@ -55,6 +55,7 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
 
   private _closeBinded = this.closeDropDown.bind(this);
   protected closeDropDown(e: Event) {
+    Object.assign(this.currentSelectedOpts, this.selectedOpts);
     this.activeSelection = false;
     this.selection = (this.sl) ? this.sl.selected : undefined;
     this.onOptSelected(this.id, Object.keys(this.selectedOpts));
@@ -85,8 +86,8 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
 
   // fn call when apply button is clicked
   protected onApplyClick(event: Event) {
-    this.closeDropDown(event);
     Object.assign(this.currentSelectedOpts, this.selectedOpts);
+    this.closeDropDown(event);
   }
 
   protected onClearClick(event: Event) {
