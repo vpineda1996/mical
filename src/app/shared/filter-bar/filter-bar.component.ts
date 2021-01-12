@@ -35,11 +35,7 @@ export class FilterBarComponent implements OnInit {
   @Input()
   useApplyBtn = true;
 
-  interventions$: Observable<string[]> =
-    this.interventionProvider.allObservableInterventions.pipe(
-      map(ints => ints.map(i => i.sKey).sort())
-    );
-
+  interventions$: Observable<string[]>;
   location$: Observable<string[]>;
   crops$: Observable<string[]>;
   climate$: Observable<string[]>;
@@ -62,7 +58,7 @@ export class FilterBarComponent implements OnInit {
     };
 
     // set intervention
-    this.interventionProvider.activeInterventions.subscribe((ints) => {
+    this.interventionProvider.activeInterventions.subscribe((ints) => { 
       this.filters.intervention = fn(Object.keys(ints));
     });
 
@@ -74,6 +70,7 @@ export class FilterBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.interventions$ = this.interventionProvider.allObservableInterventions.pipe(map(ints => ints.map(i => i.sKey).sort()));
     this.location$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.COUNTRY);
     this.crops$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.CROP);
     this.climate$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.CLIMATE);

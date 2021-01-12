@@ -26,8 +26,10 @@ export class InterventionProviderService {
     return this._interventions$;
   }
 
-  // TODO: vpineda filter interventions based on the current table
   get allObservableInterventions(): Observable<Intervention[]> {
+    if (this.storage)
+      return of(this.storage);
+
     return <Observable<Intervention[]>> this.http
       .get(tableUrl(this.outcomeTableProviderService.table))
       .pipe(share());
