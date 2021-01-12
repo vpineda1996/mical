@@ -32,7 +32,7 @@ export interface HistogramData {
   labels: {
     denom: string,
     numerator: string,
-    xlabel: string
+    xaxis: string
   }
 }
 
