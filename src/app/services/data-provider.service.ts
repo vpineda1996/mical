@@ -29,7 +29,8 @@ export class DataProviderService {
       debounceTime(DEBOUNCE_WAIT)
     ).subscribe(() => {
       let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
-      this.updateMapData(interventionsKeys);
+      console.log(1)
+      // this.updateMapData(interventionsKeys);
       this.updateHistograms();
     });
 
@@ -37,6 +38,7 @@ export class DataProviderService {
     this.setupActiveInterventionsListener();
 
     let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
+    console.log(2)
     this.updateMapData(interventionsKeys);
     this.updateHistograms();
   }
@@ -90,6 +92,7 @@ export class DataProviderService {
     });
     // do database query
     this.queryProvider.getMapData().subscribe((value: Array<MapData>) => {
+      console.log('response')
       // if no interventions are selected, display all by default
       // otherwise, only keep map data that belong to the selected interventions
       const selectedInterventions = Object.keys(keys).length === 0
