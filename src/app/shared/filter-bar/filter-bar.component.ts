@@ -143,7 +143,7 @@ export class FilterBarComponent implements OnInit {
   }
 }
 
-export const BTN_LABELS = ["Search country", "Intervention", "Search crop", "Climate", "Soil", "Study Duration", "Apply"];
+export const BTN_LABELS = ["Search country", "Intervention", "Crop", "Climate", "Soil", "Study Length", "Apply"];
 export enum BUTTON_ID {
   COUNTRY, INTERVENTION, CROP, CLIMATE, SOIL, DURATION, APPLY, NONE
 }
