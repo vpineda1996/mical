@@ -19,6 +19,7 @@ export class MapExplorerHolderComponent implements OnInit {
   onApply(data: { selectedInterventions: string[] }) {
     console.log(3)
     this.dataProvider.updateMapData(data.selectedInterventions);
+    this.dataProvider.updateHistograms();
   }
 
   ngOnInit() {

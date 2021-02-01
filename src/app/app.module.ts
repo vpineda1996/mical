@@ -10,12 +10,14 @@ import { ColorProviderService } from './services/color-provider.service';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
 import { Overlay } from '@angular/cdk/overlay';
+import {SpinnerOverlayComponent} from "./shared/spinner-overlay/spinner-overlay.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
+    SpinnerOverlayComponent
   ],
   imports: [
     BrowserModule,
