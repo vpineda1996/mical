@@ -9,6 +9,7 @@ import { ChartProviderService } from './services/chart-provider.service';
 import { ColorProviderService } from './services/color-provider.service';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
+import { Overlay } from '@angular/cdk/overlay';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { HomeModule } from './home/home.module';
   providers: [
     ColorProviderService,
     ChartProviderService,
+    Overlay
   ],
   bootstrap: [AppComponent]
 })
