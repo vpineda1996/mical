@@ -7,6 +7,8 @@ import {MapExplorerService} from '../map-explorer.service';
 import {environment} from 'src/environments/environment.prod';
 import {CLUSTER_LAYER_NAME, POINT_LAYER} from "../../util/constants";
 import {MapboxEvent} from "mapbox-gl";
+import { SpinnerOverlayService } from '../../services/spinner-overlay.service';
+
 
 @Component({
   selector: 'app-map-holder',
@@ -27,7 +29,7 @@ export class MapHolderComponent implements OnInit {
   markers$: Observable<Array<GeoJsonPoint>>;
 
   constructor(private mapService: MapExplorerService,
-              private filterProviderService: FilterProviderService) {
+              private filterProviderService: FilterProviderService) { 
     // @ts-ignore
     mapboxgl.accessToken = environment.mapbox.accessToken;
   }

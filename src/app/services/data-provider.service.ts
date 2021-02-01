@@ -7,6 +7,7 @@ import {debounceTime, flatMap, map, reduce} from 'rxjs/operators';
 import {QueryProviderService} from './query-provider.service';
 import {Intervention, InterventionProviderService} from './intervention-provider.service';
 import {FilterProviderService} from './filter-provider.service';
+import { SpinnerOverlayService } from './spinner-overlay.service';
 
 const DEBOUNCE_WAIT = 500;
 
@@ -22,7 +23,8 @@ export class DataProviderService {
 
   constructor(private interventionProviderService: InterventionProviderService,
               private filterProvider: FilterProviderService,
-              private queryProvider: QueryProviderService) {
+              private queryProvider: QueryProviderService,
+              private spinnerOverlayService: SpinnerOverlayService) {
 
     // 1. create a fn to listen to the filter provider
     filterProvider.announcer.pipe(
@@ -91,7 +93,9 @@ export class DataProviderService {
       }
     });
     // do database query
+    this.spinnerOverlayService.show();
     this.queryProvider.getMapData().subscribe((value: Array<MapData>) => {
+      this.spinnerOverlayService.hide();
       console.log('response')
       // if no interventions are selected, display all by default
       // otherwise, only keep map data that belong to the selected interventions
