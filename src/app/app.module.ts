@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
 import { Overlay } from '@angular/cdk/overlay';
 import {SpinnerOverlayComponent} from "./shared/spinner-overlay/spinner-overlay.component";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {SpinnerOverlayComponent} from "./shared/spinner-overlay/spinner-overlay.
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    NgxSpinnerModule,
 
     // material imports
     // views modules
