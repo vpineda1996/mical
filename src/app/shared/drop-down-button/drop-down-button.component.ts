@@ -2,6 +2,8 @@ import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, V
 import {BUTTON_ID} from '../filter-bar/filter-bar.component';
 import {Observable} from 'rxjs';
 import {MultiSelectListComponent} from '../multi-select-list/multi-select-list.component';
+import {Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators'
 
 @Component({
   selector: 'app-drop-down-button',
@@ -48,7 +50,7 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
 
   @Input()
   opts$ : Observable<string[]>;
-
+ 
   @Input()
   onOptSelected = (id: BUTTON_ID, selctedOpts: string[]) => {};
 
@@ -101,13 +103,21 @@ export class DropDownButtonComponent implements OnInit, OnDestroy {
     return JSON.stringify(this.currentSelectedOpts) !== JSON.stringify(this.selectedOpts);
   }
 
-  constructor() {
+  constructor(private router: Router) {
 
+    // resets the selected options for all dropdowns if page is refreshed
+    this.router.events
+    .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
+    .subscribe(event => {
+      if (event.id === 1 && event.url === event.urlAfterRedirects) {
+        this.selectedOpts = {};
+        this.currentSelectedOpts = {};
+      }
+    })
   }
 
   ngOnInit() {
-    this.selectedOpts = {};
-    this.currentSelectedOpts = {};
+   
   }
 
   ngOnDestroy() {

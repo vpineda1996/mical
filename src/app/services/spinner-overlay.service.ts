@@ -14,20 +14,24 @@ export class SpinnerOverlayService {
   public show(): void {
     // Hack avoiding `ExpressionChangedAfterItHasBeenCheckedError` error
     Promise.resolve(null).then(() => {
-      this.overlayRef = this.overlay.create({
-        positionStrategy: this.overlay
-          .position()
-          .global()
-          .centerHorizontally()
-          .centerVertically(),
-        hasBackdrop: true,
-      });
-      this.overlayRef.attach(new ComponentPortal(SpinnerOverlayComponent));
+      if (!this.overlayRef) {
+        this.overlayRef = this.overlay.create({
+          positionStrategy: this.overlay
+            .position()
+            .global()
+            .centerHorizontally()
+            .centerVertically(),
+          hasBackdrop: true,
+        });
+        this.overlayRef.attach(new ComponentPortal(SpinnerOverlayComponent));
+      }
     });
   }
 
   public hide(): void {
-    this.overlayRef.detach();
-    this.overlayRef = undefined;
+    if (this.overlayRef) {
+      this.overlayRef.dispose();
+      this.overlayRef = undefined;
+    }
   }
 }

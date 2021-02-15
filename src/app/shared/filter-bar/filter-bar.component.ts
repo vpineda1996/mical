@@ -67,6 +67,11 @@ export class FilterBarComponent implements OnInit {
     this.filters.climate = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.CLIMATE));
     this.filters.soil = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.SOIL));
     this.filters.duration = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.DURATION));
+    console.log(this.filters.intervention)
+    console.log(this.filters.crop)
+    console.log(this.filters.climate)
+    console.log(this.filters.soil)
+    console.log(this.filters.duration)
   }
 
   ngOnInit() {

@@ -20,6 +20,7 @@ export class DataProviderService {
   private selectedInterventions: Intervention[] = [];
   private interventionQueries: Subject<{[intervention:string]: HistogramData}> = new BehaviorSubject({});
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
+  private explorePageInitialized: boolean = false;
 
   constructor(private interventionProviderService: InterventionProviderService,
               private filterProvider: FilterProviderService,
@@ -32,17 +33,25 @@ export class DataProviderService {
     ).subscribe(() => {
       let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
       console.log(1)
+      if (this.explorePageInitialized) {
+        this.updateMapData(interventionsKeys);
+        this.explorePageInitialized = false;
+      }
       // this.updateMapData(interventionsKeys);
       this.updateHistograms();
     });
 
     this.setupGeoDataListener();
     this.setupActiveInterventionsListener();
-
     let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
+    console.log(interventionsKeys)
     console.log(2)
     this.updateMapData(interventionsKeys);
     this.updateHistograms();
+  }
+
+  setExplorePageInitialized(): void {
+    this.explorePageInitialized = true;
   }
 
   setupGeoDataListener(): void {
