@@ -14,6 +14,7 @@ export class HomeExplorerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('hihihhihihihi')
   }
 
   onApply(f: {[section: string]: string[]}) {
