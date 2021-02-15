@@ -38,8 +38,8 @@ export class DataProviderService {
 
     this.setupGeoDataListener();
     this.setupActiveInterventionsListener();
-
     let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
+    console.log(interventionsKeys)
     console.log(2)
     this.updateMapData(interventionsKeys);
     this.updateHistograms();
