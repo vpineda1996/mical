@@ -63,6 +63,7 @@ export class FilterBarComponent implements OnInit {
     });
 
     // set filter col opts, to on
+    this.filters.country = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.COUNTRY));
     this.filters.crop = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.CROP));
     this.filters.climate = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.CLIMATE));
     this.filters.soil = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.SOIL));
