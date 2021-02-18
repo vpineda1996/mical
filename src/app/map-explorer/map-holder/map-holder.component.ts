@@ -77,7 +77,8 @@ export class MapHolderComponent implements OnInit {
       });
     });
 
-    this.map.on('mouseenter', 'clusters',  () => {
+    this.map.on('mouseenter', 'clusters',  (e) => {
+      console.log(e)
       this.map.getCanvas().style.cursor = 'pointer';
     });
     this.map.on('mouseleave', 'clusters',  () => {
@@ -97,7 +98,16 @@ export class MapHolderComponent implements OnInit {
 
       // todo vpineda set the right type here
       let feature: any = e.features[0];
-
+      let pc: any = e.features[0].properties.point_count;
+      
+      console.log(e)
+      console.log(feature)
+      this.source.getClusterLeaves(feature.properties.cluster_id, pc, 0, (err, features) => {
+        if (err)
+         return;
+         
+        console.log(features)
+      })
 
       let coordinates = feature.geometry.coordinates.slice();
       let description = "<div>Hello!</div>";
@@ -175,8 +185,10 @@ export class MapHolderComponent implements OnInit {
 
       /// subscribe to realtime database and set data source
       this.markers$.subscribe(markers => {
+        // console.log(markers)
         const data = new PointCollection(markers);
         this.source.setData(data);
+        console.log(this.source)
       });
 
 
