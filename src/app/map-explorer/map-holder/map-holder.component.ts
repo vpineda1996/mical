@@ -8,6 +8,7 @@ import {environment} from 'src/environments/environment.prod';
 import {CLUSTER_LAYER_NAME, POINT_LAYER} from "../../util/constants";
 import {MapboxEvent} from "mapbox-gl";
 import { SpinnerOverlayService } from '../../services/spinner-overlay.service';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -77,7 +78,8 @@ export class MapHolderComponent implements OnInit {
       });
     });
 
-    this.map.on('mouseenter', 'clusters',  () => {
+    this.map.on('mouseenter', 'clusters',  (e) => {
+      console.log(e)
       this.map.getCanvas().style.cursor = 'pointer';
     });
     this.map.on('mouseleave', 'clusters',  () => {
@@ -97,29 +99,50 @@ export class MapHolderComponent implements OnInit {
 
       // todo vpineda set the right type here
       let feature: any = e.features[0];
+      let data: any = feature.properties;
+      console.log(data);
 
+      try {
+        let filterCols = JSON.parse(data.filterCols);
 
-      let coordinates = feature.geometry.coordinates.slice();
-      let description = "<div>Hello!</div>";
+        let location = data.location;
+        let interventionName = data.interventionName;
+        let author = filterCols.author;
+        let crop = filterCols.crop;
 
-      // Ensure that if the map is zoomed out such that multiple
-      // copies of the feature are visible, the popup appears
-      // over the copy being pointed to.
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        let coordinates = feature.geometry.coordinates.slice();
+        let description = `<ul style="list-style-type:none; font-weight: 600; font-family: Source Sans Pro; font-size: 14px; 
+                                      padding-left: 0; word-wrap: break-word;" >
+                            <li>Intervention: ${interventionName}</li>                    
+                            <li>Crop: ${crop}</li>
+                            <li>Location: ${location}</li>
+                            <li>DOI: ${author}</li>
+                           </ul>`;
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        // todo vpineda setup popup
+        popup.setLngLat(coordinates)
+          .setHTML(description)
+          .addTo(this.map);
+
+      // catching case where our selected keys arent in the object, this will usually occur
+      // when you are still in a cluster feature
+      } catch (err) {
+        console.log("hovering over cluster");
       }
-
-      // Populate the popup and set its coordinates
-      // based on the feature found.
-      // todo vpineda setup popup
-      // popup.setLngLat(coordinates)
-      //   .setHTML(description)
-      //   .addTo(this.map);
     };
 
-    let mouseLeaveHandler = (e) => {
-      // this.map.getCanvas().style.cursor = '';
-      // popup.remove();
+    let mouseLeaveHandler = () => {
+      this.map.getCanvas().style.cursor = '';
+      popup.remove();
     }
 
     this.map.on('mouseenter', POINT_LAYER, mouseEnterHandler);
@@ -175,8 +198,10 @@ export class MapHolderComponent implements OnInit {
 
       /// subscribe to realtime database and set data source
       this.markers$.subscribe(markers => {
+        // console.log(markers)
         const data = new PointCollection(markers);
         this.source.setData(data);
+        console.log(this.source)
       });
 
 

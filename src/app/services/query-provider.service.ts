@@ -36,7 +36,7 @@ export class QueryProviderService {
 
   buildMapURL(): string {
     let baseURL = this.buildURL();
-    baseURL += "&cols=coords,interventionType";
+    baseURL += "&cols=coords,interventionType,interventionName,location,filterCols";
     return baseURL;
   }
 
@@ -59,7 +59,7 @@ export class QueryProviderService {
      // set other filters
      let customF = this.filterProvider.filters.compile();
      url += ((startedQ) ? "&" : "?") + "f=" + customF;
-    //  console.log("Querying: " + url);
+     console.log("Querying: " + url);
      return url;
   }
 

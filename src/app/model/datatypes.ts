@@ -18,6 +18,17 @@ export class GeoPoint implements Point {
 export interface MapData {
   coords: GeoPoint;
   interventionType: number;
+  interventionName: string;
+  location: string;
+  sampleSize: number;
+  filterCols: {
+    author: string;
+    crop: string;
+    crop2: string;
+    duration: string;
+    soil: string;
+    climate: string;
+  }
 }
 
 

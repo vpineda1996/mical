@@ -6,6 +6,17 @@ export class GeoJsonPoint implements Feature<Point> {
    geometry: Point;
    id: string | number;
    type: "Feature" = "Feature";
+   sampleSize: number;
+   interventionName: string;
+   location: string;
+   filterCols: {
+    author: string;
+    crop: string;
+    crop2: string;
+    duration: string;
+    soil: string;
+    climate: string;
+  }
 
   constructor(coordinates: [number, number], public properties: GeoJsonProperties) {
     this.geometry = {
@@ -13,6 +24,10 @@ export class GeoJsonPoint implements Feature<Point> {
       coordinates: coordinates
     };
     this.type = "Feature";
+    this.sampleSize = properties.sampleSize;
+    this.filterCols = properties.filterCols;
+    this.interventionName = properties.interventionName;
+    this.location = properties.location;
   }
 }
 

@@ -95,6 +95,7 @@ export class DataProviderService {
     // maintain a hash set for unique intervention keys and quick access
     const keys = {};
     const allInterventions = this.interventionProviderService.allInterventions;
+    console.log(allInterventions)
     allInterventions.forEach(intervention => {
       const { key: currentInterventionKey, sKey } = intervention;
       if (!keys[currentInterventionKey] && selectedInterventions.includes(sKey)) {
@@ -111,6 +112,7 @@ export class DataProviderService {
       const selectedInterventions = Object.keys(keys).length === 0
         ? value
         : value.filter(v => keys[v.interventionType]);
+      console.log(selectedInterventions)
       this.mapData.next(selectedInterventions);
     });
   }
