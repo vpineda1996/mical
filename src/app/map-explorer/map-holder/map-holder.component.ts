@@ -97,27 +97,48 @@ export class MapHolderComponent implements OnInit {
       // Change the cursor style as a UI indicator.
       this.map.getCanvas().style.cursor = 'pointer';
 
-      // todo vpineda set the right type here
       let feature: any = e.features[0];
+      let dataArray = e.features;
       let data: any = feature.properties;
-      console.log(data);
+      console.log(dataArray);
 
       try {
-        let filterCols = JSON.parse(data.filterCols);
-
-        let location = data.location;
-        let interventionName = data.interventionName;
-        let author = filterCols.author;
-        let crop = filterCols.crop;
+        // using set to remove duplicates
+        let locationSet: Set<String>  = new Set();
+        let interventionNameSet: Set<String> = new Set();
+        let authorSet: Set<String>  = new Set();
+        let cropSet: Set<String>  = new Set();
+  
+        for (data of dataArray) {
+          let properties = data.properties;
+          let filterCols = JSON.parse(properties.filterCols);
+          let location = properties.location;
+          let interventionName = properties.interventionName;
+          let author = filterCols.author;
+          let crop = filterCols.crop;
+          locationSet.add(location);
+          interventionNameSet.add(interventionName);
+          authorSet.add(author);
+          cropSet.add(crop);
+        }
+        
+        // switching back to array as set cannot use .map
+        let locationArray = Array.from(locationSet);
+        let interventionNameArray = Array.from(interventionNameSet);
+        let authorArray = Array.from(authorSet);
+        let cropArray = Array.from(cropSet);
 
         let coordinates = feature.geometry.coordinates.slice();
-        let description = `<ul style="list-style-type:none; font-weight: 600; font-family: Source Sans Pro; font-size: 14px; 
+        let description = `
+        <div>
+        <h3 style="color: #4B6ECB; font-size: 16px; font-family: Source Sans Pro;">STUDY DETAILS</h3>
+        <ul style="list-style-type:none; font-weight: 600; font-family: Source Sans Pro; font-size: 14px; 
                                       padding-left: 0; word-wrap: break-word;" >
-                            <li>Intervention: ${interventionName}</li>                    
-                            <li>Crop: ${crop}</li>
-                            <li>Location: ${location}</li>
-                            <li>DOI: ${author}</li>
-                           </ul>`;
+                            <li>INTERVENTION:${interventionNameArray.map(i => ' ' + i)}</li>                    
+                            <li>CROP: ${cropArray.map(i => ' ' + this.capitalizeFirstLetter(i))}</li>
+                            <li>LOCATION: ${locationArray.map(i => ' ' + i)}</li>
+                            <li>DOI: ${authorArray.map(i => ' ' + i)}</li>
+                           </ul></div>`;
 
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
@@ -225,5 +246,9 @@ export class MapHolderComponent implements OnInit {
     this.map.flyTo({
       center: <[number, number]>data.geometry.coordinates
     });
+  }
+
+  capitalizeFirstLetter(string: String) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
