@@ -76,7 +76,7 @@ export class FilterBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.interventions$ = this.interventionProvider.allObservableInterventions.pipe(map(ints => ints.map(i => i.sKey).sort()));
+    this.interventions$ = this.interventionProvider.filtersForCol();
     this.location$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.COUNTRY);
     this.crops$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.CROP);
     this.climate$ = this.filterProvider.filtersForCol(this.outcomeProvider.filterCols.CLIMATE);

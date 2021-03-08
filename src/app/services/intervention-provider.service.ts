@@ -26,6 +26,27 @@ export class InterventionProviderService {
     return this._interventions$;
   }
 
+  private _cache: {[col: string]: string[]} = {};
+  // copied simliar style to query-provider.service filtersForCol() for consistency and caching
+  filtersForCol(): Observable<string[]> {
+    let start = of(this._cache);
+    let ans = start.pipe(
+      flatMap((cache) => {
+        if(cache['interventions']) {
+          console.log(cache)  
+          return of(cache['interventions'])
+        };
+        return this.allObservableInterventions.pipe(map(ints => ints.map(i => i.sKey).sort()));
+      }),
+      share()
+    );
+    ans.subscribe((interventions) => {
+      this._cache['interventions'] = interventions
+    })
+    return ans;
+
+  }
+
   get allObservableInterventions(): Observable<Intervention[]> {
     return <Observable<Intervention[]>> this.http
       .get(tableUrl(this.outcomeTableProviderService.table))
