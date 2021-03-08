@@ -8,7 +8,6 @@ import {
   INTERVENTION_ROUTE,
   OUTCOME_TABLE_ROUTE,
   SERVER_URL,
-  INTERVENTIONS_STORAGE_KEY,
 } from '../util/constants';
 import {BehaviorSubject, Observable, Subject, of} from 'rxjs';
 import {OutcomeTableProviderService} from './outcome-table-provider.service';

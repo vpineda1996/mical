@@ -79,7 +79,6 @@ export class MapHolderComponent implements OnInit {
     });
 
     this.map.on('mouseenter', 'clusters',  (e) => {
-      console.log(e)
       this.map.getCanvas().style.cursor = 'pointer';
     });
     this.map.on('mouseleave', 'clusters',  () => {
@@ -100,7 +99,6 @@ export class MapHolderComponent implements OnInit {
       let feature: any = e.features[0];
       let dataArray = e.features;
       let data: any = feature.properties;
-      console.log(dataArray);
 
       try {
         // using set to remove duplicates
@@ -219,10 +217,8 @@ export class MapHolderComponent implements OnInit {
 
       /// subscribe to realtime database and set data source
       this.markers$.subscribe(markers => {
-        // console.log(markers)
         const data = new PointCollection(markers);
         this.source.setData(data);
-        console.log(this.source)
       });
 
 

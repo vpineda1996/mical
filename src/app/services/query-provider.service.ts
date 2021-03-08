@@ -20,7 +20,6 @@ export class QueryProviderService {
   }
 
   getMapData(): Observable<Array<MapData>> {
-    console.log(this.buildMapURL());
     let ans =  <Observable<Array<MapData>>> this.http.get(this.buildMapURL());
     ans.subscribe(undefined, errorFn);
     return ans.pipe(share());
@@ -59,7 +58,6 @@ export class QueryProviderService {
      // set other filters
      let customF = this.filterProvider.filters.compile();
      url += ((startedQ) ? "&" : "?") + "f=" + customF;
-     console.log("Querying: " + url);
      return url;
   }
 
