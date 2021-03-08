@@ -21,22 +21,25 @@ export class InterventionProviderService {
 
   private _intervention: InterventionData = DEFAULT_INTERVENTIONS;
   private _interventions$: Subject<InterventionData> = new BehaviorSubject(this._intervention);
+  private interventionsSingleton: Intervention[] = [];
 
   get activeInterventions(): Observable<InterventionData> {
     return this._interventions$;
   }
 
   get allObservableInterventions(): Observable<Intervention[]> {
-    if (this.storage)
-      return of(this.storage);
-
     return <Observable<Intervention[]>> this.http
       .get(tableUrl(this.outcomeTableProviderService.table))
       .pipe(share());
   }
 
   get allInterventions(): Intervention[] {
-    return this.storage;
+    this.allObservableInterventions
+      .pipe(map(ints => ints))
+      .subscribe(res => {
+        this.interventionsSingleton = res
+      });
+    return this.interventionsSingleton;
   }
 
   constructor(private route: ActivatedRoute,
@@ -47,7 +50,7 @@ export class InterventionProviderService {
     })
     this.allObservableInterventions
       .pipe(map(ints => ints))
-      .subscribe(res => this.storage = res || []);
+      .subscribe(res => this.interventionsSingleton = res || []);
   }
 
   private parseInterventions(str: string) {
@@ -66,20 +69,6 @@ export class InterventionProviderService {
       this._intervention = v;
       this._interventions$.next(this._intervention);
     })
-  }
-
-  private get storage() {
-    let opts = window.sessionStorage.getItem(INTERVENTIONS_STORAGE_KEY);
-    try {
-      return JSON.parse(opts);
-    } catch (e) {
-      window.sessionStorage.setItem(INTERVENTIONS_STORAGE_KEY, "[]");
-    }
-    return [];
-  }
-
-  private set storage(store: Intervention[]) {
-    window.sessionStorage.setItem(INTERVENTIONS_STORAGE_KEY, JSON.stringify(store));
   }
 }
 
