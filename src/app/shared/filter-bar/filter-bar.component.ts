@@ -27,6 +27,8 @@ export class FilterBarComponent implements OnInit {
     duration: {},
   };
 
+  previousFilters = JSON.parse(JSON.stringify(this.filters));
+
   btnLabels = BTN_LABELS.slice();
 
   @Input()
@@ -68,11 +70,8 @@ export class FilterBarComponent implements OnInit {
     this.filters.climate = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.CLIMATE));
     this.filters.soil = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.SOIL));
     this.filters.duration = fn(this.filterProvider.selectedValues(this.outcomeProvider.filterCols.DURATION));
-    console.log(this.filters.intervention)
-    console.log(this.filters.crop)
-    console.log(this.filters.climate)
-    console.log(this.filters.soil)
-    console.log(this.filters.duration)
+    // setting previous filters to filters in case page is refreshed from explore page and saves filters
+    this.previousFilters = JSON.parse(JSON.stringify(this.filters));
   }
 
   ngOnInit() {
@@ -122,30 +121,34 @@ export class FilterBarComponent implements OnInit {
       return p;
     }, <{[section: string]: string[]}>{}); 
 
-    // notify the filter provider of the new filters
-    this.filterProvider.filterOn(this.outcomeProvider.filterCols.COUNTRY, properties.country);
-    this.filterProvider.filterOn(this.outcomeProvider.filterCols.CROP, properties.crop);
-    this.filterProvider.filterOn(this.outcomeProvider.filterCols.CLIMATE, properties.climate);
-    this.filterProvider.filterOn(this.outcomeProvider.filterCols.SOIL, properties.soil);
-    this.filterProvider.filterOn(this.outcomeProvider.filterCols.DURATION, properties.duration);
+    // notify the filter provider of the new filters only if filter is changed to prevent request on same filters
+    // alternatively if on home page, apply filters no matter what
+    if (JSON.stringify(this.filters) !== JSON.stringify(this.previousFilters) || this.useApplyBtn) {
+      this.filterProvider.filterOn(this.outcomeProvider.filterCols.COUNTRY, properties.country);
+      this.filterProvider.filterOn(this.outcomeProvider.filterCols.CROP, properties.crop);
+      this.filterProvider.filterOn(this.outcomeProvider.filterCols.CLIMATE, properties.climate);
+      this.filterProvider.filterOn(this.outcomeProvider.filterCols.SOIL, properties.soil);
+      this.filterProvider.filterOn(this.outcomeProvider.filterCols.DURATION, properties.duration);
+      this.previousFilters = JSON.parse(JSON.stringify(this.filters));
 
-    let applyParams = {
-      selectedInterventions: properties.intervention,
-      area: boundingBox([]),
-    };
-    this.selectedBtn = this.selectedBtn.map( () => false );
-    this.applyEmitter.emit(applyParams);
-
-    // once we emit, switch views
-    let fs: {[type: string]: string} = {};
-    fs[INTERVENTION_KEY] = applyParams.selectedInterventions.join(",");
-    if (applyParams.area.compress() !== "") {
-      fs[AREA_KEY] = applyParams.area.compress()
+      let applyParams = {
+        selectedInterventions: properties.intervention,
+        area: boundingBox([]),
+      };
+      this.selectedBtn = this.selectedBtn.map( () => false );
+      this.applyEmitter.emit(applyParams);
+  
+      // once we emit, switch views
+      let fs: {[type: string]: string} = {};
+      fs[INTERVENTION_KEY] = applyParams.selectedInterventions.join(",");
+      if (applyParams.area.compress() !== "") {
+        fs[AREA_KEY] = applyParams.area.compress()
+      }
+      this.router.navigate(['map'], {
+        queryParams: fs,
+        queryParamsHandling: ''
+      });
     }
-    this.router.navigate(['map'], {
-      queryParams: fs,
-      queryParamsHandling: ''
-    });
   }
 }
 
