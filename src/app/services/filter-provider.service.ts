@@ -23,7 +23,6 @@ export class FilterProviderService {
   }
 
   selectedValues(col: string): string[] {
-    console.log(this.storage)
     return this.storage[col];
   }
 

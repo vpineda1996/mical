@@ -132,10 +132,10 @@ export class MapHolderComponent implements OnInit {
         <h3 style="color: #4B6ECB; font-size: 16px; font-family: Source Sans Pro;">STUDY DETAILS</h3>
         <ul style="list-style-type:none; font-weight: 600; font-family: Source Sans Pro; font-size: 14px; 
                                       padding-left: 0; word-wrap: break-word;" >
-                            <li>INTERVENTION:${interventionNameArray.map(i => ' ' + i)}</li>                    
-                            <li>CROP: ${cropArray.map(i => ' ' + this.capitalizeFirstLetter(i))}</li>
-                            <li>LOCATION: ${locationArray.map(i => ' ' + i)}</li>
-                            <li>DOI: ${authorArray.map(i => ' ' + i)}</li>
+                            <li style="margin: 10px 0;">INTERVENTION:${interventionNameArray.map(i => ' ' + i)}</li>                    
+                            <li style="margin: 10px 0;">CROP: ${cropArray.map(i => ' ' + this.capitalizeFirstLetter(i))}</li>
+                            <li style="margin: 10px 0;">LOCATION: ${locationArray.map(i => ' ' + i)}</li>
+                            <li style="margin: 10px 0;">DOI: ${authorArray.map(i => ' ' + i)}</li>
                            </ul></div>`;
 
         // Ensure that if the map is zoomed out such that multiple
