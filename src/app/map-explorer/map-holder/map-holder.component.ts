@@ -114,11 +114,15 @@ export class MapHolderComponent implements OnInit {
           let interventionName = properties.interventionName;
           let author = filterCols.author;
           let crop = filterCols.crop;
+          let crop2 = filterCols.crop2;
           locationSet.add(location);
           interventionNameSet.add(interventionName);
           authorSet.add(author);
           cropSet.add(crop);
+          cropSet.add(crop2);
         }
+
+        cropSet.delete("NA") // deleting the NA value from crop2 column
         
         // switching back to array as set cannot use .map
         let locationArray = Array.from(locationSet);
@@ -127,10 +131,11 @@ export class MapHolderComponent implements OnInit {
         let cropArray = Array.from(cropSet);
 
         let coordinates = feature.geometry.coordinates.slice();
+        // this is an inline html tooltip
         let description = `
         <div>
         <h3 style="color: #4B6ECB; font-size: 16px; font-family: Source Sans Pro;">STUDY DETAILS</h3>
-        <ul style="list-style-type:none; font-weight: 600; font-family: Source Sans Pro; font-size: 14px; 
+        <ul style="list-style-type:none; font-weight: 400; font-family: Source Sans Pro; font-size: 14px; 
                                       padding-left: 0; word-wrap: break-word;" >
                             <li style="margin: 10px 0;">INTERVENTION:${interventionNameArray.map(i => ' ' + i)}</li>                    
                             <li style="margin: 10px 0;">CROP: ${cropArray.map(i => ' ' + this.capitalizeFirstLetter(i))}</li>
