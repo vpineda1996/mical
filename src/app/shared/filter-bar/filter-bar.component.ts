@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
 import {boundingBox} from 'src/app/util/util.algo';
 import {FilterProviderService} from '../../services/filter-provider.service';
 import {InterventionProviderService} from '../../services/intervention-provider.service';

@@ -3,7 +3,7 @@ import {HistogramData, MapData} from '../model/datatypes';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {FeatureCollection} from 'geojson';
 import {GeoData, GeoJsonPoint, PointCollection} from '../model/map';
-import {debounceTime, flatMap, map, reduce} from 'rxjs/operators';
+import {debounceTime, map, mergeMap, reduce} from 'rxjs/operators';
 import {QueryProviderService} from './query-provider.service';
 import {Intervention, InterventionProviderService} from './intervention-provider.service';
 import {FilterProviderService} from './filter-provider.service';
@@ -78,7 +78,7 @@ export class DataProviderService {
       ? this.interventionProviderService.allInterventions
       : this.selectedInterventions;
     of(...displayedInterventions).pipe(
-      flatMap((intervention) => {
+      mergeMap((intervention) => {
         return this.queryProvider.getHistogramData(intervention)
       }),
       reduce((acc, v, idx) => {

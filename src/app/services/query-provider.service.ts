@@ -4,7 +4,7 @@ import {OutcomeTableProviderService} from './outcome-table-provider.service';
 import {FilterProviderService} from './filter-provider.service';
 import {HttpClient} from '@angular/common/http';
 import {HistogramData, MapData} from '../model/datatypes';
-import {Observable, BehaviorSubject, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {API_ROUTE, HISTOGRAM_ROUTE, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
 import {catchError, share} from 'rxjs/operators';
 
@@ -62,7 +62,6 @@ export class QueryProviderService {
   }
 
 }
-
 
 let errorFn = (err) => {
   console.log("Error tring to fetch rows: " + JSON.stringify(err));

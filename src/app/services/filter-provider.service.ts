@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {Observable, of, Subject} from 'rxjs';
-import {debounceTime, flatMap, share} from 'rxjs/operators';
+import {debounceTime, mergeMap, share} from 'rxjs/operators';
 import {Comparator, CompoundFilter, EmptyFilter, Filter, GeoFilter, RegexFilter} from '../model/filters';
 import {API_ROUTE, AREA_KEY, COLUMN_FILTERS_STORAGE_KEY, OUTCOME_TABLE_ROUTE, SERVER_URL} from '../util/constants';
 import {CustomLngLatBounds} from '../util/typings';
@@ -41,7 +41,7 @@ export class FilterProviderService {
   filtersForCol(col: string) : Observable<string[]> {
     let start = of(this._cache);
     let ans = start.pipe(
-      flatMap((cache) => {
+      mergeMap((cache) => {
         if(cache[col]) return of(cache[col]);
         return <Observable<string[]>>this.http.get(this.filtersUrl(col))
       }),
