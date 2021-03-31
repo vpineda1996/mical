@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { MultiSelectListComponent } from './multi-select-list.component';
 
 describe('MultiSelectListComponent', () => {

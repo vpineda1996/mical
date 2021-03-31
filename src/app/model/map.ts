@@ -1,6 +1,5 @@
 import {BBox, Feature, FeatureCollection, GeoJsonProperties, Point} from 'geojson';
 
-
 export class GeoJsonPoint implements Feature<Point> {
    bbox: BBox;
    geometry: Point;

@@ -11,7 +11,7 @@ import {
 } from '../util/constants';
 import {BehaviorSubject, Observable, Subject, of} from 'rxjs';
 import {OutcomeTableProviderService} from './outcome-table-provider.service';
-import {share, map, flatMap, reduce, filter} from 'rxjs/operators';
+import {share, map, reduce, filter, mergeMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class InterventionProviderService {
   filtersForCol(): Observable<string[]> {
     let start = of(this._cache);
     let ans = start.pipe(
-      flatMap((cache) => {
+      mergeMap((cache) => {
         if(cache['interventions']) {
           console.log(cache)  
           return of(cache['interventions'])
@@ -77,7 +77,7 @@ export class InterventionProviderService {
     let intKeys = str.split(",").map(val => val.trim());
     let req = of(...intKeys).pipe(
       filter((k) => k != ""),
-      flatMap((key) => {
+      mergeMap((key) => {
         return <Observable<Intervention>> this.http.get(interventionUrl(key));
       }),
       reduce((acc, v: Intervention) => {
