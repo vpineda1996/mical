@@ -21,7 +21,10 @@ export class QueryProviderService {
 
   getMapData(): Observable<Array<MapData>> {
     let ans =  <Observable<Array<MapData>>> this.http.get(this.buildMapURL());
-    ans.subscribe(undefined, errorFn);
+    ans.subscribe({
+      next: undefined,
+      error: errorFn
+    })
     return ans.pipe(share());
   }
 
