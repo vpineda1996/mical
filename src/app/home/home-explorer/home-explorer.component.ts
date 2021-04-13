@@ -11,9 +11,17 @@ import {INTERVENTION_KEY} from '../../util/constants';
 export class HomeExplorerComponent implements OnInit {
 
 
-  constructor() { }
+  constructor() {
+    if (window.innerWidth < 1152) // smallest macbook 
+      alert('This site is best viewed on desktop for chrome');
+  }
 
   ngOnInit() {
+    
+  }
+
+  ngAfterViewInit() {
+    
   }
 
   onApply(f: {[section: string]: string[]}) {
