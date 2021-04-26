@@ -6,6 +6,7 @@ import {FilterProviderService} from '../../services/filter-provider.service';
 import {MapExplorerService} from '../map-explorer.service';
 import {environment} from 'src/environments/environment.prod';
 import {CLUSTER_LAYER_NAME, POINT_LAYER} from "../../util/constants";
+import {Intervention, InterventionProviderService} from '../../services/intervention-provider.service';
 import {MapboxEvent} from "mapbox-gl";
 import { SpinnerOverlayService } from '../../services/spinner-overlay.service';
 import { filter } from 'rxjs/operators';
@@ -29,10 +30,16 @@ export class MapHolderComponent implements OnInit {
   source: any;
   markers$: Observable<Array<GeoJsonPoint>>;
 
+  interventionMap;
+
+
+
   constructor(private mapService: MapExplorerService,
-              private filterProviderService: FilterProviderService) { 
+              private filterProviderService: FilterProviderService, 
+              private interventionProviderService: InterventionProviderService) { 
     // @ts-ignore
     mapboxgl.accessToken = environment.mapbox.accessToken;
+    
   }
 
   ngOnInit() {
@@ -44,6 +51,14 @@ export class MapHolderComponent implements OnInit {
     setTimeout(() => {
       if (this.map) this.map.resize();
     }, 100);
+  }
+
+  private setupInterventionMap() {
+    if (!this.interventionMap) {
+      this.interventionMap = new Map();
+      this.interventionProviderService.allInterventions.map(intervention => this.interventionMap[intervention.key] = intervention.sKey);
+    }
+    console.log(this.interventionMap[1])
   }
 
   private initializeMap() {
@@ -100,6 +115,8 @@ export class MapHolderComponent implements OnInit {
       let dataArray = e.features;
       let data: any = feature.properties;
 
+      this.setupInterventionMap()
+
       try {
         // using set to remove duplicates
         let locationSet: Set<String>  = new Set();
@@ -109,17 +126,18 @@ export class MapHolderComponent implements OnInit {
   
         for (data of dataArray) {
           let properties = data.properties;
+          console.log(properties)
           let filterCols = JSON.parse(properties.filterCols);
           let location = properties.location;
-          let interventionName = properties.interventionName;
+          let interventionName = this.interventionMap[properties.interventionType];
           let author = filterCols.author;
           let crop = filterCols.crop;
-          let crop2 = filterCols.crop2;
+          let intercrops = filterCols.intercrops;
           locationSet.add(location);
           interventionNameSet.add(interventionName);
           authorSet.add(author);
           cropSet.add(crop);
-          cropSet.add(crop2);
+          cropSet.add(intercrops);
         }
 
         cropSet.delete("NA") // deleting the NA value from crop2 column
@@ -129,6 +147,8 @@ export class MapHolderComponent implements OnInit {
         let interventionNameArray = Array.from(interventionNameSet);
         let authorArray = Array.from(authorSet);
         let cropArray = Array.from(cropSet);
+
+        console.log(cropArray)
 
         let coordinates = feature.geometry.coordinates.slice();
         // this is an inline html tooltip
@@ -160,6 +180,7 @@ export class MapHolderComponent implements OnInit {
       // catching case where our selected keys arent in the object, this will usually occur
       // when you are still in a cluster feature
       } catch (err) {
+        console.log(err)
         console.log("hovering over cluster");
       }
     };
@@ -250,6 +271,7 @@ export class MapHolderComponent implements OnInit {
   }
 
   capitalizeFirstLetter(string: String) {
+    console.log(string)
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }

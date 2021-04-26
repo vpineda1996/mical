@@ -32,7 +32,6 @@ export class DataProviderService {
       debounceTime(DEBOUNCE_WAIT)
     ).subscribe(() => {
       let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
-      console.log(1)
       if (this.explorePageInitialized) {
         this.updateMapData(interventionsKeys);
         this.explorePageInitialized = false;
@@ -44,7 +43,6 @@ export class DataProviderService {
     this.setupGeoDataListener();
     this.setupActiveInterventionsListener();
     let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
-    console.log(2)
     this.updateMapData(interventionsKeys);
     this.updateHistograms();
   }
@@ -100,6 +98,8 @@ export class DataProviderService {
         keys[currentInterventionKey] = true;
       }
     });
+
+    console.log(allInterventions)
     // do database query
     this.spinnerOverlayService.show();
     this.queryProvider.getMapData().subscribe((value: Array<MapData>) => {

@@ -6,12 +6,11 @@ export class GeoJsonPoint implements Feature<Point> {
    id: string | number;
    type: "Feature" = "Feature";
    sampleSize: number;
-   interventionName: string;
    location: string;
    filterCols: {
     author: string;
     crop: string;
-    crop2: string;
+    intercrops: string;
     duration: string;
     soil: string;
     climate: string;
@@ -25,7 +24,6 @@ export class GeoJsonPoint implements Feature<Point> {
     this.type = "Feature";
     this.sampleSize = properties.sampleSize;
     this.filterCols = properties.filterCols;
-    this.interventionName = properties.interventionName;
     this.location = properties.location;
   }
 }
