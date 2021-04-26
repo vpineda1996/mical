@@ -17,13 +17,11 @@ export class MapExplorerHolderComponent implements OnInit {
   constructor(private dataProvider: DataProviderService) { }
 
   onApply(data: { selectedInterventions: string[] }) {
-    console.log(3)
     this.dataProvider.updateMapData(data.selectedInterventions);
     this.dataProvider.updateHistograms();
   }
 
   ngOnInit() {
-    console.log("INIT")
     this.dataProvider.setExplorePageInitialized()
   }
 

@@ -99,7 +99,6 @@ export class DataProviderService {
       }
     });
 
-    console.log(allInterventions)
     // do database query
     this.spinnerOverlayService.show();
     this.queryProvider.getMapData().subscribe((value: Array<MapData>) => {

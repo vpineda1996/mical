@@ -33,7 +33,6 @@ export class InterventionProviderService {
     let ans = start.pipe(
       mergeMap((cache) => {
         if(cache['interventions']) {
-          console.log(cache)  
           return of(cache['interventions'])
         };
         return this.allObservableInterventions.pipe(map(ints => ints.map(i => i.sKey).sort()));

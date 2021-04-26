@@ -58,7 +58,6 @@ export class MapHolderComponent implements OnInit {
       this.interventionMap = new Map();
       this.interventionProviderService.allInterventions.map(intervention => this.interventionMap[intervention.key] = intervention.sKey);
     }
-    console.log(this.interventionMap[1])
   }
 
   private initializeMap() {
@@ -126,7 +125,6 @@ export class MapHolderComponent implements OnInit {
   
         for (data of dataArray) {
           let properties = data.properties;
-          console.log(properties)
           let filterCols = JSON.parse(properties.filterCols);
           let location = properties.location;
           let interventionName = this.interventionMap[properties.interventionType];
@@ -147,8 +145,6 @@ export class MapHolderComponent implements OnInit {
         let interventionNameArray = Array.from(interventionNameSet);
         let authorArray = Array.from(authorSet);
         let cropArray = Array.from(cropSet);
-
-        console.log(cropArray)
 
         let coordinates = feature.geometry.coordinates.slice();
         // this is an inline html tooltip
@@ -180,7 +176,6 @@ export class MapHolderComponent implements OnInit {
       // catching case where our selected keys arent in the object, this will usually occur
       // when you are still in a cluster feature
       } catch (err) {
-        console.log(err)
         console.log("hovering over cluster");
       }
     };
@@ -271,7 +266,6 @@ export class MapHolderComponent implements OnInit {
   }
 
   capitalizeFirstLetter(string: String) {
-    console.log(string)
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
