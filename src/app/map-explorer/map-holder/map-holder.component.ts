@@ -10,6 +10,8 @@ import {Intervention, InterventionProviderService} from '../../services/interven
 import {MapboxEvent} from "mapbox-gl";
 import { SpinnerOverlayService } from '../../services/spinner-overlay.service';
 import { filter } from 'rxjs/operators';
+import {MAP_COORDS} from '../../util/constants';
+
 
 
 @Component({
@@ -22,8 +24,8 @@ export class MapHolderComponent implements OnInit {
   /// default settings
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/satellite-streets-v11';
-  lat = 37.75;
-  lng = -122.41;
+  lat = 36.2;
+  lng = 16.5;
   message = 'Hello World!';
 
   // data
@@ -39,7 +41,6 @@ export class MapHolderComponent implements OnInit {
               private interventionProviderService: InterventionProviderService) { 
     // @ts-ignore
     mapboxgl.accessToken = environment.mapbox.accessToken;
-    
   }
 
   ngOnInit() {
@@ -61,19 +62,14 @@ export class MapHolderComponent implements OnInit {
   }
 
   private initializeMap() {
-    /// locate the user
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        this.map.flyTo({
-          center: [this.lng, this.lat]
-        });
-      });
+    if (!this.storage) {
+      let mapKey = {};
+      mapKey["lat"] = this.lat;
+      mapKey["lng"] = this.lng;
+      mapKey["zoom"] = 1.2;
+      this.storage = mapKey;
     }
-
     this.buildMap();
-
   }
 
   setupClusterListeners() {
@@ -89,6 +85,12 @@ export class MapHolderComponent implements OnInit {
           center: features[0].geometry.coordinates,
           zoom: zoom
         });
+
+        let mapKey = {};
+        mapKey["lat"] = this.lat;
+        mapKey["lng"] = this.lng;
+        mapKey["zoom"] = zoom;
+        this.storage = mapKey;
       });
     });
 
@@ -122,6 +124,7 @@ export class MapHolderComponent implements OnInit {
         let interventionNameSet: Set<String> = new Set();
         let authorSet: Set<String>  = new Set();
         let cropSet: Set<String>  = new Set();
+        let intercropSet: Set<String> = new Set();
   
         for (data of dataArray) {
           let properties = data.properties;
@@ -135,7 +138,7 @@ export class MapHolderComponent implements OnInit {
           interventionNameSet.add(interventionName);
           authorSet.add(author);
           cropSet.add(crop);
-          cropSet.add(intercrops);
+          intercropSet.add(intercrops);
         }
 
         cropSet.delete("NA") // deleting the NA value from crop2 column
@@ -145,6 +148,7 @@ export class MapHolderComponent implements OnInit {
         let interventionNameArray = Array.from(interventionNameSet);
         let authorArray = Array.from(authorSet);
         let cropArray = Array.from(cropSet);
+        let intercropArray = Array.from(intercropSet);
 
         let coordinates = feature.geometry.coordinates.slice();
         // this is an inline html tooltip
@@ -153,8 +157,9 @@ export class MapHolderComponent implements OnInit {
         <h3 style="color: #4B6ECB; font-size: 16px; font-family: Source Sans Pro;">STUDY DETAILS</h3>
         <ul style="list-style-type:none; font-weight: 400; font-family: Source Sans Pro; font-size: 14px; 
                                       padding-left: 0; word-wrap: break-word;" >
-                            <li style="margin: 10px 0;">INTERVENTION:${interventionNameArray.map(i => ' ' + i)}</li>                    
-                            <li style="margin: 10px 0;">CROP: ${cropArray.map(i => ' ' + this.capitalizeFirstLetter(i))}</li>
+                            <li style="margin: 10px 0;">INTERVENTIONS:${interventionNameArray.map(i => ' ' + i)}</li>                    
+                            <li style="margin: 10px 0;">CROPS: ${cropArray.map(i => ' ' + this.capitalizeFirstLetter(i))}</li>
+                            <li style="margin: 10px 0;">INTERCROPS: ${intercropArray.map(i => ' ' + this.capitalizeFirstLetter(i))}</li>
                             <li style="margin: 10px 0;">LOCATION: ${locationArray.map(i => ' ' + i)}</li>
                             <li style="margin: 10px 0;">DOI: ${authorArray.map(i => ' ' + i)}</li>
                            </ul></div>`;
@@ -196,10 +201,9 @@ export class MapHolderComponent implements OnInit {
     this.map = new mapboxgl.Map({
       container: 'map',
       style: this.style,
-      zoom: 1,
-      center: [this.lng, this.lat]
+      zoom: this.storage['zoom'],
+      center: [this.storage['lng'], this.storage['lat']]
     });
-
 
     /// Add map controls
     this.map.addControl(new mapboxgl.NavigationControl());
@@ -222,15 +226,11 @@ export class MapHolderComponent implements OnInit {
 
       this.map.on('move', () => {
         this.filterProviderService.setGeoFilter(this.map.getBounds());
-      });
-
-
-
-      this.mapService.boundsEvent.subscribe((bbox) => {
-        this.map.fitBounds([
-          [bbox.getWest(), bbox.getNorth()],
-          [bbox.getEast(), bbox.getSouth()]
-        ]);
+        let mapKey = {};
+        mapKey["lat"] = this.map.getCenter().lat;
+        mapKey["lng"] = this.map.getCenter().lng;
+        mapKey["zoom"] = this.map.getZoom();
+        this.storage = mapKey;
       });
 
       /// get source
@@ -267,5 +267,19 @@ export class MapHolderComponent implements OnInit {
 
   capitalizeFirstLetter(string: String) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  private get storage() {
+    let opts = window.sessionStorage.getItem(MAP_COORDS);
+    try {
+      return JSON.parse(opts);
+    } catch (e) {
+      window.sessionStorage.setItem(MAP_COORDS, "{}");
+    }
+    return {};
+  }
+
+  private set storage(store) {
+    window.sessionStorage.setItem(MAP_COORDS, JSON.stringify(store));
   }
 }

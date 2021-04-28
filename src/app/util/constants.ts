@@ -18,6 +18,7 @@ export const AREA_KEY = 'a'
 export const DEFAULT_FILTERS = new EmptyFilter();
 export const COLUMN_FILTERS_STORAGE_KEY = 'COL_FILTERS'
 export const FILTER_COL = 'filterCols';
+export const MAP_COORDS = 'mapCoords'
 
 export const YIELD_FILTER_COLS = {
   COUNTRY: "country",
