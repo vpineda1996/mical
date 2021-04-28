@@ -20,7 +20,6 @@ export class DataProviderService {
   private selectedInterventions: Intervention[] = [];
   private interventionQueries: Subject<{[intervention:string]: HistogramData}> = new BehaviorSubject({});
   private geoDataSubject: Subject<GeoData> = new BehaviorSubject(new GeoData( <FeatureCollection> DATA));
-  private explorePageInitialized: boolean = false;
 
   constructor(private interventionProviderService: InterventionProviderService,
               private filterProvider: FilterProviderService,
@@ -31,12 +30,6 @@ export class DataProviderService {
     filterProvider.announcer.pipe(
       debounceTime(DEBOUNCE_WAIT)
     ).subscribe(() => {
-      let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
-      if (this.explorePageInitialized) {
-        this.updateMapData(interventionsKeys);
-        this.explorePageInitialized = false;
-      }
-      // this.updateMapData(interventionsKeys);
       this.updateHistograms();
     });
 
@@ -44,11 +37,8 @@ export class DataProviderService {
     this.setupActiveInterventionsListener();
     let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
     this.updateMapData(interventionsKeys);
+    console.log('1')
     this.updateHistograms();
-  }
-
-  setExplorePageInitialized(): void {
-    this.explorePageInitialized = true;
   }
 
   setupGeoDataListener(): void {
@@ -67,6 +57,7 @@ export class DataProviderService {
     this.interventionProviderService.activeInterventions.subscribe((int) => {
       this.selectedInterventions = Object.values(int);
       this.updateHistograms();
+      console.log('3')
     });
   }
 

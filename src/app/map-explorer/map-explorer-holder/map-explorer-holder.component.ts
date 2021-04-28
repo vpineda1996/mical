@@ -22,7 +22,7 @@ export class MapExplorerHolderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataProvider.setExplorePageInitialized()
+    // this.dataProvider.setExplorePageInitialized()
   }
 
   getHeight(): string {
