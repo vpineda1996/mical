@@ -19,7 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   declarations: [
     AppComponent,
     NavBarComponent,
-    SpinnerOverlayComponent
+    SpinnerOverlayComponent,
   ],
   imports: [
     BrowserModule,
