@@ -12,6 +12,7 @@ import { HomeModule } from './home/home.module';
 import { Overlay } from '@angular/cdk/overlay';
 import {SpinnerOverlayComponent} from "./shared/spinner-overlay/spinner-overlay.component";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     HttpClientModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
+    MatDialogModule,
 
     // material imports
     // views modules

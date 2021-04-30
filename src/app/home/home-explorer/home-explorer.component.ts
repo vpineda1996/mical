@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {FilterProviderService} from '../../services/filter-provider.service';
 import {INTERVENTION_KEY} from '../../util/constants';
@@ -11,9 +12,9 @@ import {INTERVENTION_KEY} from '../../util/constants';
 export class HomeExplorerComponent implements OnInit {
 
 
-  constructor() {
-    if (window.innerWidth < 1152) // smallest macbook 
-      alert('This site is best viewed on desktop for chrome');
+  constructor(public dialog: MatDialog) {
+    if (window.innerWidth < 1152) // smallest macbook width dimension
+      this.openDialog();
   }
 
   ngOnInit() {
@@ -28,4 +29,19 @@ export class HomeExplorerComponent implements OnInit {
 
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(Warning);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
 }
+
+@Component({
+  selector: 'warning',
+  templateUrl: './warning.component.html',
+  styleUrls: ['./warning.component.css']
+})
+export class Warning {}
