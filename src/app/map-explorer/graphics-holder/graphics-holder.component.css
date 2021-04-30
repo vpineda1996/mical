@@ -1,7 +1,17 @@
 .card-margin {
-    margin: 12px;
+  margin: 12px;
 }
 
 #no-results {
   font-weight: bold;
+}
+
+.histogram-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.histogram-box {
+  width: 350px;
 }

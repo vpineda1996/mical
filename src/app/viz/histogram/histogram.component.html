@@ -1,28 +1,30 @@
 <mat-card>
-<div>
-  <div class="title">{{histogramDfn.title}}</div>
-  <div class="pure-g">
-    <div class="pure-u-2-5 denom">
-      <div class="arrow"></div>
-      <p>{{histogramDfn.labels.denom}}</p>
-    </div> 
-    <div class="pure-g pure-u-2-5 numerator">
-      <div class="num-aligner">
-          <p>{{histogramDfn.labels.numerator}}</p>
+  <div class="card">
+    <div class="title">{{ histogramDfn.title }}</div>
+    <div class="pure-g">
+      <div class="pure-u-2-5 denom">
+        <div class="arrow"></div>
+        <p>{{ histogramDfn.labels.denom }}</p>
+      </div>
+      <div class="pure-g pure-u-2-5 numerator">
+        <div class="num-aligner">
+          <p>{{ histogramDfn.labels.numerator }}</p>
           <div class="arrow right-arrow"></div>
+        </div>
+      </div>
+    </div>
+    <aside>
+      <div class="axis y-axis">No. Experiments</div>
+      <div class="histogramHolder" #histogramHolder></div>
+    </aside>
+    <div>
+      <div class="axis x-axis">{{ histogramDfn.labels.xaxis }}</div>
+    </div>
+    <div class="desc-holder">
+      <div class="bar-icon"></div>
+      <div class="pure-u-3-4 description dblue-fnt">
+        {{ histogramDfn.desc }}
       </div>
     </div>
   </div>
-  <aside>
-    <div class="axis y-axis" >No. Experiments</div>
-    <div class="histogramHolder" #histogramHolder></div>
-  </aside>
-  <div>
-    <div class="axis x-axis">{{histogramDfn.labels.xaxis}}</div>
-  </div>
-  <div class="desc-holder">
-    <div class="bar-icon"></div>
-    <div class="pure-u-3-4 description dblue-fnt">{{histogramDfn.desc}}</div>
-  </div>
-</div>
 </mat-card>

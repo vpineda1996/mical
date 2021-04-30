@@ -1,9 +1,15 @@
-<div class="graphics-holder pure-g">
-  <div *ngIf="(myHistDefs$ | async)?.length > 0; else empty">
-    <div [ngClass]="histogramClassStyle" *ngFor="let def of myHistDefs$ | async">
+<div class="graphics-holder">
+  <div
+    *ngIf="(myHistDefs$ | async)?.length > 0; else empty"
+    class="histogram-container"
+  >
+    <div
+      [ngClass]="histogramClassStyle"
+      *ngFor="let def of myHistDefs$ | async"
+      class="histogram-box"
+    >
       <div class="card-margin" *ngIf="def != null">
-        <viz-histogram [histogramDfn]="def">
-        </viz-histogram>
+        <viz-histogram [histogramDfn]="def"> </viz-histogram>
       </div>
     </div>
   </div>
@@ -14,7 +20,4 @@
       </div>
     </div>
   </ng-template>
-
 </div>
-
- 

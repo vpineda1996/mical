@@ -92,3 +92,7 @@ aside {
   font-family: var(--text-font);
   font-weight: 600;
 }
+
+.card {
+  min-height: 350px;
+}

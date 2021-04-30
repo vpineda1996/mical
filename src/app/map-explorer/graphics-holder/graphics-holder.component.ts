@@ -14,8 +14,8 @@ import {Observable} from 'rxjs';
 })
 export class GraphicsHolderComponent implements OnInit {
 
-  @Input()
-  histogramClassStyle = "pure-u-1";
+  // @Input()
+  // histogramClassStyle = "pure-u-1";
 
   myHistDefs$: Observable<HistogramData[]>;
 
