@@ -85,7 +85,7 @@
 .section-container .footer {
   height: 200px;
   background-color: var(--dark-grey);
-  background-image: url("../../../assets/icons/ubc-logo.png");
+  background-image: url("./../../../assets/icons/ubc-logo.png");
   background-repeat: no-repeat;
   background-position: center;
 }

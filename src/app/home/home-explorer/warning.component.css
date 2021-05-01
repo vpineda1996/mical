@@ -13,7 +13,7 @@ p {
   height: 200px;
   width: 80%;
   max-width: 300px;
-  background-image: url("../../../assets/background/warning-picture.png");
+  background-image: url("./../../../assets/background/warning-picture.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
