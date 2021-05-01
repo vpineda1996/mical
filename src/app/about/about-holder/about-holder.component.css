@@ -21,7 +21,7 @@
 
 .spacer {
   height: 50%;
-} 
+}
 
 .section {
   position: relative;
@@ -40,7 +40,7 @@
 }
 
 .section-container > :nth-child(even) {
-  background-color: var(--light-backgrnd)
+  background-color: var(--light-backgrnd);
 }
 
 .section .icon {
@@ -85,6 +85,9 @@
 .section-container .footer {
   height: 200px;
   background-color: var(--dark-grey);
+  background-image: url("../../../assets/icons/ubc-logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .footer > :first-child {
@@ -99,13 +102,15 @@
   font-family: var(--text-font);
 }
 
-.footer p,.footer h4 {
+.footer p,
+.footer h4 {
   margin: 3px 0;
   text-align: center;
   color: var(--white-color);
 }
 
-.splash, .splash-subhead {
+.splash,
+.splash-subhead {
   color: white;
   font-size: 16px;
   line-height: 25px;
@@ -122,7 +127,6 @@
   text-transform: uppercase;
 }
 
-
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
  * On tablets and other medium-sized devices, we want to customize some
@@ -138,7 +142,7 @@
     width: 400px;
   }
 }
-  
+
 /*
  * -- DESKTOP (AND UP) MEDIA QUERIES --
  * On desktops and other large devices, we want to over-ride some
@@ -148,7 +152,7 @@
   .container {
     top: 70px;
   }
-  
+
   .splash {
     margin: 0 auto 0 140px;
   }
