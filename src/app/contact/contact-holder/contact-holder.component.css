@@ -21,12 +21,14 @@
 
 .spacer {
   height: 50%;
-} 
+}
 
-.splash, .splash-subhead {
+.splash,
+.splash-subhead {
   color: var(--dark-grey);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 25px;
+  font-weight: 600;
 }
 
 .splash {
@@ -38,6 +40,9 @@
 
 .splash-head {
   text-transform: uppercase;
+  font-size: 30px;
+  font-family: "Roboto";
+  font-weight: 800;
 }
 
 .contact-map {
@@ -66,14 +71,12 @@ textarea {
   resize: none;
 }
 
-
-
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
  * On tablets and other medium-sized devices, we want to customize some
  * of the mobile styles.
  */
- @media (min-width: 48em) {
+@media (min-width: 48em) {
   .container {
     top: 60px;
   }
@@ -83,7 +86,7 @@ textarea {
     width: 500px;
   }
 }
-  
+
 /*
  * -- DESKTOP (AND UP) MEDIA QUERIES --
  * On desktops and other large devices, we want to over-ride some
@@ -93,7 +96,7 @@ textarea {
   .container {
     top: 70px;
   }
-  
+
   .splash {
     margin: 0 auto 0 140px;
   }

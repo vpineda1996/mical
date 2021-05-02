@@ -112,8 +112,9 @@
 .splash,
 .splash-subhead {
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 25px;
+  font-weight: 600;
 }
 
 .splash {
@@ -125,6 +126,13 @@
 
 .splash-head {
   text-transform: uppercase;
+  font-size: 30px;
+  font-family: "Roboto";
+  font-weight: bold;
+}
+
+.icon-text {
+  font-size: 18px;
 }
 
 /*

@@ -45,6 +45,9 @@ p {
 
 .dblue-fnt {
   color: var(--dark-blue);
+  font-size: 18px;
+  font-family: "Roboto";
+  font-weight: bold;
 }
 
 .center-view {
@@ -94,11 +97,18 @@ p {
   color: var(--dark-grey);
 }
 
+.mat-expansion-panel-body {
+  font-size: 16px;
+  font-family: "Source Sans Pro";
+}
+
 .section-b .mat-expansion-panel-header-title {
   font-family: var(--text-font);
   font-weight: bold;
   text-transform: uppercase;
   color: var(--dark-grey);
+  font-size: 16px;
+  font-family: "Roboto";
 }
 
 .custom-scroll-bar::-webkit-scrollbar {

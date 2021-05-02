@@ -1,5 +1,7 @@
 p {
-  margin: 15px 50px;
+  font-family: "Roboto";
+  margin-bottom: 0;
+  font-weight: 200;
 }
 
 #warning {
@@ -7,14 +9,21 @@ p {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  font-size: 14px;
+  width: 250px;
 }
 
 #warning-picture {
   height: 200px;
-  width: 80%;
-  max-width: 300px;
+  width: 60%;
+  max-width: 200px;
   background-image: url("./../../../assets/background/warning-picture.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+#warning-text-container {
+  margin: 0px 50px;
+  margin-top: 25px;
 }

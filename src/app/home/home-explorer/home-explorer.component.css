@@ -104,15 +104,16 @@ a.pure-button-primary {
   text-align: left;
 }
 
-/* This is the main heading that appears on the blue section */
+/* This is the main heading */
 .splash-head {
   text-transform: uppercase;
-  font-size: 20px;
   font-weight: bold;
   color: var(--dark-grey);
+  font-size: 30px;
+  font-family: "Roboto";
 }
 
-/* This is the subheading that appears on the blue section */
+/* This is the subheading */
 .splash-subhead {
   color: var(--dark-grey);
   font-family: var(--text-font);
@@ -150,9 +151,9 @@ a.pure-button-primary {
   /* We decrease the width of the .splash, since we have more width
   to work with */
 
-  .splash-head {
+  /* .splash-head {
     font-size: 250%;
-  }
+  } */
 
   /* We remove the border-separator assigned to .l-box-lrg */
   .l-box-lrg {
@@ -167,9 +168,9 @@ a.pure-button-primary {
  */
 @media (min-width: 78em) {
   /* We increase the header font size even more */
-  .splash-head {
+  /* .splash-head {
     font-size: 300%;
-  }
+  } */
 
   .seach-bar-opts-container {
     padding-top: 24px;
