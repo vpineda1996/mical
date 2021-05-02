@@ -8,6 +8,7 @@ import {QueryProviderService} from './query-provider.service';
 import {Intervention, InterventionProviderService} from './intervention-provider.service';
 import {FilterProviderService} from './filter-provider.service';
 import { SpinnerOverlayService } from './spinner-overlay.service';
+import {HOME_SEARCH} from '../util/constants';
 
 const DEBOUNCE_WAIT = 500;
 
@@ -31,6 +32,11 @@ export class DataProviderService {
       debounceTime(DEBOUNCE_WAIT)
     ).subscribe(() => {
       this.updateHistograms();
+      if (this.storage == "true") {
+        this.updateMapData(interventionsKeys);
+        this.storage = "false";
+      }
+      console.log(2)
     });
 
     this.setupGeoDataListener();
@@ -109,6 +115,21 @@ export class DataProviderService {
 
   getHistogramData(): Observable<{[intervention:string]: HistogramData}> {
     return this.interventionQueries;
+  }
+
+  // helpers for global session storage 
+  private get storage() {
+    let isFilterChanged = window.sessionStorage.getItem(HOME_SEARCH);
+    try {
+      return isFilterChanged;
+    } catch (e) {
+      window.sessionStorage.setItem(HOME_SEARCH, "false"); // boolean not supported
+      return "false";
+    }
+  }
+
+  private set storage(param) {
+    window.sessionStorage.setItem(HOME_SEARCH, param); // boolean not supported
   }
 }
 

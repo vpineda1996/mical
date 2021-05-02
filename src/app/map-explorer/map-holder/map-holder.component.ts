@@ -269,6 +269,7 @@ export class MapHolderComponent implements OnInit {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  // helpers for global session storage 
   private get storage() {
     let opts = window.sessionStorage.getItem(MAP_COORDS);
     try {

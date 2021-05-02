@@ -6,6 +6,7 @@ import {FilterProviderService} from '../../services/filter-provider.service';
 import {InterventionProviderService} from '../../services/intervention-provider.service';
 import {OutcomeTableProviderService} from '../../services/outcome-table-provider.service';
 import {AREA_KEY, INTERVENTION_KEY} from '../../util/constants';
+import {FILTER_UPDATE} from '../../util/constants';
 
 @Component({
   selector: 'app-filter-bar',
@@ -119,6 +120,15 @@ export class FilterBarComponent implements OnInit {
       p[k] = Object.keys(sec);
       return p;
     }, <{[section: string]: string[]}>{}); 
+    console.log('hi')
+
+    // updating filter var for local storage
+    console.log(JSON.stringify(this.filters))
+    console.log(JSON.stringify(this.previousFilters))
+    if (JSON.stringify(this.filters) !== JSON.stringify(this.previousFilters)) {
+      this.storage = "true";
+      console.log("updated")
+    }
 
     // notify the filter provider of the new filters only if filter is changed to prevent request on same filters
     // alternatively if on home page, apply filters no matter what
@@ -148,6 +158,21 @@ export class FilterBarComponent implements OnInit {
         queryParamsHandling: ''
       });
     }
+  }
+
+  // helpers for global session storage 
+  private get storage() {
+    let isFilterChanged = window.sessionStorage.getItem(FILTER_UPDATE);
+    try {
+      return isFilterChanged;
+    } catch (e) {
+      window.sessionStorage.setItem(FILTER_UPDATE, "false"); // boolean not supported
+      return "false";
+    }
+  }
+
+  private set storage(isFilterChanged) {
+    window.sessionStorage.setItem(FILTER_UPDATE, isFilterChanged);
   }
 }
 
