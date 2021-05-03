@@ -34,7 +34,7 @@ A step by step series of examples that tell you how to get a development env run
 Install all project dependencies using npm.
 
 ```
-npm install --save-dev @angular-devkit/build-angular
+npm install 
 ```
 
 To run project locally use the command
@@ -49,7 +49,7 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## Running the tests
 
-### As of April 2021, the test suite needs to be remade as they are not up to date.
+### As of April 2021, the test suite needs to be remade as they are not up to date (so ignore this section of README)
 
 The Project contains Unit tests using [Karma](https://karma-runner.github.io), and E2E tests using [Protractor](http://www.protractortest.org/).
 
