@@ -1,4 +1,4 @@
-# FarmGek
+# FarmGeek
 
 ## Project Description
 
