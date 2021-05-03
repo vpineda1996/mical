@@ -31,12 +31,13 @@ export class DataProviderService {
     filterProvider.announcer.pipe(
       debounceTime(DEBOUNCE_WAIT)
     ).subscribe(() => {
-      this.updateHistograms();
       if (this.storage == "true") {
+        console.log(2)
+        let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
         this.updateMapData(interventionsKeys);
         this.storage = "false";
       }
-      console.log(2)
+      this.updateHistograms();
     });
 
     this.setupGeoDataListener();

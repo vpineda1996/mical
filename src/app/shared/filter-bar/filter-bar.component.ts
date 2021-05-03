@@ -120,14 +120,10 @@ export class FilterBarComponent implements OnInit {
       p[k] = Object.keys(sec);
       return p;
     }, <{[section: string]: string[]}>{}); 
-    console.log('hi')
 
     // updating filter var for local storage
-    console.log(JSON.stringify(this.filters))
-    console.log(JSON.stringify(this.previousFilters))
     if (JSON.stringify(this.filters) !== JSON.stringify(this.previousFilters)) {
       this.storage = "true";
-      console.log("updated")
     }
 
     // notify the filter provider of the new filters only if filter is changed to prevent request on same filters

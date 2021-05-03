@@ -117,7 +117,7 @@ a.pure-button-primary {
 .splash-subhead {
   color: var(--dark-grey);
   font-family: var(--text-font);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.025em;
   /* opacity: 0.8; */
   font-weight: 600;
   font-size: 18px;

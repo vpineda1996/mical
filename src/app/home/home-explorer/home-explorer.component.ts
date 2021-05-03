@@ -45,7 +45,6 @@ export class HomeExplorerComponent implements OnInit {
       window.sessionStorage.setItem(FILTER_UPDATE, "false");
       return "false"
     }
-    console.log(isFilterChanged)
     return isFilterChanged;
   }
 
