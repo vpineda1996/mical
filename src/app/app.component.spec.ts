@@ -13,10 +13,10 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
-  it(`should have as title 'AgriculturalEvidence'`, waitForAsync(() => {
+  it(`should have as title 'FarmGeek'`, waitForAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('AgriculturalEvidence');
+    expect(app.title).toEqual('FarmGeek');
   }));
   it('should render title in a h1 tag', waitForAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);

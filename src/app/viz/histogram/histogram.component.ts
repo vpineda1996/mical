@@ -42,6 +42,20 @@ export class HistogramComponent implements OnInit, AfterViewInit {
     };
   }
 
+  buildBaseline() {
+    return {
+      data: [0,0],
+      color: "#4B6ECB",
+      bars: {
+        show: true,
+        fill: 1,
+        align: "center",
+        lineWidth: 1,
+        barWidth: 1,
+      }
+    };
+  }
+
   buildDensity() {
     return {
       data:  this.histogramDfn.dist,
@@ -88,6 +102,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
         }
       },
     };
-    $.plot(this.holder.nativeElement, [this.buildBar(), this.buildDensity()], opts);
+    console.log(this.buildBar())
+    $.plot(this.holder.nativeElement, [this.buildBar(), this.buildBaseline(), this.buildDensity()], opts);
   }
 }
