@@ -7,11 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactHolderComponent implements OnInit {
 
-  message = {
-    from: "",
-    email: "",
-    msg: ""
-  }
+  submitted = false;
 
   constructor() { }
 

@@ -60,6 +60,8 @@
 
 .contact-form h4 {
   letter-spacing: 1.12px;
+  font-size: 18px;
+  font-family: "Roboto";
 }
 
 .contact-form label {
@@ -68,8 +70,19 @@
   letter-spacing: 1.12px;
 }
 
+.input-header {
+  color: var(--dark-blue);
+  font-size: 14px;
+  font-family: "Roboto";
+  font-weight: bold;
+}
+
 textarea {
   resize: none;
+}
+
+p {
+  font-size: 18px;
 }
 
 /*
