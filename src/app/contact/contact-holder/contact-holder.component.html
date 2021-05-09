@@ -26,7 +26,8 @@
         action="https://docs.google.com/forms/d/e/1FAIpQLScidiOC1Oa3ep0Neofc44pn9bEOgKBWhrxdzd8Jemyv8hx2rQ/formResponse"
         target="hidden_iframe"
         method="POST"
-        onsubmit="document.getElementById(`submitted-text`).innerHTML = `Message was Submitted!`;"
+        onsubmit="document.getElementById(`submitted-text`).innerHTML = `Message Submitted!`;
+                  setTimeout(function(){document.getElementById(`submitted-text`).innerHTML = `<br />`}, 2000)"
       >
         <div class="pure-g">
           <div class="pure-u-1">
