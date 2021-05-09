@@ -2,7 +2,7 @@
 
 ## Project Description
 
-The  purpose of this repo is house the client side code for  the FarmGeek web application.  FarmGeek is a new web-based application for policy makers, researchers, funders, donors, and farm extension agents to identify the balance of the evidence for different on-farm interventions for agricultural outcomes such as yield, biodiversity, human health. 
+The purpose of this repo is house the client side code for the FarmGeek web application. FarmGeek is a new web-based application for policy makers, researchers, funders, donors, and farm extension agents to identify the balance of the evidence for different on-farm interventions for agricultural outcomes such as yield, biodiversity, human health.
 
 This repository has been developed by worklearn students at the University of British Columbia, under direction of Zia Mehrabi and Navin Ramankutty. It is currently maintained by Zia Mehrabi, at the University of Colorado Boulder. Any questions please contact ziamehrabi@gmail.com.
 
@@ -33,7 +33,7 @@ A step by step series of examples that tell you how to get a development env run
 Install all project dependencies using npm.
 
 ```
-npm install 
+npm install
 ```
 
 To run project locally use the command
@@ -78,6 +78,10 @@ Deployment of this project to heroku is done from the [mical_server](https://git
 - [flot](https://www.flotcharts.org/) - library used to create JavaScript charts
 - [RxJS](https://rxjs-dev.firebaseapp.com/guide/overview) - library for composing asynchronous and event-based programs
 - [Mapbox](https://www.mapbox.com/) - Map library for JavaScript
+
+## Other Things
+
+- The Contact Form is linked to a Google Forms Application. Responses can be accessed via the agrimical gmail account.
 
 ## Contributors
 
