@@ -32,7 +32,6 @@ export class DataProviderService {
       debounceTime(DEBOUNCE_WAIT)
     ).subscribe(() => {
       if (this.storage == "true") {
-        console.log(2)
         let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
         this.updateMapData(interventionsKeys);
         this.storage = "false";
@@ -44,7 +43,6 @@ export class DataProviderService {
     this.setupActiveInterventionsListener();
     let interventionsKeys: string[] = this.selectedInterventions.map((intervention) => intervention.sKey);
     this.updateMapData(interventionsKeys);
-    console.log('1')
     this.updateHistograms();
   }
 
@@ -64,7 +62,6 @@ export class DataProviderService {
     this.interventionProviderService.activeInterventions.subscribe((int) => {
       this.selectedInterventions = Object.values(int);
       this.updateHistograms();
-      console.log('3')
     });
   }
 

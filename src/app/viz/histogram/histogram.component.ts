@@ -102,7 +102,6 @@ export class HistogramComponent implements OnInit, AfterViewInit {
         }
       },
     };
-    console.log(this.buildBar())
     $.plot(this.holder.nativeElement, [this.buildBar(), this.buildBaseline(), this.buildDensity()], opts);
   }
 }

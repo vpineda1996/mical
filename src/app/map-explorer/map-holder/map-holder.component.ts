@@ -34,8 +34,6 @@ export class MapHolderComponent implements OnInit {
 
   interventionMap;
 
-
-
   constructor(private mapService: MapExplorerService,
               private filterProviderService: FilterProviderService, 
               private interventionProviderService: InterventionProviderService) { 
@@ -75,6 +73,7 @@ export class MapHolderComponent implements OnInit {
   setupClusterListeners() {
     // inspect a cluster on click
     this.map.on('click', CLUSTER_LAYER_NAME,  (e) => {
+      // dont zoom if tooltip is open 
       let features: any = this.map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
       let clusterId = features[0].properties.cluster_id;
       this.source.getClusterExpansionZoom(clusterId, (err, zoom) => {
@@ -104,97 +103,96 @@ export class MapHolderComponent implements OnInit {
 
   setupTooltip() {
     let popup = new mapboxgl.Popup({
-      closeButton: false,
-      closeOnClick: false
+      closeButton: true,
+      closeOnClick: true
     });
 
-    let mouseEnterHandler = (e) => {
-      // Change the cursor style as a UI indicator.
-      this.map.getCanvas().style.cursor = 'pointer';
+    let tooltipHandler = (e) => {
+        // Change the cursor style as a UI indicator.
+        this.map.getCanvas().style.cursor = 'pointer';
 
-      let feature: any = e.features[0];
-      let dataArray = e.features;
-      let data: any = feature.properties;
+        let feature: any = e.features[0];
+        let dataArray = e.features;
+        let data: any = feature.properties;
 
-      this.setupInterventionMap()
+        this.setupInterventionMap()
 
-      try {
-        // using set to remove duplicates
-        let locationSet: Set<String>  = new Set();
-        let interventionNameSet: Set<String> = new Set();
-        let authorSet: Set<String>  = new Set();
-        let cropSet: Set<String>  = new Set();
-        let intercropSet: Set<String> = new Set();
-  
-        for (data of dataArray) {
-          let properties = data.properties;
-          let filterCols = JSON.parse(properties.filterCols);
-          let location = properties.location;
-          let interventionName = this.interventionMap[properties.interventionType];
-          let author = filterCols.author;
-          let crop = filterCols.crop;
-          let intercrops = filterCols.intercrops;
-          locationSet.add(location);
-          interventionNameSet.add(interventionName);
-          authorSet.add(author);
-          cropSet.add(crop);
-          intercropSet.add(intercrops);
+        try {
+          // using set to remove duplicates
+          let locationSet: Set<String>  = new Set();
+          let interventionNameSet: Set<String> = new Set();
+          let authorSet: Set<String>  = new Set();
+          let cropSet: Set<String>  = new Set();
+          let intercropSet: Set<String> = new Set();
+    
+          for (data of dataArray) {
+            let properties = data.properties;
+            let filterCols = JSON.parse(properties.filterCols);
+            let location = properties.location;
+            let interventionName = this.interventionMap[properties.interventionType];
+            let author = filterCols.author;
+            let crop = filterCols.crop;
+            let intercrops = filterCols.intercrops;
+            locationSet.add(location);
+            interventionNameSet.add(interventionName);
+            authorSet.add(author);
+            cropSet.add(crop);
+            intercropSet.add(intercrops);
+          }
+
+          cropSet.delete("NA") // deleting the NA value from crop2 column
+          
+          // switching back to array as set cannot use .map
+          let locationArray = Array.from(locationSet);
+          let interventionNameArray = Array.from(interventionNameSet);
+          let authorArray = Array.from(authorSet);
+          let cropArray = Array.from(cropSet);
+          let intercropArray = Array.from(intercropSet);
+
+          let coordinates = feature.geometry.coordinates.slice();
+          // this is an inline html tooltip
+          let description = `
+          <div>
+          <h3 style="color: #4B6ECB; font-size: 16px; font-family: Source Sans Pro;">STUDY DETAILS</h3>
+          <ul style="list-style-type:none; font-weight: 400; font-family: Source Sans Pro; font-size: 14px; 
+                                        padding-left: 0; word-wrap: break-word;" >
+                              <li style="margin: 10px 0;">INTERVENTIONS:${interventionNameArray.map(i => ' ' + i)}</li>                    
+                              <li style="margin: 10px 0;">CROPS: ${cropArray.map(i => ' ' + this.capitalizeFirstLetter(i))}</li>
+                              <li style="margin: 10px 0;">INTERCROPS: ${intercropArray.map(i => ' ' + this.capitalizeFirstLetter(i))}</li>
+                              <li style="margin: 10px 0;">LOCATION: ${locationArray.map(i => ' ' + i)}</li>
+                              <li style="margin: 10px 0;">DOI: ${authorArray.map(i => ' ' + i)}</li>
+                            </ul></div>`;
+
+          // Ensure that if the map is zoomed out such that multiple
+          // copies of the feature are visible, the popup appears
+          // over the copy being pointed to.
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+
+          // Populate the popup and set its coordinates
+          // based on the feature found.
+          // todo vpineda setup popup
+          popup.setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(this.map);
+
+        // catching case where our selected keys arent in the object, this will usually occur
+        // when you are still in a cluster feature
+        } catch (err) {
+          console.log("hovering over cluster");
         }
-
-        cropSet.delete("NA") // deleting the NA value from crop2 column
-        
-        // switching back to array as set cannot use .map
-        let locationArray = Array.from(locationSet);
-        let interventionNameArray = Array.from(interventionNameSet);
-        let authorArray = Array.from(authorSet);
-        let cropArray = Array.from(cropSet);
-        let intercropArray = Array.from(intercropSet);
-
-        let coordinates = feature.geometry.coordinates.slice();
-        // this is an inline html tooltip
-        let description = `
-        <div>
-        <h3 style="color: #4B6ECB; font-size: 16px; font-family: Source Sans Pro;">STUDY DETAILS</h3>
-        <ul style="list-style-type:none; font-weight: 400; font-family: Source Sans Pro; font-size: 14px; 
-                                      padding-left: 0; word-wrap: break-word;" >
-                            <li style="margin: 10px 0;">INTERVENTIONS:${interventionNameArray.map(i => ' ' + i)}</li>                    
-                            <li style="margin: 10px 0;">CROPS: ${cropArray.map(i => ' ' + this.capitalizeFirstLetter(i))}</li>
-                            <li style="margin: 10px 0;">INTERCROPS: ${intercropArray.map(i => ' ' + this.capitalizeFirstLetter(i))}</li>
-                            <li style="margin: 10px 0;">LOCATION: ${locationArray.map(i => ' ' + i)}</li>
-                            <li style="margin: 10px 0;">DOI: ${authorArray.map(i => ' ' + i)}</li>
-                           </ul></div>`;
-
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        // Populate the popup and set its coordinates
-        // based on the feature found.
-        // todo vpineda setup popup
-        popup.setLngLat(coordinates)
-          .setHTML(description)
-          .addTo(this.map);
-
-      // catching case where our selected keys arent in the object, this will usually occur
-      // when you are still in a cluster feature
-      } catch (err) {
-        console.log("hovering over cluster");
-      }
     };
 
-    let mouseLeaveHandler = () => {
+    this.map.on('click', POINT_LAYER, tooltipHandler);
+
+    this.map.on('mouseenter', POINT_LAYER,  (e) => {
+      this.map.getCanvas().style.cursor = 'pointer';
+    });
+
+    this.map.on('mouseleave', POINT_LAYER,  () => {
       this.map.getCanvas().style.cursor = '';
-      popup.remove();
-    }
-
-    this.map.on('mouseenter', POINT_LAYER, mouseEnterHandler);
-    this.map.on('mouseleave', POINT_LAYER, mouseLeaveHandler);
-
-    this.map.on('mouseenter', CLUSTER_LAYER_NAME, mouseEnterHandler);
-    this.map.on('mouseleave', CLUSTER_LAYER_NAME, mouseLeaveHandler);
+    });
   }
 
   buildMap() {
@@ -224,7 +222,7 @@ export class MapHolderComponent implements OnInit {
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
       });
 
-      this.map.on('move', () => {
+      this.map.on('move', () => {        
         this.filterProviderService.setGeoFilter(this.map.getBounds());
         let mapKey = {};
         mapKey["lat"] = this.map.getCenter().lat;

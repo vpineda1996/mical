@@ -17,7 +17,6 @@ export class MapExplorerHolderComponent implements OnInit {
   constructor(private dataProvider: DataProviderService) { }
 
   onApply(data: { selectedInterventions: string[] }) {
-    console.log('4')
     this.dataProvider.updateMapData(data.selectedInterventions);
     this.dataProvider.updateHistograms();
   }
